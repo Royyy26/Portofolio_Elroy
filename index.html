@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Elroy Matthew Wiyanto — Web & Mobile Developer Portfolio" />
+  <title>Elroy Matthew Wiyanto — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <span class="logo-dot"></span>
+    elroy.dev
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+      <div class="theme-icons"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></div>
+      <div class="theme-thumb"></div>
+    </button>
+    <a href="mailto:elroy.matthew10@gmail.com" class="btn btn-primary" style="padding:.55rem 1.1rem; font-size:.6rem;">Hire Me</a>
+    <button class="hamburger" id="hamburger" aria-label="menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-overlay" id="overlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#about"      class="mob-link">About</a>
+  <a href="#skills"     class="mob-link">Skills</a>
+  <a href="#experience" class="mob-link">Experience</a>
+  <a href="#projects"   class="mob-link">Projects</a>
+  <a href="#education"  class="mob-link">Education</a>
+  <a href="#contact"    class="mob-link">Contact</a>
+  <div style="padding:1.2rem 0; display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-family:var(--font-mono); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">Theme</span>
+    <button class="theme-btn" id="themeToggleMobile" aria-label="Toggle theme">
+      <div class="theme-icons"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></div>
+      <div class="theme-thumb"></div>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="home">
+  <div class="hero-dots"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <div class="container hero-content">
+    <div class="hero-inner">
+      <!-- Left: text -->
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Available for Full-time &amp; Freelance
+        </div>
+        <h1 class="hero-name">
+          Elroy
+          <span class="line2">Matthew</span>
+          <span class="line3">Wiyanto.</span>
+        </h1>
+        <p class="hero-role">
+          Web Developer &amp; <span class="hl">Mobile Developer</span>
+        </p>
+        <p class="hero-desc">
+          Building performant, scalable web &amp; mobile applications.
+          Skilled in React.js, Next.js, RESTful API design, and end-to-end
+          delivery — from database to user interface.
+        </p>
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-primary">View Projects ↗</a>
+          <a href="#contact"  class="btn btn-ghost">Get in Touch</a>
+          <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="btn btn-dark">GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- Right: code snippet card -->
+      <div class="hero-code">
+        <div class="hero-code-bar">
+          <div class="hc-dot r"></div>
+          <div class="hc-dot y"></div>
+          <div class="hc-dot g"></div>
+          <span class="hc-fname">developer.ts</span>
+        </div>
+        <div class="hero-code-body">
+          <span class="cl"><span class="c-ln">1</span><span class="c-kw">const</span> <span class="c-fn">me</span> <span class="c-punc">= {</span></span>
+          <span class="cl"><span class="c-ln">2</span>  <span class="c-key">name</span><span class="c-punc">:</span> <span class="c-str">"Elroy Matthew"</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">3</span>  <span class="c-key">role</span><span class="c-punc">:</span> <span class="c-str">"Web &amp; Mobile Dev"</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">4</span>  <span class="c-key">gpa</span><span class="c-punc">:</span> <span class="c-num">4.00</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">5</span>  <span class="c-key">stack</span><span class="c-punc">: [</span></span>
+          <span class="cl"><span class="c-ln">6</span>    <span class="c-str">"React"</span><span class="c-punc">,</span> <span class="c-str">"Next.js"</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">7</span>    <span class="c-str">"Laravel"</span><span class="c-punc">,</span> <span class="c-str">"Golang"</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">8</span>    <span class="c-str">"Android"</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">9</span>  <span class="c-punc">],</span></span>
+          <span class="cl"><span class="c-ln">10</span> <span class="c-key">available</span><span class="c-punc">:</span> <span class="c-kw">true</span><span class="c-punc">,</span></span>
+          <span class="cl"><span class="c-ln">11</span><span class="c-punc">};</span></span>
+          <span class="cl" style="margin-top:.5rem"><span class="c-ln">12</span><span class="c-com">// open to work 🤝</span></span>
+          <span class="cl"><span class="c-ln">13</span><span class="c-punc">█</span><span class="c-cursor"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-mouse"></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <!-- Left: text + stats -->
+      <div>
+        <div class="reveal">
+          <p class="eyebrow"><span class="eyebrow-n">01</span> About</p>
+          <h2 class="section-title">Code.<br>Build.<br><span class="acc">Ship.</span></h2>
+        </div>
+        <div class="about-text reveal reveal-d1">
+          <p style="margin-top:1.75rem;">
+            I'm a <strong>5th-semester Information Systems student</strong> at Maranatha Christian University
+            (<span class="hi">GPA 4.00, Full Academic Scholarship</span>) passionate about building
+            <strong>web applications</strong> and <strong>mobile experiences</strong>.
+          </p>
+          <p>
+            Currently interning at <strong>PT Akselerasi Informasi Indonesia</strong> as a Web Developer —
+            developing full-stack apps: front-end UI, back-end logic, RESTful API integration, and database management.
+          </p>
+          <p>
+            I'm comfortable owning a feature <strong>end-to-end</strong> — from schema design to deployment —
+            and have hands-on experience in frontend, backend, mobile, and cloud architecture.
+          </p>
+        </div>
+        <div class="about-stats reveal reveal-d2">
+          <div class="stat-card"><div class="stat-num">4.00</div><div class="stat-label">Perfect GPA</div></div>
+          <div class="stat-card"><div class="stat-num">5×</div><div class="stat-label">Dean's List</div></div>
+          <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Certifications</div></div>
+          <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Years Coding</div></div>
+        </div>
+      </div>
+
+      <!-- Center: profile photo -->
+      <div class="profile-wrap reveal reveal-d1">
+        <div class="profile-frame">
+          <div class="profile-inner">
+            <img
+              src="assets/img/profile.jpg"
+              onerror="this.onerror=null; this.src='img/profile/profile.png';"
+              alt="Elroy Matthew Wiyanto"
+              loading="lazy"
+            />
+          </div>
+          <div class="profile-corner-br"></div>
+          <div class="profile-badge">
+            <span class="dot-s"></span> Available
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: terminal card -->
+      <div class="reveal reveal-d2">
+        <div class="terminal">
+          <div class="term-bar">
+            <div class="t-dot r"></div>
+            <div class="t-dot y"></div>
+            <div class="t-dot g"></div>
+            <span class="t-title">profile.json</span>
+          </div>
+          <div class="term-body">
+            <div class="t-row"><span class="t-k">name</span><span class="t-v">Elroy Matthew Wiyanto</span></div>
+            <div class="t-row"><span class="t-k">role</span><span class="t-v g">Web &amp; Mobile Dev</span></div>
+            <div class="t-row"><span class="t-k">university</span><span class="t-v b">Maranatha Christian</span></div>
+            <div class="t-row"><span class="t-k">major</span><span class="t-v">Information Systems</span></div>
+            <div class="t-row"><span class="t-k">gpa</span><span class="t-v g">4.00 / 4.00</span></div>
+            <div class="t-row"><span class="t-k">location</span><span class="t-v">Bandung, Indonesia</span></div>
+            <div class="t-row"><span class="t-k">available</span><span class="t-v g">true</span></div>
+            <div class="t-row"><span class="t-k">github</span><span class="t-v p">@Royyy26</span></div>
+            <div class="t-row"><span class="t-k">scholarship</span><span class="t-v o">100% tuition</span></div>
+            <div class="t-prompt">$ <span>_</span><span class="t-blink"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-n">02</span> Skills</p>
+      <h2 class="section-title">Tech <span class="stroke">Stack</span></h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="reveal reveal-d1">
+        <div class="skill-group-head">Frontend</div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">React.js / Next.js</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-pct">90%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">TypeScript</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Tailwind CSS / Responsive Design</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+        </div>
+        <div class="skill-group-head" style="margin-top:2.25rem;">Mobile Development</div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Android Development</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">RESTful API Integration</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="skill-group-head">Backend</div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">PHP / Laravel</span><span class="skill-pct">80%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Golang (Gin Framework)</span><span class="skill-pct">70%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Python</span><span class="skill-pct">75%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Java (OOP)</span><span class="skill-pct">72%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="72"></div></div>
+        </div>
+        <div class="skill-group-head" style="margin-top:2.25rem;">Database &amp; DevOps</div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">MySQL / PostgreSQL</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-pct">85%</span></div>
+          <div class="skill-track"><div class="skill-bar" data-width="85"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tags-wrap reveal" style="margin-top:3rem;">
+      <div class="tags-head">// Tools &amp; Other</div>
+      <div class="tags-cloud">
+        <span class="tag">Postman</span>
+        <span class="tag">Figma</span>
+        <span class="tag">VS Code</span>
+        <span class="tag">XAMPP</span>
+        <span class="tag">Oracle VM</span>
+        <span class="tag">Cisco Packet Tracer</span>
+        <span class="tag">AWS Cloud</span>
+        <span class="tag">Canva</span>
+        <span class="tag">Microsoft Excel</span>
+        <span class="tag">Bahasa Indonesia</span>
+        <span class="tag">English</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-n">03</span> Experience</p>
+      <h2 class="section-title">Where I've<br><span class="stroke">Worked</span></h2>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <span class="tl-date">Apr 2026 — Present</span>
+          <span class="tl-type">Internship</span>
+        </div>
+        <div class="tl-role">Web Developer Intern</div>
+        <div class="tl-company"><span class="co">PT Akselerasi Informasi Indonesia</span></div>
+        <ul class="tl-desc">
+          <li>Develop and maintain full-stack web applications — front-end UI, back-end logic, and database integration</li>
+          <li>Build and integrate RESTful APIs ensuring seamless communication between system components</li>
+          <li>Involved in mobile development with API consumption across Android platforms</li>
+          <li>Optimize performance, conduct testing &amp; debugging in a collaborative team environment</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <span class="tl-date">Feb 2026 — Apr 2026</span>
+          <span class="tl-type">Internship</span>
+        </div>
+        <div class="tl-role">IT Help Desk</div>
+        <div class="tl-company"><span class="co">PT Comtronics Systems</span></div>
+        <ul class="tl-desc">
+          <li>Provided technical support for hardware, software, and network issues to minimize downtime</li>
+          <li>Installed, configured, and maintained IT systems; managed support tickets and documentation</li>
+          <li>Collaborated with IT team to troubleshoot complex problems with strong communication skills</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <span class="tl-date">Feb 2025 — Jul 2025</span>
+          <span class="tl-type">Teaching</span>
+        </div>
+        <div class="tl-role">Assistant Lecturer — Project Oriented Programming</div>
+        <div class="tl-company"><span class="co">Maranatha Christian University</span></div>
+        <ul class="tl-desc">
+          <li>Mentored students in OOP concepts: inheritance, polymorphism, encapsulation, and abstraction</li>
+          <li>Developed and assessed weekly programming exercises; guided debugging and code quality</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <span class="tl-date">Sep 2024 — Feb 2025</span>
+          <span class="tl-type">Teaching</span>
+        </div>
+        <div class="tl-role">Assistant Lecturer — Basic Programming</div>
+        <div class="tl-company"><span class="co">Maranatha Christian University</span></div>
+        <ul class="tl-desc">
+          <li>Taught fundamental programming: variables, loops, conditionals, and functions</li>
+          <li>Designed and evaluated weekly coding assignments for first-year students</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-meta">
+          <span class="tl-date">May 2023 — Aug 2023</span>
+          <span class="tl-type">Internship</span>
+        </div>
+        <div class="tl-role">Data Entry Intern</div>
+        <div class="tl-company"><span class="co">Government Tax Office — Cirebon, Indonesia</span></div>
+        <ul class="tl-desc">
+          <li>Entered and organized taxpayer data in Microsoft Excel with high accuracy and confidentiality</li>
+          <li>Supported digital archiving for efficient data access and management</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-n">04</span> Projects</p>
+      <h2 class="section-title">Things I've<br><span class="acc">Built</span></h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-num">01</div>
+        <div class="project-icon">🌐</div>
+        <div class="project-name">Full-Stack Web Application</div>
+        <div class="project-desc">End-to-end web app developed during internship. Includes front-end interface, RESTful API integration, back-end logic, and database management optimized for performance and scalability.</div>
+        <div class="project-stack"><span class="stack-tag">Next.js</span><span class="stack-tag">TypeScript</span><span class="stack-tag">REST API</span><span class="stack-tag">PostgreSQL</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-d1">
+        <div class="project-num">02</div>
+        <div class="project-icon">📱</div>
+        <div class="project-name">Mobile App with REST API</div>
+        <div class="project-desc">Cross-platform mobile application consuming RESTful APIs. Built with clean architecture focusing on seamless UX, state management, and API integration across Android platforms.</div>
+        <div class="project-stack"><span class="stack-tag">Android</span><span class="stack-tag">Mobile Dev</span><span class="stack-tag">REST API</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-d2">
+        <div class="project-num">03</div>
+        <div class="project-icon">⚙️</div>
+        <div class="project-name">RESTful API Service (Golang / Gin)</div>
+        <div class="project-desc">High-performance REST API with Golang and Gin framework. Implements clean routing, middleware, authentication, and database interaction for production-ready endpoints.</div>
+        <div class="project-stack"><span class="stack-tag">Golang</span><span class="stack-tag">Gin</span><span class="stack-tag">MySQL</span><span class="stack-tag">REST API</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">04</div>
+        <div class="project-icon">🎓</div>
+        <div class="project-name">Student Management System (Java OOP)</div>
+        <div class="project-desc">Object-oriented Java application for managing academic data. Demonstrates mastery of inheritance, polymorphism, encapsulation — built while serving as Assistant Lecturer.</div>
+        <div class="project-stack"><span class="stack-tag">Java</span><span class="stack-tag">OOP</span><span class="stack-tag">NetBeans</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-d1">
+        <div class="project-num">05</div>
+        <div class="project-icon">🗄️</div>
+        <div class="project-name">PHP Web App + Database Integration</div>
+        <div class="project-desc">Server-side web application in PHP with MySQL. Features CRUD operations, form handling, session management, and responsive front-end for a real-world use case.</div>
+        <div class="project-stack"><span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span><span class="stack-tag">HTML/CSS</span><span class="stack-tag">JavaScript</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="project-card reveal reveal-d2">
+        <div class="project-num">06</div>
+        <div class="project-icon">☁️</div>
+        <div class="project-name">Cloud Architecture Design (AWS)</div>
+        <div class="project-desc">Designed scalable cloud architectures leveraging AWS services — compute, storage, networking, and security — as part of AWS Academy Cloud Architecting coursework.</div>
+        <div class="project-stack"><span class="stack-tag">AWS</span><span class="stack-tag">VPC / EC2</span><span class="stack-tag">S3</span></div>
+        <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+    </div>
+    <div style="text-align:center; margin-top:2.25rem;" class="reveal">
+      <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="btn btn-ghost">View All on GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EDUCATION ═══ -->
+<section id="education">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-n">05</span> Education</p>
+      <h2 class="section-title">Academic<br><span class="stroke">Background</span></h2>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-icon">🎓</div>
+        <div>
+          <div class="edu-title">B.Sc. Information Systems</div>
+          <div class="edu-sub">Maranatha Christian University — Bandung, Indonesia</div>
+          <div class="edu-date">Aug 2023 — Jun 2027 (Expected)</div>
+          <div class="edu-detail">
+            <strong>GPA: 4.00 / 4.00</strong> · Full Academic Scholarship (100% tuition) ·
+            Dean's List <strong>5 consecutive semesters</strong> ·
+            1st Place Academic Festival (Video Competition) · 3rd Place Academic Festival (Internal).<br><br>
+            Relevant coursework: Database &amp; SQL, Python Programming, Decision Support Systems, Business Intelligence, Data Mining.
+          </div>
+        </div>
+      </div>
+      <div class="edu-card reveal reveal-d1">
+        <div class="edu-icon">🏫</div>
+        <div>
+          <div class="edu-title">High School Diploma — Natural Science</div>
+          <div class="edu-sub">SMAK Terang Bangsa — Cirebon, Indonesia</div>
+          <div class="edu-date">Jul 2020 — Apr 2023</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="certs-wrap reveal">
+      <div class="certs-title">// Certifications</div>
+      <div class="certs-grid">
+        <div class="cert-card"><span class="cert-icon">☁️</span><div><div class="cert-name">AWS Cloud Architecting</div><div class="cert-year">Oct 2025</div></div></div>
+        <div class="cert-card"><span class="cert-icon">🤖</span><div><div class="cert-name">AWS Machine Learning Foundations</div><div class="cert-year">Jun 2025</div></div></div>
+        <div class="cert-card"><span class="cert-icon">🔧</span><div><div class="cert-name">HackerRank Problem Solving (Intermediate)</div><div class="cert-year">Jun 2025</div></div></div>
+        <div class="cert-card"><span class="cert-icon">🗄️</span><div><div class="cert-name">HackerRank SQL (Basic)</div><div class="cert-year">Sep 2025</div></div></div>
+        <div class="cert-card"><span class="cert-icon">☁️</span><div><div class="cert-name">AWS Cloud Foundations</div><div class="cert-year">Apr 2025</div></div></div>
+        <div class="cert-card"><span class="cert-icon">☁️</span><div><div class="cert-name">AWS Intro to Cloud (Sem 1 &amp; 2)</div><div class="cert-year">Oct 2024</div></div></div>
+        <div class="cert-card"><span class="cert-icon">💻</span><div><div class="cert-name">HackerRank Problem Solving (Basic)</div><div class="cert-year">Oct 2024</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ORGANIZATIONS ═══ -->
+<section id="orgs">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow"><span class="eyebrow-n">06</span> Organizations</p>
+      <h2 class="section-title">Beyond<br><span class="acc">Code</span></h2>
+    </div>
+    <div class="orgs-grid">
+      <div class="org-card reveal">
+        <div class="org-header">
+          <div><div class="org-role">Vice President</div></div>
+          <div class="org-period">Feb 2025 — Feb 2026</div>
+        </div>
+        <div class="org-name">HMSI Maranatha 25/26</div>
+        <div class="org-desc">Led &amp; managed team activities to achieve project targets. Maintained communications between internal team and partners. Managed risk through project monitoring &amp; planning.</div>
+      </div>
+      <div class="org-card reveal reveal-d1">
+        <div class="org-header">
+          <div><div class="org-role">Academic Division</div></div>
+          <div class="org-period">Feb 2024 — Feb 2025</div>
+        </div>
+        <div class="org-name">HMSI Maranatha 24/25</div>
+        <div class="org-desc">Organized academic events such as workshops, seminars, and study groups. Managed tutoring programs to enhance student competency.</div>
+      </div>
+      <div class="org-card reveal reveal-d2">
+        <div class="org-header">
+          <div><div class="org-role">Event Chairperson</div></div>
+          <div class="org-period">Mar 2024</div>
+        </div>
+        <div class="org-name">Odoo ERP Seminar — HMSI Maranatha</div>
+        <div class="org-desc">Led a cross-functional team of 15+ to organize an ERP seminar for 100+ participants. Managed end-to-end operations including budgeting, scheduling, and stakeholder coordination.</div>
+      </div>
+      <div class="org-card reveal">
+        <div class="org-header">
+          <div><div class="org-role">Logistics Division</div></div>
+          <div class="org-period">Dec 2024</div>
+        </div>
+        <div class="org-name">GDG Bandung Event</div>
+        <div class="org-desc">Managed logistics and equipment for a tech event attended by 1000+ participants. Resolved on-site issues quickly while collaborating to ensure seamless execution.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <p class="eyebrow" style="justify-content:center;"><span class="eyebrow-n">07</span> Contact</p>
+      <h2 class="section-title">Let's Build<br><span class="acc">Together</span></h2>
+      <p class="contact-sub">Open to internship opportunities, freelance projects, and full-time roles. Have a project in mind or just want to connect? I'd love to hear from you.</p>
+      <div class="contact-grid">
+        <a href="mailto:elroy.matthew10@gmail.com" class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-lbl">Email</div>
+          <div class="contact-val">elroy.matthew10@gmail.com</div>
+        </a>
+        <a href="https://wa.me/6287806776235" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">📱</div>
+          <div class="contact-lbl">WhatsApp</div>
+          <div class="contact-val">+62 878-0677-6235</div>
+        </a>
+        <a href="https://www.linkedin.com/in/elroy-matthew-wiyanto-992780298/" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">💼</div>
+          <div class="contact-lbl">LinkedIn</div>
+          <div class="contact-val">elroy-matthew-wiyanto</div>
+        </a>
+        <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon">🐙</div>
+          <div class="contact-lbl">GitHub</div>
+          <div class="contact-val">@Royyy26</div>
+        </a>
+      </div>
+      <a href="mailto:elroy.matthew10@gmail.com" class="btn btn-primary" style="font-size:.78rem; padding:.95rem 2.5rem;">Say Hello →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div>© 2025 <span class="footer-acc">Elroy Matthew Wiyanto</span></div>
+  <div class="footer-links">
+    <a href="https://github.com/Royyy26" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/elroy-matthew-wiyanto-992780298/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:elroy.matthew10@gmail.com">Email</a>
+  </div>
+  <div>Built with <span class="footer-acc">♥</span> · Bandung, Indonesia</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
