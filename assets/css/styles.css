@@ -201,39 +201,43 @@ body:has(button:hover) #cursor-ring {
 }
 
 @keyframes floatY {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
 }
 
 @keyframes gradShift {
-  0% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  50% {
-    background-position: 100% 50%;
-  }
+@keyframes textShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
 
-  100% {
-    background-position: 0% 50%;
-  }
+@keyframes auraPulse {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.14; }
+  50% { transform: scale(1.12) translate(-15px, 15px); opacity: 0.22; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(232, 146, 42, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(232, 146, 42, 0.5); }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, var(--amber) 0%, #fff 50%, var(--teal-l) 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: textShimmer 4s linear infinite;
 }
 
 @keyframes scan {
-  0% {
-    transform: translateY(-100%);
-  }
-
-  100% {
-    transform: translateY(100vh);
-  }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
 @keyframes slideRight {
@@ -663,7 +667,8 @@ section {
   height: 500px;
   right: -100px;
   top: -80px;
-  background: radial-gradient(circle, rgba(232, 146, 42, .14) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(232, 146, 42, .2) 0%, transparent 65%);
+  animation: auraPulse 8s ease-in-out infinite alternate;
 }
 
 .hero-blob-2 {
@@ -671,7 +676,8 @@ section {
   height: 400px;
   left: 5%;
   bottom: 10%;
-  background: radial-gradient(circle, rgba(42, 140, 122, .1) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(42, 140, 122, .18) 0%, transparent 65%);
+  animation: auraPulse 10s ease-in-out 2s infinite alternate-reverse;
 }
 
 .hero-content {
@@ -1494,7 +1500,9 @@ section {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: background .25s;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform .15s ease-out, background .25s, box-shadow .35s;
 }
 
 .project-card::before {
@@ -1502,16 +1510,19 @@ section {
   position: absolute;
   inset: 0 0 auto;
   height: 0;
-  background: linear-gradient(90deg, var(--amber), var(--teal));
-  transition: height .25s;
+  background: linear-gradient(90deg, var(--amber), var(--teal-l));
+  transition: height .3s var(--ease-out);
 }
 
 .project-card:hover {
   background: var(--bg1);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12), 0 0 20px rgba(232, 146, 42, 0.15);
+  z-index: 2;
 }
 
 .project-card:hover::before {
-  height: 2.5px;
+  height: 3px;
 }
 
 .project-num {
@@ -1532,12 +1543,13 @@ section {
   place-items: center;
   font-size: 1.3rem;
   margin-bottom: 1.1rem;
-  transition: border-color .2s, background .2s;
+  transition: transform .3s var(--ease-spring), border-color .2s, background .2s;
 }
 
 .project-card:hover .project-icon {
   border-color: var(--line-h);
-  background: rgba(232, 146, 42, .08);
+  background: rgba(232, 146, 42, .12);
+  transform: scale(1.1) rotate(-4deg);
 }
 
 .project-name {
