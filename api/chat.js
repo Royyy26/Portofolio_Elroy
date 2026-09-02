@@ -10,7 +10,7 @@
  */
 
 import Anthropic from "@anthropic-ai/sdk";
-import { SYSTEM_PROMPT } from "./profile.js";
+import { SYSTEM_PROMPT } from "../lib/profile.js";
 
 const MODEL = "claude-opus-5";
 const MAX_TOKENS = 1200;        // jawaban chat pendek; ini juga plafon biaya per pertanyaan
@@ -98,37 +98,59 @@ export default async function handler(req, res) {
     res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
   };
 
-  try {
-    const stream = getClient().beta.messages.stream({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
+  // Prompt sistem berisi seluruh profil Elroy dan tidak berubah antar request,
+  // jadi di-cache. Yang berubah cuma pertanyaannya, dan itu ada setelah
+  // breakpoint cache.
+  const baseReq = {
+    model: MODEL,
+    max_tokens: MAX_TOKENS,
+    system: [
+      { type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
+    ],
+    messages,
+    // Tanya-jawab pendek soal dokumen yang sudah tersedia — tidak butuh
+    // penalaran dalam. Effort rendah menjawab lebih cepat dan lebih murah.
+    output_config: { effort: "low" },
+  };
 
-      // Prompt sistem berisi seluruh profil Elroy dan tidak berubah antar
-      // request, jadi di-cache. Yang berubah cuma pertanyaannya, dan itu ada
-      // setelah breakpoint cache.
-      system: [
-        { type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
-      ],
-      messages,
+  // Kalau permintaan ditolak filter keamanan, API menjalankan ulang permintaan
+  // yang sama di model cadangan dalam panggilan yang sama, sehingga pengunjung
+  // tidak melihat kegagalan.
+  const withFallback = {
+    ...baseReq,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+  };
 
-      // Tanya-jawab pendek soal dokumen yang sudah tersedia — tidak butuh
-      // penalaran dalam. Effort rendah menjawab lebih cepat dan lebih murah.
-      output_config: { effort: "low" },
-
-      // Kalau permintaan ditolak filter keamanan, API menjalankan ulang
-      // permintaan yang sama di model cadangan dalam panggilan yang sama,
-      // sehingga pengunjung tidak melihat kegagalan.
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-    });
-
-    for await (const event of stream) {
+  // Fitur di atas opsional. Kalau flag beta-nya ditolak API (400), lebih baik
+  // chat tetap hidup tanpa fallback daripada mati total — kegagalannya dicatat
+  // di log supaya ketahuan, bukan disembunyikan.
+  //
+  // Delta diteruskan ke pengunjung sambil stream berjalan; jangan menunggu
+  // stream selesai lebih dulu, karena itu meniadakan gunanya streaming.
+  const runStream = async (req, beta) => {
+    const s = beta
+      ? getClient().beta.messages.stream(req)
+      : getClient().messages.stream(req);
+    for await (const event of s) {
       if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
         send("delta", { text: event.delta.text });
       }
     }
+    return s.finalMessage();
+  };
 
-    const final = await stream.finalMessage();
+  try {
+    let final;
+    try {
+      final = await runStream(withFallback, true);
+    } catch (err) {
+      // 400 selalu terjadi sebelum ada delta terkirim, jadi mengulang di sini
+      // aman: pengunjung belum melihat teks apa pun.
+      if (!(err instanceof Anthropic.BadRequestError)) throw err;
+      console.warn("[chat] parameter fallback ditolak, ulangi tanpa flag beta:", err.message);
+      final = await runStream(baseReq, false);
+    }
 
     if (final.stop_reason === "refusal") {
       send("error", { message: "Maaf, saya tidak bisa menjawab yang itu. Coba tanya soal pengalaman atau project Elroy." });
