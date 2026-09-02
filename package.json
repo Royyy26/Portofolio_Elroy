@@ -2,12 +2,12 @@
   "name": "elroy-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio of Elroy Matthew Wiyanto, with an AI assistant that answers questions about him.",
+  "description": "Portfolio of Elroy Matthew Wiyanto, with a Gemini-powered assistant that answers questions about him.",
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.123.0"
+    "@google/genai": "^2.20.0"
   }
 }

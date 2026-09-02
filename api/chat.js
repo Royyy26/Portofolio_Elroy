@@ -1,20 +1,19 @@
 /**
  * POST /api/chat — Serverless Function untuk Vercel.
  *
- * Ini hanya pembungkus bergaya Node (req, res). Logikanya ada di
- * lib/chat-core.js dan dipakai bersama dengan versi Netlify.
+ * Pembungkus tipis bergaya Node (req, res); logikanya ada di lib/chat-core.js.
  *
  * Kunci API TIDAK PERNAH menyentuh browser. Fungsi ini yang memegangnya,
- * memanggil Anthropic, lalu meneruskan jawabannya ke halaman sebagai SSE.
- * Kalau kunci ditaruh di JavaScript sisi klien, siapa pun bisa membacanya
- * lewat View Source dan memakainya atas namamu.
+ * memanggil Gemini, lalu meneruskan jawabannya ke halaman sebagai SSE. Kalau
+ * kunci ditaruh di JavaScript sisi klien, siapa pun bisa membacanya lewat View
+ * Source dan memakai kuotamu.
  *
- * Set ANTHROPIC_API_KEY di Vercel → Settings → Environment Variables.
+ * Set GEMINI_API_KEY di Vercel → Settings → Environment Variables.
  */
 
 import {
   parseMessages, rateLimited, streamAnswer,
-  friendlyError, usageOf, REFUSAL_MESSAGE,
+  friendlyError, refusalMessage, hasApiKey,
 } from "../lib/chat-core.js";
 
 export default async function handler(req, res) {
@@ -23,8 +22,8 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    res.status(500).json({ error: "ANTHROPIC_API_KEY belum di-set di environment." });
+  if (!hasApiKey()) {
+    res.status(500).json({ error: "GEMINI_API_KEY belum di-set di environment." });
     return;
   }
 
@@ -59,16 +58,20 @@ export default async function handler(req, res) {
   const send = (event, data) => res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
 
   try {
-    const final = await streamAnswer(parsed.messages, (text) => send("delta", { text }));
+    const { finishReason, usage } = await streamAnswer(
+      parsed.messages,
+      (text) => send("delta", { text }),
+    );
 
-    if (final.stop_reason === "refusal") {
-      send("error", { message: REFUSAL_MESSAGE });
+    const refused = refusalMessage(finishReason);
+    if (refused) {
+      send("error", { message: refused });
     } else {
-      send("done", { stop_reason: final.stop_reason, usage: usageOf(final) });
+      send("done", { finish_reason: finishReason, usage });
     }
   } catch (err) {
     // Pesan internal tidak dibocorkan ke pengunjung; detailnya masuk log Vercel.
-    console.error("[chat]", err?.status, err?.message);
+    console.error("[chat]", err?.status ?? err?.code, err?.message);
     send("error", { message: friendlyError(err) });
   } finally {
     res.end();

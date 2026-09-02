@@ -18,25 +18,27 @@
 ## AI Assistant
 
 Widget chat di pojok kanan bawah menjawab pertanyaan tentang Elroy — pengalaman,
-project, keahlian, ketersediaan. Ditenagai Claude lewat sebuah serverless function.
+project, keahlian, ketersediaan. Ditenagai **Google Gemini** lewat sebuah
+serverless function, dijalankan di **tier gratis** Google AI Studio.
 
 ### Struktur
 
 | File | Isi |
 |---|---|
-| `api/profile.js` | Basis pengetahuan + prompt sistem. **Satu-satunya file yang perlu diubah** saat ada pekerjaan/project/sertifikat baru. |
-| `api/chat.js` | Serverless function: memegang kunci API, memanggil Claude, streaming SSE ke browser. |
+| `lib/profile.js` | Basis pengetahuan + prompt sistem. **Satu-satunya file yang perlu diubah** saat ada pekerjaan/project/sertifikat baru. |
+| `lib/chat-core.js` | Logika: validasi, pembatas laju, panggilan Gemini, penanganan error. |
+| `api/chat.js` | Pembungkus Vercel: memegang kunci API, streaming SSE ke browser. |
 
-Kunci API tidak pernah dikirim ke browser. Kalau ditaruh di JavaScript sisi klien,
-siapa pun bisa membacanya lewat View Source.
+Kunci API tidak pernah dikirim ke browser. Kalau ditaruh di JavaScript sisi
+klien, siapa pun bisa membacanya lewat View Source dan memakai kuotamu.
 
 ### Setup
 
-1. Ambil kunci API di https://console.anthropic.com → API Keys
-2. Vercel → project → Settings → Environment Variables → tambah `ANTHROPIC_API_KEY`
+1. Ambil kunci API gratis di https://aistudio.google.com/apikey
+2. Vercel → project → Settings → Environment Variables → tambah `GEMINI_API_KEY`
 3. Redeploy
 
-Untuk dev lokal: `npm install`, buat file `.env` berisi `ANTHROPIC_API_KEY=...`
+Untuk dev lokal: `npm install`, buat file `.env` berisi `GEMINI_API_KEY=...`
 (sudah masuk `.gitignore`), lalu `npx vercel dev`.
 
 Preview statis biasa (`python -m http.server`) tidak menjalankan serverless
@@ -45,9 +47,15 @@ normal.
 
 ### Batasan yang sudah dipasang
 
-- Maks 8 pertanyaan per menit per IP (per-instance, menahan spam kasar — bukan
-  plafon keras; untuk itu pakai Upstash Redis atau Vercel Firewall)
+- Maks 8 pertanyaan per menit per IP (per-instance; menahan spam kasar dan
+  mengurangi risiko satu orang menghabiskan kuota harian)
 - Maks 800 karakter per pertanyaan, 10 pesan riwayat terakhir
-- `max_tokens` 1200, effort `low` — jawaban chat pendek, biaya per pertanyaan terkendali
-- Prompt sistem di-cache, jadi profil yang ~2.500 token tidak dibayar penuh tiap
-  pertanyaan. Pantau lewat `cache_read` di event `done`.
+- `maxOutputTokens` 1000 — jawaban chat pendek
+- Model `gemini-2.0-flash`
+
+### Soal tier gratis
+
+Tier gratis punya batas request per menit dan per hari, dan syaratnya
+ditentukan Google — bisa berubah sewaktu-waktu. Kalau kuota habis, pengunjung
+mendapat pesan yang menyarankan menghubungi Elroy lewat WhatsApp, bukan error
+mentah.
