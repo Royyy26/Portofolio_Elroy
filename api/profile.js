@@ -13,7 +13,8 @@
 export const PROFILE = `
 # Elroy Matthew Wiyanto
 
-Full-Stack Developer & Web Developer. Berbasis di Bandung, Indonesia.
+Full-Stack Developer & Web Developer. Berbasis di Bandung, Jawa Barat, Indonesia.
+Kata ganti: he/him (rujuk sebagai "dia").
 Website: elroy.dev · GitHub: @Royyy26
 
 ## Ringkasan
@@ -37,10 +38,13 @@ posisi full-time.
 ## Pengalaman Kerja
 
 ### Egafood Indonesia — Full-Stack Developer Intern (Agu 2026 – sekarang)
+Cengkareng, Jakarta · on-site
 - Membangun sistem ERP untuk seluruh perusahaan dari nol untuk transformasi digital
 - Membangun & mengintegrasikan RESTful API antara frontend, backend, dan logika bisnis
 - Modul yang dikerjakan: Warehouse Management, HR Management, User Management,
   General Affairs, Sales & Distribution
+- Berkolaborasi dengan stakeholder untuk menerjemahkan kebutuhan bisnis menjadi
+  fitur sistem, termasuk testing, debugging, dan penyempurnaan
 - Stack: Next.js, React, TypeScript, Golang, Gin Framework, PostgreSQL
 
 ### PT Akselerasi Informasi Indonesia (Accelworks) — Web Development Intern (Apr 2026 – Jul 2026)
@@ -51,7 +55,8 @@ posisi full-time.
 ### PT Comtronics Systems (ICT Total Solution) — IT Help Desk (Feb 2026 – Apr 2026)
 - Dukungan teknis untuk hardware, software, masalah jaringan, dan sistem ticketing
 - Instalasi, konfigurasi, dan pemeliharaan perangkat IT; menjaga stabilitas jaringan
-- Tools: Zabbix, Ruijie
+- Tools: Zabbix, WhatsUp Gold, NetBox, Ruijie, dan AKOJA ERP — untuk network
+  monitoring, penanganan insiden, dan operasional IT
 
 ### Universitas Kristen Maranatha — Asisten Dosen Project Oriented Programming (Feb 2025 – Jul 2025)
 - Membimbing mahasiswa dalam OOP: inheritance, polymorphism, encapsulation, abstraction
@@ -156,6 +161,16 @@ manajemen waktu, adaptasi, kepemimpinan
   Seminar Application Modernization, hybrid cloud, dan DevOps.
 - Indonesia Vizz Idol — Divisi Logistik & Konsumsi (Mei 2025)
 
+## Yang tidak tercakup di dokumen ini
+Kalau ditanya hal-hal berikut, katakan belum ada informasinya dan arahkan ke
+email atau WhatsApp Elroy — jangan dikira-kira:
+- Ekspektasi gaji
+- Tanggal pasti bisa mulai bekerja / notice period
+- Level bahasa Inggris secara spesifik (misal skor TOEFL/IELTS)
+- Tantangan teknis spesifik di tiap project dan bagaimana ia menyelesaikannya
+- Ukuran tim dan pembagian peran di tiap tempat kerja
+- Pengalaman dengan Docker, CI/CD, atau automated testing
+
 ## Kontak
 - Email: elroy.matthew10@gmail.com
 - WhatsApp: +62 878-0677-6235
@@ -163,8 +178,14 @@ manajemen waktu, adaptasi, kepemimpinan
 - GitHub: github.com/Royyy26
 - CV lengkap bisa diunduh dari tombol "Download CV" di website
 
-## Status saat ini
-Terbuka untuk peluang internship, project freelance, dan posisi full-time.
+## Ketersediaan & preferensi kerja
+- Status: terbuka untuk peluang internship, project freelance, dan posisi full-time
+  (ditandai "Open to work" di LinkedIn, terlihat oleh semua orang)
+- Lokasi yang dicari: Bandung
+- Model kerja: on-site atau hybrid
+- Domisili: Bandung, Jawa Barat, Indonesia
+- Saat ini masih berkuliah (perkiraan lulus Jun 2027) sambil magang, jadi jadwal
+  perlu dibicarakan langsung dengan Elroy
 `.trim();
 
 export const SYSTEM_PROMPT = `Kamu adalah asisten di website portfolio Elroy Matthew Wiyanto. Pengunjung — sering kali recruiter atau calon klien — bertanya tentang Elroy, dan tugasmu menjawabnya.
