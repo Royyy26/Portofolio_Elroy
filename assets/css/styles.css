@@ -3659,6 +3659,47 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   }
 }
 
+/* ============================================================
+   PERAPIAN MOBILE
+============================================================ */
+@media (max-width: 640px) {
+  /* Petunjuk "SCROLL" diposisikan absolut di dasar hero. Di layar sempit
+     tombol CTA menumpuk ke bawah sampai menabraknya, jadi teks dan ikon
+     mouse-nya menindih tombol GITHUB. Ia cuma dekorasi — di layar sekecil
+     ini orang sudah tahu harus scroll. */
+  .scroll-hint {
+    display: none;
+  }
+
+  /* Navbar terlalu padat: avatar, nama, sakelar tema, tombol CV, dan
+     hamburger berdesakan sampai tombolnya nyaris bersentuhan. Tombol
+     Download CV dibuang dari navbar — bukan menghilangkan fungsinya, karena
+     tombol yang sama ada di hero dan di menu geser. */
+  .nav-right .btn-primary {
+    display: none;
+  }
+
+  /* ...jadi ia dipindah ke menu geser, bukan dihilangkan. Tanpa ini, tombol
+     CV cuma ada di hero dan hilang begitu pengunjung scroll ke bawah. */
+  .mob-cv {
+    width: 100%;
+    margin-top: 1.2rem;
+  }
+
+  .nav-right {
+    gap: .6rem;
+  }
+
+  #navbar {
+    padding-inline: 1.1rem;
+  }
+
+  /* Ruang bawah hero jadi lebih lega setelah petunjuk scroll hilang */
+  .hero-ctas {
+    margin-bottom: 1rem;
+  }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .projects-grid {
