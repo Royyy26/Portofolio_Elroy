@@ -4012,6 +4012,10 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-lg);
   padding: clamp(1.5rem, 4vw, 2.25rem);
+  /* Tombol tutup berakhir ~46px dari tepi atas dialog. Di layar sempit
+     padding menyusut jadi 24px sehingga tombolnya menimpa panggung
+     sejauh 22px; ruang atas dijaga minimal agar keduanya tak bertabrakan. */
+  padding-top: max(3.4rem, clamp(1.5rem, 4vw, 2.25rem));
   opacity: 0;
   transform: translateY(14px) scale(.97);
   transition: opacity .32s var(--ease-out), transform .32s var(--ease-spring);
@@ -4067,7 +4071,14 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   place-items: center;
 }
 
+/* Diposisikan absolut, bukan item grid. Sebagai item grid, height:100%
+   mengacu ke tinggi baris yang ditentukan isi (492px untuk badge bujur
+   sangkar), bukan ke kotak yang sudah dijepit aspect-ratio (370px) --
+   akibatnya keenam badge AWS terpotong 32% di bagian bawah. Dengan
+   inset:0 kotak gambar persis sebesar panggung, dan contain bekerja. */
 .cert-shot {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
