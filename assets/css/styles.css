@@ -135,36 +135,6 @@ a {
   background: var(--amber);
 }
 
-/* ── CUSTOM CURSOR ── */
-#cursor {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--amber);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transition: transform .08s;
-}
-
-#cursor-ring {
-  position: fixed;
-  width: 30px;
-  height: 30px;
-  border: 1.5px solid rgba(232, 146, 42, .45);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transition: width .3s var(--ease-spring), height .3s var(--ease-spring), border-color .2s;
-}
-
-body:has(a:hover) #cursor-ring,
-body:has(button:hover) #cursor-ring {
-  width: 46px;
-  height: 46px;
-  border-color: rgba(232, 146, 42, .7);
-}
-
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from {
@@ -2184,53 +2154,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
-}
-
-/* ── CURSOR STATES ── */
-#cursor-ring {
-  display: grid;
-  place-items: center;
-  transition: width .35s var(--ease-spring), height .35s var(--ease-spring),
-              background .3s, border-color .25s;
-}
-
-#cursor-label {
-  font-family: var(--font-mono);
-  font-size: .42rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: #fff;
-  opacity: 0;
-  transform: scale(.5);
-  transition: opacity .2s, transform .3s var(--ease-spring);
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-body.cur-view #cursor-ring {
-  /* 78px dulu terlalu besar: bubble menutupi teks card yang sedang dibaca.
-     52px cukup untuk memuat labelnya tanpa menghalangi. */
-  width: 52px;
-  height: 52px;
-  background: var(--amber);
-  border-color: var(--amber);
-  box-shadow: 0 4px 14px rgba(232, 146, 42, .38);
-}
-
-body.cur-view #cursor-label {
-  opacity: 1;
-  transform: none;
-}
-
-body.cur-view #cursor {
-  opacity: 0;
-}
-
-@media (hover: none), (pointer: coarse) {
-  #cursor,
-  #cursor-ring {
-    display: none !important;
-  }
 }
 
 /* ── PROJECT CARD CURSOR SPOTLIGHT ── */

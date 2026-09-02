@@ -11,19 +11,6 @@ function toggleTheme() {
 document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
 
-/* ── CUSTOM CURSOR ── */
-const cur  = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
-(function loop(){
-  rx += (mx-rx)*.13; ry += (my-ry)*.13;
-  cur.style.transform  = `translate(${mx-4}px,${my-4}px)`;
-  const rr = ring.offsetWidth / 2;
-  ring.style.transform = `translate(${rx-rr}px,${ry-rr}px)`;
-  requestAnimationFrame(loop);
-})();
-
 /* ── NAVBAR SCROLL ── */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive:true });
@@ -224,19 +211,6 @@ const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   };
   document.querySelectorAll('.btn').forEach(el => bind(el, .3, -2));
   document.querySelectorAll('.contact-card').forEach(el => bind(el, .16, -5));
-})();
-
-/* ── CURSOR: VIEW STATE OVER PROJECT CARDS ── */
-(function cursorStates() {
-  const label = document.getElementById('cursor-label');
-  if (!label) return;
-  document.querySelectorAll('.project-card:not(.project-cta)').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      label.textContent = 'View ↗';
-      document.body.classList.add('cur-view');
-    });
-    card.addEventListener('mouseleave', () => document.body.classList.remove('cur-view'));
-  });
 })();
 
 /* ── PROJECT CARD CURSOR SPOTLIGHT ── */
