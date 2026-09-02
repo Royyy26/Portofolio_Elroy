@@ -467,6 +467,84 @@ document.querySelectorAll('.project-card').forEach(card => {
     if (e.key === 'Escape' && !panel.hidden) close();
   });
 
+  /* ---------- jawaban pintasan ----------
+     Sebagian besar pertanyaan pengunjung adalah beberapa hal yang itu-itu saja,
+     dan jawabannya tidak berubah. Menjawabnya di sini berarti nol panggilan API
+     dan nol pemakaian kuota gratis — sekaligus balasannya instan.
+
+     Aturan mainnya: hanya untuk pertanyaan PENDEK. Kalau seseorang menulis
+     kalimat panjang, ia sedang menanyakan sesuatu yang spesifik, dan jawaban
+     kalengan justru merugikan. Biarkan model yang menangani. */
+
+  const FAST = [
+    {
+      re: /^(hai|halo|hallo|hi|hello|hey|pagi|siang|sore|malam|selamat (pagi|siang|sore|malam))\b/i,
+      id: 'Halo! Silakan tanya apa saja tentang Elroy — pengalaman kerja, project, keahlian, atau ketersediaannya.',
+      en: 'Hi! Ask me anything about Elroy — his work experience, projects, skills, or availability.',
+    },
+    {
+      re: /(siapa kamu|kamu siapa|kamu ini apa|kamu ai|kamu bot|who are you|what are you|are you (an? )?(ai|bot|gemini|chatgpt))/i,
+      id: 'Saya asisten AI di portfolio Elroy Matthew Wiyanto, ditenagai Google Gemini. Saya menjawab berdasarkan CV dan profil Elroy — jadi kalau ada yang tidak saya ketahui, saya akan bilang tidak tahu, bukan mengarang.',
+      en: "I'm the AI assistant on Elroy Matthew Wiyanto's portfolio, powered by Google Gemini. I answer from Elroy's CV and profile — so if I don't know something, I'll say so rather than make it up.",
+    },
+    {
+      re: /(kontak|hubungi|contact|reach (him|out)|email\b|e-mail|whatsapp|wa\b|nomor|phone)/i,
+      id: 'Elroy bisa dihubungi lewat:\n• Email — elroy.matthew10@gmail.com\n• WhatsApp — +62 878-0677-6235 (ada tombol hijaunya di pojok kanan bawah)\n• LinkedIn — elroy-matthew-wiyanto\n• GitHub — @Royyy26',
+      en: 'You can reach Elroy at:\n• Email — elroy.matthew10@gmail.com\n• WhatsApp — +62 878-0677-6235 (green button, bottom right)\n• LinkedIn — elroy-matthew-wiyanto\n• GitHub — @Royyy26',
+    },
+    {
+      re: /(open to work|lagi cari kerja|sedang mencari|available|tersedia|bisa direkrut|hiring|lowongan|masih kuliah)/i,
+      id: 'Ya, Elroy terbuka untuk peluang internship, project freelance, maupun posisi full-time. Ia mencari posisi di Bandung, on-site atau hybrid. Saat ini masih berkuliah (perkiraan lulus Juni 2027) sambil magang, jadi soal jadwal sebaiknya dibicarakan langsung dengannya.',
+      en: "Yes — Elroy is open to internships, freelance projects, and full-time roles. He's looking in Bandung, on-site or hybrid. He's still studying (expected to graduate June 2027) alongside his internship, so timing is best discussed with him directly.",
+    },
+    {
+      re: /^(.{0,40})(cv|resume|curriculum)\b/i,
+      id: 'CV lengkap Elroy bisa diunduh lewat tombol "Download CV" di bagian atas halaman.',
+      en: 'You can download Elroy\'s full CV from the "Download CV" button at the top of the page.',
+    },
+    {
+      re: /(github|repo|repositor|source code|kode sumber)/i,
+      id: 'Kode Elroy ada di github.com/Royyy26 — di sana ada TripVerse, Customer Portal Comtronics, NEXA, dan OdeBistro. Beberapa project lain seperti ERP Egafood bersifat privat karena project internship.',
+      en: "Elroy's code is at github.com/Royyy26 — TripVerse, the Comtronics Customer Portal, NEXA, and OdeBistro are there. A few projects like the Egafood ERP are private because they're internship work.",
+    },
+    {
+      re: /(makasih|terima kasih|thanks|thank you|thx|ok(e|ay)?$|sip$|mantap$)/i,
+      id: 'Sama-sama! Kalau ada yang mau ditanyakan lagi soal Elroy, silakan.',
+      en: "You're welcome! Ask me anything else about Elroy whenever you like.",
+    },
+  ];
+
+  // Kata yang praktis hanya muncul di salah satu bahasa. Sapaan ikut masuk:
+  // "halo" sendirian tidak punya kata petunjuk lain, jadi tanpa ini ia salah
+  // dikira bahasa Inggris.
+  const ID_HINT = /\b(apa|siapa|gimana|bagaimana|dimana|di\s?mana|kapan|kenapa|mengapa|bisa|boleh|yang|dan|untuk|saja|aja|nya|kah|dong|sih|tolong|mau|ada|halo|hallo|hai|pagi|siang|sore|malam|selamat|makasih|terima\s?kasih|sip|mantap|kerja|kuliah)\b/i;
+  const EN_HINT = /\b(hi|hello|hey|thanks|thank|who|what|how|where|when|why|can|do|does|is|are|your|you|the|about|contact|available|resume|tell)\b/i;
+
+  function fastAnswer(q) {
+    const query = q.trim();
+    // Pertanyaan panjang hampir selalu spesifik — serahkan ke model.
+    if (query.split(/\s+/).length > 8) return null;
+
+    const hit = FAST.find((f) => f.re.test(query));
+    if (!hit) return null;
+    // Bahasa Indonesia jadi default: pengunjung situs ini sebagian besar
+    // berbahasa Indonesia, jadi itu tebakan yang paling sering benar.
+    if (ID_HINT.test(query)) return hit.id;
+    if (EN_HINT.test(query)) return hit.en;
+    return hit.id;
+  }
+
+  // Ditulis bertahap supaya terasa sama dengan jawaban dari model — kalau
+  // muncul sekaligus, dua jenis jawaban akan terasa berbeda tanpa alasan.
+  async function typeOut(el, str) {
+    const parts = str.split(/(\s+)/);
+    for (let i = 0; i < parts.length; i++) {
+      el.textContent += parts[i];
+      scroll();
+      if (parts[i].trim()) await new Promise((r) => setTimeout(r, 18));
+    }
+  }
+
   /* ---------- kirim ---------- */
 
   function setBusy(v) {
@@ -483,6 +561,19 @@ document.querySelectorAll('.project-card').forEach(card => {
     history.push({ role: 'user', content: question });
     input.value = '';
     setBusy(true);
+
+    // Dijawab lokal kalau bisa: tanpa panggilan API, tanpa kuota terpakai.
+    const quick = fastAnswer(question);
+    if (quick) {
+      const el = bubble('msg-bot', '');
+      el.classList.add('streaming');
+      await typeOut(el, quick);
+      el.classList.remove('streaming');
+      history.push({ role: 'assistant', content: quick });
+      setBusy(false);
+      input.focus();
+      return;
+    }
 
     const typing = typingBubble();
     let answer = null;
