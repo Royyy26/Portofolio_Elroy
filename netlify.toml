@@ -1,5 +1,21 @@
+# Netlify menyajikan seluruh isi publish directory sebagai berkas statis, dan
+# tidak punya mekanisme pengecualian. Kalau publish diarahkan ke root repo,
+# lib/profile.js (berisi seluruh system prompt) dan api/chat.js bisa dibuka
+# siapa pun lewat URL. Karena itu publish diarahkan ke dist/ yang disusun oleh
+# scripts/build-static.mjs berisi berkas publik saja.
 [build]
-  publish = "."
+  command = "node scripts/build-static.mjs"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Fungsi memakai config.path = "/api/chat" (Netlify Functions v2), jadi kode di
+# browser tidak perlu tahu ia berjalan di Netlify atau Vercel. Redirect ini
+# cadangan kalau config.path tidak terbaca.
+[[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
+  force = false
 
 [[headers]]
   for = "/*"
