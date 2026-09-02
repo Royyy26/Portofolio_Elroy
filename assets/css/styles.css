@@ -3307,8 +3307,8 @@ body.cur-view #cursor {
 /* WhatsApp: logo resmi jadi tombolnya sendiri — tidak dibungkus lingkaran
    hijau lagi, karena logonya sudah punya lingkaran hijau + outline putih. */
 .fab-wa {
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   background: transparent;
   box-shadow: none;
   overflow: visible;
@@ -3410,11 +3410,6 @@ body.cur-view #cursor {
 }
 
 @media (max-width: 640px) {
-  .fab-wa {
-    width: 52px;
-    height: 52px;
-  }
-
   .fab-tip {
     display: none;
   }
