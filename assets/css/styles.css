@@ -557,10 +557,16 @@ section {
   background: rgba(30, 28, 20, .5);
   backdrop-filter: blur(6px);
   transition: opacity .3s;
+  /* Di bawah 900px backdrop ini display:block dan menutupi seluruh layar.
+     opacity:0 membuatnya tak terlihat, TAPI ia tetap menangkap sentuhan — dan
+     z-index-nya di atas navbar, sehingga hamburger, tombol tema, dan Download
+     CV tidak bisa ditekan sama sekali di HP. */
+  pointer-events: none;
 }
 
 .mobile-overlay.open {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .mobile-nav {
@@ -579,8 +585,14 @@ section {
   box-shadow: var(--shadow-lg);
 }
 
+.mobile-nav {
+  visibility: hidden;
+  transition: transform .35s var(--ease-out), visibility .35s;
+}
+
 .mobile-nav.open {
   transform: translateX(0);
+  visibility: visible;
 }
 
 .mob-link {
@@ -1583,6 +1595,18 @@ section {
 .proj-link svg {
   width: 11px;
   height: 11px;
+}
+
+/* Bukan tautan: proyek ini tidak akan dipublikasikan, jadi jangan tampilkan
+   afordansi yang bisa diklik. */
+.proj-soon {
+  cursor: default;
+  opacity: .75;
+}
+
+.proj-soon:hover {
+  color: var(--muted);
+  transform: none;
 }
 
 /* live demo pill */
