@@ -24,6 +24,10 @@ export default async function handler(req, res) {
     hasKey: Boolean(key),
     keyLength: key ? key.length : 0,
     keyEndsWith: key ? "..." + key.slice(-4) : null,
+    // Awalan kunci bukan rahasia: "AIza" adalah prefiks publik untuk kunci
+    // Google AI Studio. Kalau bukan itu, jenis kredensialnya salah.
+    keyStartsWith: key ? key.slice(0, 4) : null,
+    looksLikeAiStudioKey: key ? (key.startsWith("AIza") && key.length === 39) : null,
     keyLooksTrimmed: key ? key === key.trim() : null,
     model: MODEL,
     node: process.version,
