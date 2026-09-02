@@ -3104,52 +3104,6 @@ body.cur-view #cursor {
   transform: translateY(-3px);
 }
 
-/* WhatsApp */
-.fab-wa {
-  width: 56px;
-  height: 56px;
-  gap: 0;
-  padding: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  background: #25d366;
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(37, 211, 102, .4);
-}
-
-.fab-wa svg {
-  width: 25px;
-  height: 25px;
-  flex-shrink: 0;
-  transition: transform .45s var(--ease-spring);
-}
-
-.fab-label {
-  max-width: 0;
-  opacity: 0;
-  font-family: var(--font-mono);
-  font-size: .64rem;
-  letter-spacing: .06em;
-  overflow: hidden;
-  transition: max-width .45s var(--ease-out), opacity .3s ease, margin-left .45s var(--ease-out);
-}
-
-.fab-wa:hover {
-  width: 178px;
-  background: #1eb257;
-  box-shadow: 0 10px 28px rgba(37, 211, 102, .55);
-}
-
-.fab-wa:hover svg {
-  transform: rotate(-12deg) scale(1.08);
-}
-
-.fab-wa:hover .fab-label {
-  max-width: 110px;
-  opacity: 1;
-  margin-left: .55rem;
-}
-
 /* denyut supaya menarik perhatian tanpa berisik */
 .fab-ring {
   position: absolute;
@@ -3172,18 +3126,6 @@ body.cur-view #cursor {
   0%   { transform: scale(1); opacity: .7; }
   70%  { transform: scale(1.55); opacity: 0; }
   100% { transform: scale(1.55); opacity: 0; }
-}
-
-@media (max-width: 640px) {
-  .fab-wa {
-    width: 50px;
-    height: 50px;
-  }
-
-  .fab-wa svg {
-    width: 22px;
-    height: 22px;
-  }
 }
 
 /* ============================================================
@@ -3362,11 +3304,58 @@ body.cur-view #cursor {
 /* ============================================================
    AI ASSISTANT — panel chat
 ============================================================ */
+/* WhatsApp: logo resmi jadi tombolnya sendiri — tidak dibungkus lingkaran
+   hijau lagi, karena logonya sudah punya lingkaran hijau + outline putih. */
+.fab-wa {
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.fab-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(37, 211, 102, .45));
+  transition: transform .45s var(--ease-spring), filter .3s ease;
+}
+
+.fab-wa:hover .fab-img {
+  transform: scale(1.09) rotate(-6deg);
+  filter: drop-shadow(0 10px 24px rgba(37, 211, 102, .7));
+}
+
+/* denyut mengikuti lingkaran hijau di dalam logo, bukan tepi gambar */
+.fab-ring {
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  border: 2px solid #25d366;
+  pointer-events: none;
+}
+
+.fab-stack.show .fab-ring {
+  animation: fabPulse 2.6s ease-out infinite;
+}
+
+.fab-wa:hover .fab-ring {
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+@keyframes fabPulse {
+  0%   { transform: scale(1); opacity: .7; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Ask AI */
 .fab-chat {
   width: 46px;
   height: 46px;
-  overflow: hidden;
-  white-space: nowrap;
   background: var(--text-h);
   color: var(--bg);
   box-shadow: 0 6px 18px rgba(0, 0, 0, .22);
@@ -3375,30 +3364,60 @@ body.cur-view #cursor {
 .fab-chat svg {
   width: 21px;
   height: 21px;
-  flex-shrink: 0;
   transition: transform .4s var(--ease-spring);
 }
 
 .fab-chat:hover {
-  width: 140px;
   background: var(--amber);
   color: #fff;
-  box-shadow: 0 10px 26px rgba(232, 146, 42, .45);
+  box-shadow: 0 8px 22px rgba(232, 146, 42, .45);
 }
 
 .fab-chat:hover svg {
   transform: scale(1.1) rotate(-6deg);
 }
 
-.fab-chat:hover .fab-label {
-  max-width: 80px;
-  opacity: 1;
-  margin-left: .5rem;
-}
-
 .fab-chat.open {
   background: var(--amber);
   color: #fff;
+}
+
+/* Tooltip seragam untuk ketiga tombol. Muncul di kiri tombol — tombol berbentuk
+   gambar tidak bisa memuat teks di dalamnya seperti pill yang melebar. */
+.fab-tip {
+  position: absolute;
+  right: calc(100% + .6rem);
+  top: 50%;
+  white-space: nowrap;
+  padding: .32rem .7rem;
+  border-radius: var(--r-full);
+  background: var(--text-h);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .06em;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translate(8px, -50%);
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  transition: opacity .25s ease, transform .35s var(--ease-spring);
+}
+
+.fab:hover .fab-tip {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+@media (max-width: 640px) {
+  .fab-wa {
+    width: 52px;
+    height: 52px;
+  }
+
+  .fab-tip {
+    display: none;
+  }
 }
 
 /* ── PANEL ── */
