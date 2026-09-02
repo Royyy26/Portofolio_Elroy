@@ -31,7 +31,7 @@
   <!-- Setelah deploy, ganti kedua baris di bawah dengan domain asli (LinkedIn butuh URL absolut):
        <meta property="og:url" content="https://NAMADOMAIN.vercel.app/" />
        <meta property="og:image" content="https://NAMADOMAIN.vercel.app/assets/img/og-image.png" /> -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=21" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=22" />
 </head>
 
 <body class="pre-lock">
@@ -872,6 +872,12 @@
 
   <!-- ═══ TOMBOL MELAYANG ═══ -->
   <div class="fab-stack" id="fabStack">
+    <button class="fab fab-top" id="backToTop" type="button" aria-label="Back to top">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" />
+      </svg>
+    </button>
     <button class="fab fab-chat" id="chatToggle" type="button" aria-label="Tanya AI tentang Elroy"
       aria-expanded="false" aria-controls="chatPanel">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"
@@ -880,12 +886,6 @@
         <path d="M5.2 7.2h.01M8 7.2h.01M10.8 7.2h.01" />
       </svg>
       <span class="fab-label">Ask AI</span>
-    </button>
-    <button class="fab fab-top" id="backToTop" type="button" aria-label="Back to top">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" />
-      </svg>
     </button>
     <a class="fab fab-wa" href="https://wa.me/6287806776235?text=Hi%20Elroy%2C%20I%20saw%20your%20portfolio"
       target="_blank" rel="noopener" aria-label="Contact me on WhatsApp">
@@ -897,7 +897,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=21"></script>
+  <script src="assets/js/main.js?v=22"></script>
 </body>
 
 </html>

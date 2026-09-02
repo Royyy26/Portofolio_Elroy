@@ -3071,6 +3071,13 @@ body.cur-view #cursor {
   transition-delay: .06s;
 }
 
+/* Tombol "ke atas" kini berada di puncak stack. visibility:hidden tetap
+   menyisakan ruang, jadi sebelum di-scroll akan tampak celah kosong di atas
+   tombol Ask AI. Dikeluarkan dari alur sekalian. */
+.fab-stack:not(.show) .fab-top {
+  display: none;
+}
+
 /* kembali ke atas */
 .fab-top {
   width: 40px;
