@@ -11,19 +11,62 @@
   <link
     href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="/favicon.ico?v=3" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png?v=3" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png?v=3" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/img/favicon-48.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/icon-192.png?v=3" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png?v=3" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#e8922a" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Elroy Matthew Wiyanto — Full-Stack &amp; Web Developer" />
+  <meta property="og:description" content="Full-stack developer building performant web apps with React, Next.js, Golang and PostgreSQL." />
+  <meta property="og:image" content="assets/img/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/img/og-image.png" />
+  <!-- Setelah deploy, ganti kedua baris di bawah dengan domain asli (LinkedIn butuh URL absolut):
+       <meta property="og:url" content="https://NAMADOMAIN.vercel.app/" />
+       <meta property="og:image" content="https://NAMADOMAIN.vercel.app/assets/img/og-image.png" /> -->
+  <link rel="stylesheet" href="assets/css/styles.css?v=20" />
 </head>
 
-<body>
+<body class="pre-lock">
+
+  <!-- ═══ PRELOADER ═══ -->
+  <div class="preloader" id="preloader">
+    <div class="pre-panels" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="pre-inner">
+      <div class="pre-logo">elroy<span>.dev</span></div>
+      <div class="pre-track"><span class="pre-fill" id="preFill"></span></div>
+      <div class="pre-meta"><span id="preMsg">booting</span><span id="prePct">0%</span></div>
+    </div>
+  </div>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-prog" aria-hidden="true"><span id="scrollProgBar"></span></div>
+
+  <!-- JEJAK KURSOR -->
+  <canvas id="sparkCanvas" class="spark-canvas" aria-hidden="true"></canvas>
+
+  <!-- FILM GRAIN -->
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- CURSOR -->
   <div id="cursor"></div>
-  <div id="cursor-ring"></div>
+  <div id="cursor-ring"><span id="cursor-label"></span></div>
 
   <!-- ═══ NAVBAR ═══ -->
   <nav id="navbar">
     <a href="#home" class="nav-logo">
-      <span class="logo-dot"></span>
+      <span class="logo-avatar">
+        <img src="assets/img/avatar.webp" alt="" aria-hidden="true" decoding="async"
+          onerror="this.closest('.logo-avatar').classList.add('no-img'); this.remove();" />
+      </span>
       elroy.dev
     </a>
     <ul class="nav-links">
@@ -79,9 +122,9 @@
             Available for Full-time &amp; Freelance
           </div>
           <h1 class="hero-name">
-            Elroy
-            <span class="line2">Matthew</span>
-            <span class="line3 shimmer-text">Wiyanto.</span>
+            <span class="hn-line"><span class="hn-in">Elroy</span></span>
+            <span class="hn-line"><span class="hn-in line2">Matthew</span></span>
+            <span class="hn-line"><span class="hn-in line3 shimmer-text">Wiyanto.</span></span>
           </h1>
           <p class="hero-role">
             Full-Stack Developer &amp; <span class="hl">Web Developer</span>
@@ -191,7 +234,7 @@
         <div class="profile-wrap reveal reveal-d1">
           <div class="profile-frame">
             <div class="profile-inner">
-              <img src="assets/img/profile.jpg" onerror="this.onerror=null; this.src='img/profile/profile.png';"
+              <img src="assets/img/profile.webp" onerror="this.onerror=null; this.src='assets/img/original/profile.jpg';"
                 alt="Elroy Matthew Wiyanto" loading="lazy" />
             </div>
             <div class="profile-corner-br"></div>
@@ -348,6 +391,14 @@
     </div>
   </section>
 
+  <!-- ═══ TECH MARQUEE ═══ -->
+  <div class="marquee reveal" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="mq-half"><span class="mq-item">React</span><span class="mq-dot">◆</span><span class="mq-item">Next.js</span><span class="mq-dot">◆</span><span class="mq-item">TypeScript</span><span class="mq-dot">◆</span><span class="mq-item">Golang</span><span class="mq-dot">◆</span><span class="mq-item">Gin</span><span class="mq-dot">◆</span><span class="mq-item">Laravel</span><span class="mq-dot">◆</span><span class="mq-item">PHP</span><span class="mq-dot">◆</span><span class="mq-item">PostgreSQL</span><span class="mq-dot">◆</span><span class="mq-item">MySQL</span><span class="mq-dot">◆</span><span class="mq-item">Python</span><span class="mq-dot">◆</span><span class="mq-item">Java</span><span class="mq-dot">◆</span><span class="mq-item">Tailwind CSS</span><span class="mq-dot">◆</span><span class="mq-item">REST API</span><span class="mq-dot">◆</span><span class="mq-item">Git</span><span class="mq-dot">◆</span><span class="mq-item">AWS Cloud</span><span class="mq-dot">◆</span><span class="mq-item">Figma</span><span class="mq-dot">◆</span><span class="mq-item">Postman</span><span class="mq-dot">◆</span></div>
+      <div class="mq-half"><span class="mq-item">React</span><span class="mq-dot">◆</span><span class="mq-item">Next.js</span><span class="mq-dot">◆</span><span class="mq-item">TypeScript</span><span class="mq-dot">◆</span><span class="mq-item">Golang</span><span class="mq-dot">◆</span><span class="mq-item">Gin</span><span class="mq-dot">◆</span><span class="mq-item">Laravel</span><span class="mq-dot">◆</span><span class="mq-item">PHP</span><span class="mq-dot">◆</span><span class="mq-item">PostgreSQL</span><span class="mq-dot">◆</span><span class="mq-item">MySQL</span><span class="mq-dot">◆</span><span class="mq-item">Python</span><span class="mq-dot">◆</span><span class="mq-item">Java</span><span class="mq-dot">◆</span><span class="mq-item">Tailwind CSS</span><span class="mq-dot">◆</span><span class="mq-item">REST API</span><span class="mq-dot">◆</span><span class="mq-item">Git</span><span class="mq-dot">◆</span><span class="mq-item">AWS Cloud</span><span class="mq-dot">◆</span><span class="mq-item">Figma</span><span class="mq-dot">◆</span><span class="mq-item">Postman</span><span class="mq-dot">◆</span></div>
+    </div>
+  </div>
+
   <!-- ═══ EXPERIENCE ═══ -->
   <section id="experience">
     <div class="container">
@@ -414,94 +465,168 @@
       </div>
       <div class="projects-grid">
 
-        <div class="project-card reveal">
-          <div class="project-num">01</div>
-          <div class="project-icon">🏢</div>
-          <div class="project-name">Egafood ERP System</div>
-          <div class="project-desc">Company-wide ERP system built from the ground up at Egafood Indonesia for digital
-            transformation. Full-stack application covering Warehouse, HR, User Management, General Affairs, and Sales
-            &amp; Distribution modules.</div>
-          <div class="project-stack"><span class="stack-tag">Next.js</span><span
-              class="stack-tag">TypeScript</span><span class="stack-tag">Golang</span><span
-              class="stack-tag">Gin</span><span class="stack-tag">PostgreSQL</span></div>
-          <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <path
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-            Private — Internship Project
-          </a>
+    <div class="project-card reveal">
+      <div class="project-thumb" data-initials="EG">
+        <img class="thumb-bg" src="assets/img/projects/egafood-erp.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.remove();}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <img class="thumb-shot" src="assets/img/projects/egafood-erp.webp" alt="Egafood ERP dashboard preview" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.closest('.project-thumb').classList.add('thumb-empty');this.parentNode.querySelectorAll('img').forEach(function(n){n.remove();});}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <span class="thumb-sheen" aria-hidden="true"></span>
+        <span class="thumb-go" aria-hidden="true">↗</span>
+        <span class="project-num">01</span>
+      </div>
+      <div class="project-body">
+        <div class="project-icon">🏢</div>
+        <div class="project-name">Egafood ERP System</div>
+        <div class="project-desc">Company-wide ERP system built from the ground up at Egafood Indonesia for digital transformation. Full-stack application covering Warehouse, HR, User Management, General Affairs, and Sales &amp; Distribution modules.</div>
+        <div class="project-stack"><span class="stack-tag">Next.js</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Golang</span><span class="stack-tag">Gin</span><span class="stack-tag">PostgreSQL</span></div>
+        <div class="proj-links">
+            <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="proj-link">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              Private &mdash; Internship Project
+            </a>
         </div>
+      </div>
+    </div>
 
-        <div class="project-card reveal reveal-d1">
-          <div class="project-num">02</div>
-          <div class="project-icon">✈️</div>
-          <div class="project-name">TripVerse — Online Travel Agent</div>
-          <div class="project-desc">Full-featured online travel agent platform with multi-role admin dashboard, booking
-            management, user authentication with forgot-password flow, activity logging, and multi-language support
-            (EN/ID).</div>
-          <div class="project-stack"><span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span><span
-              class="stack-tag">JavaScript</span><span class="stack-tag">HTML/CSS</span><span
-              class="stack-tag">XAMPP</span></div>
-          <a href="https://github.com/Royyy26/TripVerse_Online_Travel_Agent" target="_blank" class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <path
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-            View on GitHub
-          </a>
+    <div class="project-card reveal reveal-d1">
+      <div class="project-thumb" data-initials="TV">
+        <img class="thumb-bg" src="assets/img/projects/tripverse.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.remove();}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <img class="thumb-shot" src="assets/img/projects/tripverse.webp" alt="TripVerse admin dashboard preview" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.closest('.project-thumb').classList.add('thumb-empty');this.parentNode.querySelectorAll('img').forEach(function(n){n.remove();});}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <span class="thumb-sheen" aria-hidden="true"></span>
+        <span class="thumb-go" aria-hidden="true">↗</span>
+        <span class="project-num">02</span>
+      </div>
+      <div class="project-body">
+        <div class="project-icon">✈️</div>
+        <div class="project-name">TripVerse &mdash; Online Travel Agent</div>
+        <div class="project-desc">Full-featured online travel agent platform with multi-role admin dashboard, booking management, user authentication with forgot-password flow, activity logging, and multi-language support (EN/ID).</div>
+        <div class="project-stack"><span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span><span class="stack-tag">JavaScript</span><span class="stack-tag">HTML/CSS</span><span class="stack-tag">XAMPP</span></div>
+        <div class="proj-links">
+            <a href="http://tripverse.rf.gd/TripVerse/php/auth/login.php" target="_blank" rel="noopener" class="proj-link proj-demo">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M9 2h5v5h-1.5V4.56L5.56 11.5 4.5 10.44l6.94-6.94H9V2z" />
+                <path d="M12.5 8.5V13a1.5 1.5 0 01-1.5 1.5H3A1.5 1.5 0 011.5 13V5A1.5 1.5 0 013 3.5h4.5V5H3v8h8V8.5h1.5z" />
+              </svg>
+              Live Demo
+            </a>
+            <a href="https://github.com/Royyy26/TripVerse_Online_Travel_Agent" target="_blank" rel="noopener" class="proj-link">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              View on GitHub
+            </a>
         </div>
+      </div>
+    </div>
 
-        <div class="project-card reveal reveal-d2">
-          <div class="project-num">03</div>
-          <div class="project-icon">📦</div>
-          <div class="project-name">AKOJA ERP System</div>
-          <div class="project-desc">Enterprise Resource Planning application developed collaboratively via GitLab.
-            Covers core business modules with RESTful API backend, modern frontend UI, and integrated database
-            management for streamlined operations.</div>
-          <div class="project-stack"><span class="stack-tag">Next.js</span><span
-              class="stack-tag">TypeScript</span><span class="stack-tag">REST API</span><span
-              class="stack-tag">PostgreSQL</span></div>
-          <a href="https://gitlab.com" target="_blank" class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <path
-                d="M15.97 9.058l-.895-2.756L13.3.842a.477.477 0 00-.907 0L10.618 6.3H5.382L3.607.842a.477.477 0 00-.907 0L.925 6.3.03 9.058a.953.953 0 00.347 1.067l7.623 5.54 7.623-5.54a.953.953 0 00.347-1.067" />
-            </svg>
-            View on GitLab
-          </a>
+    <div class="project-card reveal reveal-d2">
+      <div class="project-thumb" data-initials="AK">
+        <img class="thumb-bg" src="assets/img/projects/akoja-erp.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.remove();}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <img class="thumb-shot" src="assets/img/projects/akoja-erp.webp" alt="AKOJA ERP dashboard preview" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.closest('.project-thumb').classList.add('thumb-empty');this.parentNode.querySelectorAll('img').forEach(function(n){n.remove();});}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <span class="thumb-sheen" aria-hidden="true"></span>
+        <span class="thumb-go" aria-hidden="true">↗</span>
+        <span class="project-num">03</span>
+      </div>
+      <div class="project-body">
+        <div class="project-icon">📦</div>
+        <div class="project-name">AKOJA ERP System</div>
+        <div class="project-desc">Enterprise Resource Planning application developed collaboratively via GitLab. Covers core business modules with RESTful API backend, modern frontend UI, and integrated database management for streamlined operations.</div>
+        <div class="project-stack"><span class="stack-tag">Next.js</span><span class="stack-tag">TypeScript</span><span class="stack-tag">REST API</span><span class="stack-tag">PostgreSQL</span></div>
+        <div class="proj-links">
+            <a href="https://erp.akoja.id/" target="_blank" rel="noopener" class="proj-link proj-demo">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M9 2h5v5h-1.5V4.56L5.56 11.5 4.5 10.44l6.94-6.94H9V2z" />
+                <path d="M12.5 8.5V13a1.5 1.5 0 01-1.5 1.5H3A1.5 1.5 0 011.5 13V5A1.5 1.5 0 013 3.5h4.5V5H3v8h8V8.5h1.5z" />
+              </svg>
+              Live Demo
+            </a>
+            <a href="https://gitlab.com" target="_blank" rel="noopener" class="proj-link">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M15.97 9.058l-.895-2.756L13.3.842a.477.477 0 00-.907 0L10.618 6.3H5.382L3.607.842a.477.477 0 00-.907 0L.925 6.3.03 9.058a.953.953 0 00.347 1.067l7.623 5.54 7.623-5.54a.953.953 0 00.347-1.067" />
+              </svg>
+              View on GitLab
+            </a>
         </div>
+      </div>
+    </div>
 
-        <div class="project-card reveal">
-          <div class="project-num">04</div>
-          <div class="project-icon">🖥️</div>
-          <div class="project-name">Customer Portal — Comtronics Systems</div>
-          <div class="project-desc">Customer-facing portal developed during internship at PT Comtronics Systems.
-            Features ticket management, support request tracking, and IT helpdesk integration for streamlined customer
-            service workflows.</div>
-          <div class="project-stack"><span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span><span
-              class="stack-tag">HTML/CSS</span><span class="stack-tag">JavaScript</span></div>
-          <a href="https://github.com/Royyy26/Customer_Portal_Comtronics-Systems" target="_blank" class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <path
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-            View on GitHub
-          </a>
+    <div class="project-card reveal">
+      <div class="project-thumb thumb-top" data-initials="CP">
+        <img class="thumb-bg" src="assets/img/projects/comtronics-portal.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.remove();}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <img class="thumb-shot" src="assets/img/projects/comtronics-portal.webp" alt="Comtronics customer portal preview" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.closest('.project-thumb').classList.add('thumb-empty');this.parentNode.querySelectorAll('img').forEach(function(n){n.remove();});}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <span class="thumb-sheen" aria-hidden="true"></span>
+        <span class="thumb-go" aria-hidden="true">↗</span>
+        <span class="project-num">04</span>
+      </div>
+      <div class="project-body">
+        <div class="project-icon">🖥️</div>
+        <div class="project-name">Customer Portal &mdash; Comtronics Systems</div>
+        <div class="project-desc">Customer-facing portal developed during internship at PT Comtronics Systems. Features ticket management, support request tracking, and IT helpdesk integration for streamlined customer service workflows.</div>
+        <div class="project-stack"><span class="stack-tag">PHP</span><span class="stack-tag">MySQL</span><span class="stack-tag">HTML/CSS</span><span class="stack-tag">JavaScript</span></div>
+        <div class="proj-links">
+            <a href="https://portal-customer.akoja.id/" target="_blank" rel="noopener" class="proj-link proj-demo">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path d="M9 2h5v5h-1.5V4.56L5.56 11.5 4.5 10.44l6.94-6.94H9V2z" />
+                <path d="M12.5 8.5V13a1.5 1.5 0 01-1.5 1.5H3A1.5 1.5 0 011.5 13V5A1.5 1.5 0 013 3.5h4.5V5H3v8h8V8.5h1.5z" />
+              </svg>
+              Live Demo
+            </a>
+            <a href="https://github.com/Royyy26/Customer_Portal_Comtronics-Systems" target="_blank" rel="noopener" class="proj-link">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              View on GitHub
+            </a>
         </div>
-        <div class="project-card reveal reveal-d1">
-          <div class="project-num">05</div>
-          <div class="project-icon">🧋</div>
-          <div class="project-name">BOUT'AI — Ice Cream & Tea POS</div>
-          <div class="project-desc">Java-based Point of Sale (POS) & Ordering Application featuring dynamic menu selection, customizable add-on toppings, multi-payment options (Cash, Debit, QRIS), and automated itemized receipt printing.</div>
-          <div class="project-stack"><span class="stack-tag">Java</span><span class="stack-tag">CLI / Algorithm</span><span class="stack-tag">Data Structures</span></div>
-          <a href="https://github.com/Royyy26" target="_blank" class="proj-link">
-            <svg viewBox="0 0 16 16" fill="currentColor">
-              <path
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-            View on GitHub
-          </a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-d1">
+      <div class="project-thumb" data-initials="NX">
+        <img class="thumb-bg" src="assets/img/projects/nexa.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.remove();}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <img class="thumb-shot" src="assets/img/projects/nexa.webp" alt="NEXA smart city dashboard preview" loading="lazy" decoding="async"
+          onerror="if(this.dataset.retry){this.closest('.project-thumb').classList.add('thumb-empty');this.parentNode.querySelectorAll('img').forEach(function(n){n.remove();});}else{this.dataset.retry=1;this.src=this.src.replace(/\.webp$/,'.png');}" />
+        <span class="thumb-sheen" aria-hidden="true"></span>
+        <span class="thumb-go" aria-hidden="true">↗</span>
+        <span class="project-num">05</span>
+      </div>
+      <div class="project-body">
+        <div class="project-icon">🛰️</div>
+        <div class="project-name">NEXA &mdash; Smart City Command Center</div>
+        <div class="project-desc">Smart city monitoring dashboard for real-time urban operations. Handles emergency reports, live CCTV findings, IoT device health (smart street lighting, sensors, controllers), and environmental alerts &mdash; all plotted on an interactive map with trend analytics.</div>
+        <div class="project-stack"><span class="stack-tag">React 19</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Vite</span><span class="stack-tag">Tailwind CSS</span><span class="stack-tag">Google Maps</span><span class="stack-tag">Chart.js</span></div>
+        <div class="proj-links">
+            <a href="https://github.com/Royyy26/nexa-fe/tree/dev" target="_blank" rel="noopener" class="proj-link">
+              <svg viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+              </svg>
+              View on GitHub
+            </a>
         </div>
+      </div>
+    </div>
+
+    <a href="#contact" class="project-card project-cta reveal reveal-d2">
+      <div class="cta-arrow">→</div>
+      <div class="cta-title">Got something<br>to build?</div>
+      <div class="cta-sub">Open for internships, freelance &amp; full-time roles.</div>
+      <span class="cta-link">Start a conversation ↗</span>
+    </a>
       </div>
       <div style="text-align:center; margin-top:2.25rem;" class="reveal">
         <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="btn btn-ghost">View All on GitHub
@@ -520,7 +645,9 @@
 
       <div class="edu-grid">
         <div class="edu-card reveal">
-          <div class="edu-icon">🎓</div>
+          <div class="edu-icon"><img class="edu-logo" src="assets/img/maranatha.webp"
+              alt="Logo Maranatha Christian University" loading="lazy" decoding="async"
+              onerror="this.parentNode.textContent='🎓'" /></div>
           <div>
             <div class="edu-title">B.Sc. Information Systems</div>
             <div class="edu-sub">Maranatha Christian University — Bandung, Indonesia</div>
@@ -535,7 +662,9 @@
           </div>
         </div>
         <div class="edu-card reveal reveal-d1">
-          <div class="edu-icon">🏫</div>
+          <div class="edu-icon"><img class="edu-logo" src="assets/img/terang-bangsa.webp"
+              alt="Logo SMAK Terang Bangsa" loading="lazy" decoding="async"
+              onerror="this.parentNode.textContent='🏫'" /></div>
           <div>
             <div class="edu-title">High School Diploma — Natural Science</div>
             <div class="edu-sub">SMAK Terang Bangsa — Cirebon, Indonesia</div>
@@ -615,6 +744,11 @@
       </div>
       <div class="orgs-grid">
         <div class="org-card reveal">
+          <div class="org-photo">
+            <img src="assets/img/vice-president.webp" alt="HMSI Maranatha 25/26 executive board" loading="lazy" decoding="async"
+              onerror="this.closest('.org-card').classList.add('org-nophoto'); this.remove();" />
+          </div>
+          <div class="org-body">
           <div class="org-header">
             <div>
               <div class="org-role">Vice President</div>
@@ -624,18 +758,26 @@
           <div class="org-name">HMSI Maranatha 25/26</div>
           <div class="org-desc">Led &amp; managed team activities to achieve project targets. Maintained communications
             between internal team and partners. Managed risk through project monitoring &amp; planning.</div>
+          </div>
         </div>
 
         <div class="org-card reveal reveal-d2">
+          <div class="org-photo">
+            <img src="assets/img/academic.webp" alt="HMSI Maranatha 24/25 Academic Division team" loading="lazy" decoding="async"
+              onerror="this.closest('.org-card').classList.add('org-nophoto'); this.remove();" />
+          </div>
+          <div class="org-body">
           <div class="org-header">
             <div>
-              <div class="org-role">Event Chairperson</div>
+              <div class="org-role">Academic Division</div>
             </div>
-            <div class="org-period">Mar 2024</div>
+            <div class="org-period">Feb 2024 — Feb 2025</div>
           </div>
-          <div class="org-name">Odoo ERP Seminar — HMSI Maranatha</div>
-          <div class="org-desc">Led a cross-functional team of 15+ to organize an ERP seminar for 100+ participants.
-            Managed end-to-end operations including budgeting, scheduling, and stakeholder coordination.</div>
+          <div class="org-name">HMSI Maranatha 24/25</div>
+          <div class="org-desc">Organized academic events including workshops, seminars, and study groups to support
+            student learning. Developed educational materials and coordinated with lecturers and industry professionals
+            for mentorship. Managed tutoring programs and academic initiatives to raise student competency.</div>
+          </div>
         </div>
 
       </div>
@@ -690,7 +832,25 @@
     <div>Built with <span class="footer-acc">♥</span> · Bandung, Indonesia</div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <!-- ═══ TOMBOL MELAYANG ═══ -->
+  <div class="fab-stack" id="fabStack">
+    <button class="fab fab-top" id="backToTop" type="button" aria-label="Back to top">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M8 13V3M3.5 7.5L8 3l4.5 4.5" />
+      </svg>
+    </button>
+    <a class="fab fab-wa" href="https://wa.me/6287806776235?text=Hi%20Elroy%2C%20I%20saw%20your%20portfolio"
+      target="_blank" rel="noopener" aria-label="Contact me on WhatsApp">
+      <span class="fab-ring" aria-hidden="true"></span>
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M13.6 2.33A7.9 7.9 0 008 0a8 8 0 00-6.94 12L0 16l4.13-1.08A8 8 0 1013.6 2.33zM8 14.66a6.63 6.63 0 01-3.39-.93l-.24-.14-2.51.66.67-2.45-.16-.25A6.66 6.66 0 118 14.66zm3.65-4.99c-.2-.1-1.18-.58-1.36-.65s-.32-.1-.45.1-.51.65-.63.79-.23.15-.43.05a5.44 5.44 0 01-1.6-.99 6 6 0 01-1.11-1.38c-.11-.2 0-.31.09-.41s.2-.23.3-.35a1.36 1.36 0 00.2-.33.37.37 0 000-.35c0-.1-.45-1.09-.62-1.49s-.33-.34-.45-.34h-.38a.74.74 0 00-.53.25 2.23 2.23 0 00-.7 1.66 3.89 3.89 0 00.81 2.06 8.87 8.87 0 003.39 3c.47.2.84.32 1.13.42a2.71 2.71 0 001.25.08 2.04 2.04 0 001.34-.95 1.66 1.66 0 00.12-.94c-.05-.09-.18-.14-.38-.24z" />
+      </svg>
+      <span class="fab-label">Contact Me</span>
+    </a>
+  </div>
+
+  <script src="assets/js/main.js?v=20"></script>
 </body>
 
 </html>
