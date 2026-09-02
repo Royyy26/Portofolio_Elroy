@@ -2196,7 +2196,7 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 
 #cursor-label {
   font-family: var(--font-mono);
-  font-size: .5rem;
+  font-size: .42rem;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #fff;
@@ -2208,10 +2208,13 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 }
 
 body.cur-view #cursor-ring {
-  width: 78px;
-  height: 78px;
+  /* 78px dulu terlalu besar: bubble menutupi teks card yang sedang dibaca.
+     52px cukup untuk memuat labelnya tanpa menghalangi. */
+  width: 52px;
+  height: 52px;
   background: var(--amber);
   border-color: var(--amber);
+  box-shadow: 0 4px 14px rgba(232, 146, 42, .38);
 }
 
 body.cur-view #cursor-label {
