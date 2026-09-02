@@ -34,6 +34,31 @@ export default async function handler(req, res) {
       .sort(),
   };
 
+  // ?models=1 menanyakan ke Google model apa saja yang benar-benar bisa
+  // diakses kunci ini. Menghilangkan tebak-tebakan saat nama model berubah.
+  if (req.query?.models === "1" && key) {
+    try {
+      const ai = new GoogleGenAI({ apiKey: key });
+      const names = [];
+      const page = await ai.models.list();
+      for await (const m of page) {
+        const actions = m.supportedActions || m.supportedGenerationMethods || [];
+        if (!actions.length || actions.includes("generateContent")) {
+          names.push(m.name);
+        }
+        if (names.length >= 60) break;
+      }
+      res.status(200).json({ ...info, models: names.sort() });
+    } catch (err) {
+      res.status(200).json({
+        ...info,
+        modelsError: String(err?.message ?? "").slice(0, 500),
+        modelsStatus: err?.status ?? err?.code ?? null,
+      });
+    }
+    return;
+  }
+
   if (req.query?.probe !== "1") {
     res.status(200).json({ ...info, hint: "tambahkan ?probe=1 untuk menguji panggilan ke Gemini" });
     return;
