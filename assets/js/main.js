@@ -671,3 +671,102 @@ document.querySelectorAll('.project-card').forEach(card => {
     });
   }
 })();
+
+/* ── CERTIFICATE MODAL ── */
+(() => {
+  const modal = document.getElementById('certModal');
+  const cards = [...document.querySelectorAll('[data-cert]')];
+  if (!modal || !cards.length) return;
+
+  const dialog   = modal.querySelector('.cert-dialog');
+  const shot     = document.getElementById('certShot');
+  const fallback = document.getElementById('certFallback');
+  const mark     = document.getElementById('certMark');
+  const elIssuer = document.getElementById('certIssuer');
+  const elTitle  = document.getElementById('certTitle');
+  const elDate   = document.getElementById('certDate');
+  const elVerify = document.getElementById('certVerify');
+  const elCount  = document.getElementById('certCount');
+
+  let idx = 0;
+  let pemicu = null;    // kartu yang membuka modal, untuk mengembalikan fokus
+  let timerTutup = null;
+
+  function tampil(i) {
+    idx = (i + cards.length) % cards.length;
+    const c = cards[idx];
+
+    elIssuer.textContent = c.dataset.issuer || '';
+    elTitle.textContent  = c.dataset.name   || '';
+    elDate.textContent   = c.dataset.date   || '';
+    elCount.textContent  = (idx + 1) + ' / ' + cards.length;
+
+    const verify = c.dataset.verify;
+    elVerify.hidden = !verify;
+    if (verify) elVerify.href = verify;
+
+    const ikon = c.querySelector('.cert-icon');
+    mark.textContent = ikon ? ikon.textContent : '';
+
+    // Uji muat dulu di luar DOM. Kalau berkasnya belum ada, onload tak
+    // pernah jalan dan panel cadangan tetap tampil -- tidak ada ikon rusak.
+    shot.hidden = true;
+    fallback.hidden = false;
+    const src = c.dataset.img;
+    if (src) {
+      const uji = new Image();
+      const untuk = idx;
+      uji.onload = () => {
+        if (untuk !== idx) return;        // pengguna sudah pindah kartu
+        shot.src = src;
+        shot.alt = 'Sertifikat ' + (c.dataset.name || '');
+        shot.hidden = false;
+        fallback.hidden = true;
+      };
+      uji.src = src;
+    }
+  }
+
+  function buka(i, dari) {
+    clearTimeout(timerTutup);
+    pemicu = dari || null;
+    modal.hidden = false;
+    document.body.classList.add('modal-lock');
+    tampil(i);
+    requestAnimationFrame(() => modal.classList.add('open'));
+    modal.querySelector('.cert-close').focus();
+  }
+
+  function tutup() {
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-lock');
+    timerTutup = setTimeout(() => { modal.hidden = true; }, 340);
+    if (pemicu) pemicu.focus();
+    pemicu = null;
+  }
+
+  cards.forEach((c, i) => c.addEventListener('click', () => buka(i, c)));
+
+  modal.addEventListener('click', e => {
+    if (e.target.closest('[data-cert-close]')) tutup();
+  });
+
+  document.getElementById('certPrev').addEventListener('click', () => tampil(idx - 1));
+  document.getElementById('certNext').addEventListener('click', () => tampil(idx + 1));
+
+  document.addEventListener('keydown', e => {
+    if (modal.hidden) return;
+    if (e.key === 'Escape')     { tutup();        return; }
+    if (e.key === 'ArrowLeft')  { tampil(idx - 1); return; }
+    if (e.key === 'ArrowRight') { tampil(idx + 1); return; }
+    if (e.key !== 'Tab') return;
+
+    // Jerat fokus: selama modal terbuka, Tab tidak boleh keluar dialog
+    const bisa = [...dialog.querySelectorAll('button, a[href]')]
+      .filter(el => !el.hidden && el.offsetParent !== null);
+    if (!bisa.length) return;
+    const awal = bisa[0], akhir = bisa[bisa.length - 1];
+    if (e.shiftKey && document.activeElement === awal) { e.preventDefault(); akhir.focus(); }
+    else if (!e.shiftKey && document.activeElement === akhir) { e.preventDefault(); awal.focus(); }
+  });
+})();

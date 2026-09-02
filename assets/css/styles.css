@@ -1794,6 +1794,49 @@ section {
   border-radius: var(--r-sm);
   box-shadow: var(--shadow-sm);
   transition: transform .25s var(--ease-spring), border-color .2s, box-shadow .2s;
+  /* Kartunya sekarang <button>: netralkan gaya bawaan tombol */
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.cert-card:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.cert-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+/* Panah kecil yang memberi tahu kartunya bisa diklik */
+.cert-go {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .25s, transform .25s var(--ease-spring), color .2s;
+}
+
+.cert-go svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cert-card:hover .cert-go,
+.cert-card:focus-visible .cert-go {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--amber);
 }
 
 .cert-card:hover {
@@ -1808,6 +1851,7 @@ section {
 }
 
 .cert-name {
+  display: block;
   font-size: .7rem;
   font-weight: 700;
   color: var(--text);
@@ -1815,6 +1859,7 @@ section {
 }
 
 .cert-year {
+  display: block;
   font-family: var(--font-mono);
   font-size: .58rem;
   color: var(--muted);
@@ -2128,6 +2173,12 @@ footer {
 }
 
 body.pre-lock {
+  overflow: hidden;
+}
+
+/* Kelas terpisah dari .pre-lock supaya menutup modal tidak ikut
+   melepas kunci milik preloader, dan sebaliknya. */
+body.modal-lock {
   overflow: hidden;
 }
 
@@ -3919,5 +3970,243 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 
   .spark-canvas {
     display: none;
+  }
+}
+/* ══════════════════════════════════════════════════════════════
+   CERTIFICATE MODAL
+   ══════════════════════════════════════════════════════════════ */
+.cert-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.cert-modal[hidden] {
+  display: none;
+}
+
+.cert-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 9, 7, .62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.cert-modal.open .cert-backdrop {
+  opacity: 1;
+}
+
+.cert-dialog {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  opacity: 0;
+  transform: translateY(14px) scale(.97);
+  transition: opacity .32s var(--ease-out), transform .32s var(--ease-spring);
+}
+
+.cert-modal.open .cert-dialog {
+  opacity: 1;
+  transform: none;
+}
+
+.cert-close {
+  position: absolute;
+  top: .85rem;
+  right: .85rem;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--muted-h);
+  cursor: pointer;
+  transition: color .2s, border-color .2s, transform .25s var(--ease-spring);
+}
+
+.cert-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cert-close:hover {
+  color: var(--amber);
+  border-color: var(--line-h);
+  transform: rotate(90deg);
+}
+
+.cert-close:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* Panggung gambar. Rasio dikunci supaya tinggi dialog tidak melompat
+   saat berpindah antar sertifikat dengan proporsi berbeda. */
+.cert-stage {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+}
+
+.cert-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cert-shot[hidden] {
+  display: none;
+}
+
+.cert-fallback {
+  display: grid;
+  place-items: center;
+  gap: .9rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.cert-fallback[hidden] {
+  display: none;
+}
+
+.cert-fallback-mark {
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.cert-fallback-note {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cert-meta {
+  margin-top: 1.4rem;
+}
+
+.cert-issuer {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.cert-modal-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.4vw, 1.85rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--text-h);
+  margin-top: .5rem;
+}
+
+.cert-date {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--muted);
+  margin-top: .55rem;
+}
+
+.cert-verify {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border-bottom: 1px solid var(--line-h);
+  padding-bottom: .2rem;
+  transition: color .2s, border-color .2s;
+}
+
+.cert-verify[hidden] {
+  display: none;
+}
+
+.cert-verify:hover {
+  color: var(--amber-d);
+  border-color: var(--amber);
+}
+
+.cert-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.cert-arrow {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text);
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s, transform .25s var(--ease-spring);
+}
+
+.cert-arrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+.cert-arrow:hover {
+  color: var(--amber);
+  border-color: var(--line-h);
+  transform: scale(1.08);
+}
+
+.cert-arrow:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.cert-count {
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .14em;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .cert-backdrop,
+  .cert-dialog {
+    transition: none;
+  }
+
+  .cert-close:hover {
+    transform: none;
   }
 }
