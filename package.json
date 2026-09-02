@@ -9,8 +9,5 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.123.0"
-  },
-  "scripts": {
-    "build": "node scripts/build-static.mjs"
   }
 }
