@@ -365,36 +365,43 @@ section {
 
 /* ── THEME TOGGLE ── */
 .theme-btn {
-  width: 48px;
-  height: 26px;
+  width: 58px;
+  height: 30px;
   background: var(--bg3);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--line-h);
   border-radius: var(--r-full);
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: background .3s, border-color .3s;
-  overflow: hidden;
+  padding: 0;
+  transition: background .3s, border-color .3s, box-shadow .3s;
 }
 
 .theme-btn:hover {
   border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(232, 146, 42, .18);
+}
+
+.theme-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
 }
 
 .theme-thumb {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   background: var(--amber);
   border-radius: 50%;
-  transition: transform .3s var(--ease-spring);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+  z-index: 1;
+  transition: transform .35s var(--ease-spring);
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .28);
 }
 
 [data-theme="dark"] .theme-thumb {
-  transform: translateX(22px);
+  transform: translateX(28px);
 }
 
 .theme-icons {
@@ -403,23 +410,55 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5px;
+  padding: 0 6px;
   pointer-events: none;
-  font-size: .6rem;
+  z-index: 2;
 }
 
 .icon-sun,
 .icon-moon {
-  opacity: .4;
-  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
 }
 
-[data-theme="light"] .icon-sun {
-  opacity: .85;
+.theme-icons svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  transition: color .3s;
 }
 
-[data-theme="light"] .icon-moon {
-  opacity: .2;
+.icon-sun svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.icon-moon svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Ikon yang sedang ditindih thumb amber dibuat putih supaya kontras;
+   pasangannya diredupkan tapi tetap terbaca. Sebelumnya keduanya emoji
+   9.6px dengan opacity .2-.4, praktis tak kelihatan. */
+.icon-sun {
+  color: #fff;
+}
+
+.icon-moon {
+  color: var(--muted-h);
+}
+
+[data-theme="dark"] .icon-sun {
+  color: var(--muted-h);
+}
+
+[data-theme="dark"] .icon-moon {
+  color: #fff;
 }
 
 [data-theme="dark"] .icon-moon {
@@ -703,7 +742,9 @@ section {
 
 .hero-name {
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 12vw, 10.5rem);
+  /* Turun dari 10.5rem: pada layar 900px tinggi, tiga baris nama memakan
+     ~600px sehingga tombol Download CV jatuh di bawah lipatan. */
+  font-size: clamp(3.6rem, 8vw, 7rem);
   line-height: .88;
   letter-spacing: -.02em;
   color: var(--text-h);
@@ -928,8 +969,20 @@ section {
 .about-layout {
   display: grid;
   grid-template-columns: 1fr 300px 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
+  column-gap: clamp(2rem, 4vw, 4rem);
+  row-gap: clamp(1.75rem, 3vw, 3rem);
   align-items: start;
+}
+
+/* Judul dan deretan statistik melintang penuh. Sebelumnya keduanya
+   terjepit di kolom kiri yang cuma sepertiga lebar, jadi judulnya
+   bertumpuk tiga baris dan sisi kanannya menganga. */
+.about-head {
+  grid-column: 1 / -1;
+}
+
+.about-title {
+  font-size: clamp(2.6rem, 6.4vw, 5.5rem);
 }
 
 .about-text p {
@@ -951,10 +1004,10 @@ section {
 }
 
 .about-stats {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .65rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .75rem;
 }
 
 .stat-card {
@@ -994,7 +1047,6 @@ section {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 1.5rem;
 }
 
 .profile-frame {
@@ -1906,7 +1958,23 @@ section {
 }
 
 .contact-icon {
-  font-size: 1.35rem;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+}
+
+.contact-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Logo GitHub itu siluet hitam pekat, jadi lenyap di latar gelap.
+   Dibalik jadi putih khusus dark mode. */
+[data-theme="dark"] .contact-icon .ic-gh {
+  filter: invert(1);
 }
 
 .contact-lbl {

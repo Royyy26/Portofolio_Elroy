@@ -32,7 +32,7 @@
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://portofolio-elroy.vercel.app/assets/img/og-image.png" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=34" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=35" />
 </head>
 
 <body class="pre-lock">
@@ -76,7 +76,10 @@
     </ul>
     <div class="nav-right">
       <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
-        <div class="theme-icons"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></div>
+        <div class="theme-icons">
+          <span class="icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><path d="M12 1.7v2.7M12 19.6v2.7M4.7 4.7l1.9 1.9M17.4 17.4l1.9 1.9M1.7 12h2.7M19.6 12h2.7M4.7 19.3l1.9-1.9M17.4 6.6l1.9-1.9"/></svg></span>
+          <span class="icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 13.4A9.2 9.2 0 0 1 10.6 3a9.4 9.4 0 1 0 10.4 10.4z"/></svg></span>
+        </div>
         <div class="theme-thumb"></div>
       </button>
       <a href="assets/cv/Elroy_Matthew_Wiyanto_cv.pdf" download class="btn btn-primary"
@@ -99,7 +102,10 @@
       <span
         style="font-family:var(--font-mono); font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);">Theme</span>
       <button class="theme-btn" id="themeToggleMobile" aria-label="Toggle theme">
-        <div class="theme-icons"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></div>
+        <div class="theme-icons">
+          <span class="icon-sun" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.6"/><path d="M12 1.7v2.7M12 19.6v2.7M4.7 4.7l1.9 1.9M17.4 17.4l1.9 1.9M1.7 12h2.7M19.6 12h2.7M4.7 19.3l1.9-1.9M17.4 6.6l1.9-1.9"/></svg></span>
+          <span class="icon-moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 13.4A9.2 9.2 0 0 1 10.6 3a9.4 9.4 0 1 0 10.4 10.4z"/></svg></span>
+        </div>
         <div class="theme-thumb"></div>
       </button>
     </div>
@@ -187,45 +193,28 @@
   <section id="about">
     <div class="container">
       <div class="about-layout">
-        <!-- Left: text + stats -->
-        <div>
-          <div class="reveal">
-            <p class="eyebrow"><span class="eyebrow-n">01</span> About</p>
-            <h2 class="section-title">Code.<br>Build.<br><span class="acc">Ship.</span></h2>
-          </div>
-          <div class="about-text reveal reveal-d1">
-            <p style="margin-top:1.75rem;">
-              I'm a <strong>7th-semester Information Systems student</strong> at Maranatha Christian University
-              (<span class="hi">GPA 4.00, Full Academic Scholarship</span>) passionate about building
-              <strong>full-stack web applications</strong> and <strong>scalable backend services</strong>.
-            </p>
-            <p>
-              Currently working at <strong>Egafood Indonesia</strong> as a Full-Stack Developer Intern —
-              developing a company-wide ERP system from the ground up for digital transformation.
-            </p>
-            <p>
-              I'm comfortable owning a feature <strong>end-to-end</strong> — from schema design to deployment —
-              and have hands-on experience in frontend, backend, API design, and cloud architecture.
-            </p>
-          </div>
-          <div class="about-stats reveal reveal-d2">
-            <div class="stat-card">
-              <div class="stat-num">4.00</div>
-              <div class="stat-label">Perfect GPA</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">6×</div>
-              <div class="stat-label">Dean's List</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">9+</div>
-              <div class="stat-label">Certifications</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">2+</div>
-              <div class="stat-label">Years Coding</div>
-            </div>
-          </div>
+        <!-- Judul melintang penuh. Sebelumnya "Code./Build./Ship." bertumpuk
+             di kolom sempit sehingga sisi kanannya menganga kosong. -->
+        <div class="about-head reveal">
+          <p class="eyebrow"><span class="eyebrow-n">01</span> About</p>
+          <h2 class="section-title about-title">Code. Build. <span class="acc">Ship.</span></h2>
+        </div>
+
+        <!-- Kiri: narasi -->
+        <div class="about-text reveal reveal-d1">
+          <p>
+            I'm a <strong>7th-semester Information Systems student</strong> at Maranatha Christian University
+            (<span class="hi">GPA 4.00, Full Academic Scholarship</span>) passionate about building
+            <strong>full-stack web applications</strong> and <strong>scalable backend services</strong>.
+          </p>
+          <p>
+            Currently working at <strong>Egafood Indonesia</strong> as a Full-Stack Developer Intern —
+            developing a company-wide ERP system from the ground up for digital transformation.
+          </p>
+          <p>
+            I'm comfortable owning a feature <strong>end-to-end</strong> — from schema design to deployment —
+            and have hands-on experience in frontend, backend, API design, and cloud architecture.
+          </p>
         </div>
 
         <!-- Center: profile photo -->
@@ -262,6 +251,26 @@
               <div class="t-row"><span class="t-k">scholarship</span><span class="t-v o">100% tuition</span></div>
               <div class="t-prompt">$ <span>_</span><span class="t-blink"></span></div>
             </div>
+          </div>
+        </div>
+
+        <!-- Statistik: satu baris melintang di bawah -->
+        <div class="about-stats reveal reveal-d2">
+          <div class="stat-card">
+            <div class="stat-num">4.00</div>
+            <div class="stat-label">Perfect GPA</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">6×</div>
+            <div class="stat-label">Dean's List</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">9+</div>
+            <div class="stat-label">Certifications</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">2+</div>
+            <div class="stat-label">Years Coding</div>
           </div>
         </div>
       </div>
@@ -835,23 +844,23 @@
           in mind or just want to connect? I'd love to hear from you.</p>
         <div class="contact-grid">
           <a href="mailto:elroy.matthew10@gmail.com" class="contact-card">
-            <div class="contact-icon">✉️</div>
+            <div class="contact-icon"><img src="assets/img/gmail.webp" alt="" aria-hidden="true" /></div>
             <div class="contact-lbl">Email</div>
             <div class="contact-val">elroy.matthew10@gmail.com</div>
           </a>
           <a href="https://wa.me/6287806776235" target="_blank" rel="noopener" class="contact-card">
-            <div class="contact-icon">📱</div>
+            <div class="contact-icon"><img src="assets/img/whatsapp.webp" alt="" aria-hidden="true" /></div>
             <div class="contact-lbl">WhatsApp</div>
             <div class="contact-val">+62 878-0677-6235</div>
           </a>
           <a href="https://www.linkedin.com/in/elroy-matthew-wiyanto/" target="_blank" rel="noopener"
             class="contact-card">
-            <div class="contact-icon">💼</div>
+            <div class="contact-icon"><img src="assets/img/linkedin.png" alt="" aria-hidden="true" /></div>
             <div class="contact-lbl">LinkedIn</div>
             <div class="contact-val">elroy-matthew-wiyanto</div>
           </a>
           <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="contact-card">
-            <div class="contact-icon">🐙</div>
+            <div class="contact-icon"><img src="assets/img/github.png" alt="" aria-hidden="true" class="ic-gh" /></div>
             <div class="contact-lbl">GitHub</div>
             <div class="contact-val">@Royyy26</div>
           </a>
@@ -938,7 +947,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=34"></script>
+  <script src="assets/js/main.js?v=35"></script>
 </body>
 
 </html>
