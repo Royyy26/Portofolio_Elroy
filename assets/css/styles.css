@@ -3104,30 +3104,6 @@ body.cur-view #cursor {
   transform: translateY(-3px);
 }
 
-/* denyut supaya menarik perhatian tanpa berisik */
-.fab-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 2px solid #25d366;
-  pointer-events: none;
-}
-
-.fab-stack.show .fab-ring {
-  animation: fabPulse 2.6s ease-out infinite;
-}
-
-.fab-wa:hover .fab-ring {
-  animation-play-state: paused;
-  opacity: 0;
-}
-
-@keyframes fabPulse {
-  0%   { transform: scale(1); opacity: .7; }
-  70%  { transform: scale(1.55); opacity: 0; }
-  100% { transform: scale(1.55); opacity: 0; }
-}
-
 /* ============================================================
    HOVER TAMBAHAN — bagian yang tadinya diam
 ============================================================ */

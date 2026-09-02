@@ -27,7 +27,7 @@ posisi full-time.
 - S1 Sistem Informasi — Universitas Kristen Maranatha, Bandung (Agu 2023 – Jun 2027, perkiraan lulus)
   - IPK 4.00 / 4.00
   - Beasiswa Akademik Penuh (100% biaya kuliah)
-  - Dean's List 5 semester berturut-turut (syarat IPK minimum 3.85)
+  - Dean's List 6 semester berturut-turut (syarat IPK minimum 3.85)
   - Juara 1 Academic Festival (Kompetisi Video)
   - Juara 3 Academic Festival (internal kampus)
   - Mata kuliah relevan: Database & SQL, Pemrograman Python, Sistem Pendukung
