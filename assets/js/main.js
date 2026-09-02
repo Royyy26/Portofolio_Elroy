@@ -441,6 +441,23 @@ document.querySelectorAll('.project-card').forEach(card => {
     if (e.key === 'Escape' && !panel.hidden) close();
   });
 
+  /* ---------- penyajian teks ----------
+     Prompt sudah meminta teks biasa, tapi model tidak selalu menurut. Ini
+     jaring pengamannya, sekaligus membuat penekanan tetap terbaca.
+
+     Urutannya penting: escape HTML DULU, baru terapkan pola. Dengan begitu
+     tidak ada markup dari jawaban model yang bisa hidup sebagai HTML — hanya
+     tag yang kita buat sendiri di langkah kedua. */
+
+  const escapeHtml = (t) => t
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  function render(text) {
+    return escapeHtml(text)
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')   // **tebal**
+      .replace(/(^|\n)[ \t]*[*-][ \t]+/g, '$1• ');            // butir daftar
+  }
+
   /* ---------- jawaban pintasan ----------
      Sebagian besar pertanyaan pengunjung adalah beberapa hal yang itu-itu saja,
      dan jawabannya tidak berubah. Menjawabnya di sini berarti nol panggilan API
@@ -512,8 +529,10 @@ document.querySelectorAll('.project-card').forEach(card => {
   // muncul sekaligus, dua jenis jawaban akan terasa berbeda tanpa alasan.
   async function typeOut(el, str) {
     const parts = str.split(/(\s+)/);
+    let acc = '';
     for (let i = 0; i < parts.length; i++) {
-      el.textContent += parts[i];
+      acc += parts[i];
+      el.innerHTML = render(acc);
       scroll();
       if (parts[i].trim()) await new Promise((r) => setTimeout(r, 18));
     }
@@ -607,7 +626,7 @@ document.querySelectorAll('.project-card').forEach(card => {
           if (evt === 'delta') {
             if (!answer) { typing.remove(); answer = bubble('msg-bot', ''); answer.classList.add('streaming'); }
             text += payload.text;
-            answer.textContent = text;
+            answer.innerHTML = render(text);
             scroll();
           } else if (evt === 'error') {
             typing.remove();
