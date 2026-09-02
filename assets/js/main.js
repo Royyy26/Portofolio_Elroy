@@ -400,3 +400,186 @@ document.querySelectorAll('.project-card').forEach(card => {
     if (document.hidden) { live = 0; ctx.clearRect(0, 0, W, H); }
   });
 })();
+
+/* ── AI ASSISTANT: tanya jawab tentang Elroy ── */
+(function assistant() {
+  const panel = document.getElementById('chatPanel');
+  const toggle = document.getElementById('chatToggle');
+  const closeBtn = document.getElementById('chatClose');
+  const log = document.getElementById('chatLog');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('chatSend');
+  const chips = document.getElementById('chatChips');
+  if (!panel || !toggle || !log || !form) return;
+
+  const history = [];          // dikirim ulang tiap request; API-nya stateless
+  let busy = false;
+  let greeted = false;
+
+  /* ---------- render ---------- */
+
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+
+  function bubble(cls, text) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + cls;
+    el.textContent = text || '';
+    log.appendChild(el);
+    scroll();
+    return el;
+  }
+
+  function typingBubble() {
+    const el = document.createElement('div');
+    el.className = 'msg msg-bot msg-typing';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    log.appendChild(el);
+    scroll();
+    return el;
+  }
+
+  /* ---------- buka / tutup ---------- */
+
+  function open() {
+    panel.hidden = false;
+    requestAnimationFrame(() => panel.classList.add('show'));
+    toggle.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    if (!greeted) {
+      greeted = true;
+      bubble('msg-bot',
+        "Hai! Saya asisten AI-nya Elroy. Tanya apa saja soal pengalaman, project, atau keahliannya — boleh pakai bahasa Indonesia atau Inggris.");
+    }
+    setTimeout(() => input.focus(), 280);
+  }
+
+  function close() {
+    panel.classList.remove('show');
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    setTimeout(() => { panel.hidden = true; }, 300);
+  }
+
+  toggle.addEventListener('click', () => (panel.hidden ? open() : close()));
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !panel.hidden) close();
+  });
+
+  /* ---------- kirim ---------- */
+
+  function setBusy(v) {
+    busy = v;
+    input.disabled = v;
+    sendBtn.disabled = v;
+  }
+
+  async function ask(question) {
+    if (busy || !question.trim()) return;
+    if (chips) chips.classList.add('gone');
+
+    bubble('msg-user', question);
+    history.push({ role: 'user', content: question });
+    input.value = '';
+    setBusy(true);
+
+    const typing = typingBubble();
+    let answer = null;
+    let text = '';
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history.slice(-10) }),
+      });
+
+      if (!res.ok || !res.body) {
+        // 404 di sini biasanya berarti dibuka sebagai file statis tanpa
+        // serverless function-nya (mis. python -m http.server).
+        let msg = 'Asisten belum aktif di sini.';
+        if (res.status === 404 || res.status === 405 || res.status === 501) {
+          // Preview statis (mis. python -m http.server) tidak punya serverless
+          // function, jadi POST ke /api/chat tidak akan pernah berhasil.
+          msg = 'Asisten hanya berjalan di versi yang sudah di-deploy, bukan di preview statis lokal.';
+        } else if (res.status === 429) {
+          msg = 'Terlalu banyak pertanyaan sekaligus. Tunggu sebentar ya.';
+        } else {
+          try { msg = (await res.json()).error || msg; } catch (_) { /* biarkan pesan default */ }
+        }
+        typing.remove();
+        bubble('msg-error', msg);
+        history.pop();
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      // Server-Sent Events: tiap kejadian dipisah baris kosong ganda.
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+
+        let sep;
+        while ((sep = buf.indexOf('\n\n')) !== -1) {
+          const raw = buf.slice(0, sep);
+          buf = buf.slice(sep + 2);
+
+          let evt = 'message', data = '';
+          for (const line of raw.split('\n')) {
+            if (line.startsWith('event:')) evt = line.slice(6).trim();
+            else if (line.startsWith('data:')) data += line.slice(5).trim();
+          }
+          if (!data) continue;
+
+          let payload;
+          try { payload = JSON.parse(data); } catch (_) { continue; }
+
+          if (evt === 'delta') {
+            if (!answer) { typing.remove(); answer = bubble('msg-bot', ''); answer.classList.add('streaming'); }
+            text += payload.text;
+            answer.textContent = text;
+            scroll();
+          } else if (evt === 'error') {
+            typing.remove();
+            if (answer) answer.classList.remove('streaming');
+            bubble('msg-error', payload.message || 'Ada gangguan sebentar.');
+          }
+        }
+      }
+
+      if (answer) {
+        answer.classList.remove('streaming');
+        history.push({ role: 'assistant', content: text });
+      } else {
+        typing.remove();
+        bubble('msg-error', 'Tidak ada jawaban yang diterima. Coba lagi ya.');
+        history.pop();
+      }
+    } catch (err) {
+      typing.remove();
+      if (answer) answer.classList.remove('streaming');
+      bubble('msg-error', 'Koneksi terputus. Coba lagi ya.');
+      history.pop();
+    } finally {
+      setBusy(false);
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    ask(input.value);
+  });
+
+  if (chips) {
+    chips.addEventListener('click', e => {
+      const chip = e.target.closest('.chat-chip');
+      if (chip) ask(chip.textContent.trim());
+    });
+  }
+})();

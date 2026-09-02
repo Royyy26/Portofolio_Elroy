@@ -31,7 +31,7 @@
   <!-- Setelah deploy, ganti kedua baris di bawah dengan domain asli (LinkedIn butuh URL absolut):
        <meta property="og:url" content="https://NAMADOMAIN.vercel.app/" />
        <meta property="og:image" content="https://NAMADOMAIN.vercel.app/assets/img/og-image.png" /> -->
-  <link rel="stylesheet" href="assets/css/styles.css?v=20" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=21" />
 </head>
 
 <body class="pre-lock">
@@ -832,8 +832,55 @@
     <div>Built with <span class="footer-acc">♥</span> · Bandung, Indonesia</div>
   </footer>
 
+  <!-- ═══ AI ASSISTANT ═══ -->
+  <div class="chat-panel" id="chatPanel" role="dialog" aria-label="Tanya tentang Elroy" aria-modal="false" hidden>
+    <div class="chat-head">
+      <span class="chat-avatar"><img src="assets/img/avatar.webp" alt="" aria-hidden="true" /></span>
+      <div class="chat-id">
+        <div class="chat-title">Ask about Elroy</div>
+        <div class="chat-sub"><span class="chat-dot"></span> AI assistant</div>
+      </div>
+      <button class="chat-close" id="chatClose" type="button" aria-label="Tutup chat">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <path d="M4 4l8 8M12 4l-8 8" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="chat-log" id="chatLog" aria-live="polite"></div>
+
+    <div class="chat-chips" id="chatChips">
+      <button type="button" class="chat-chip">What is his tech stack?</button>
+      <button type="button" class="chat-chip">Tell me about the ERP project</button>
+      <button type="button" class="chat-chip">Pengalaman kerjanya apa saja?</button>
+      <button type="button" class="chat-chip">Is he open to work?</button>
+    </div>
+
+    <form class="chat-form" id="chatForm" autocomplete="off">
+      <input id="chatInput" type="text" maxlength="800" placeholder="Tanya apa saja tentang Elroy..."
+        aria-label="Tulis pertanyaan" />
+      <button type="submit" id="chatSend" aria-label="Kirim">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M14 2L7.5 8.5M14 2l-4.2 12-2.3-5.5L2 6.2 14 2z" />
+        </svg>
+      </button>
+    </form>
+
+    <p class="chat-foot">Dijawab AI dari CV &amp; portfolio Elroy. Bisa keliru — untuk hal penting, hubungi langsung.</p>
+  </div>
+
   <!-- ═══ TOMBOL MELAYANG ═══ -->
   <div class="fab-stack" id="fabStack">
+    <button class="fab fab-chat" id="chatToggle" type="button" aria-label="Tanya AI tentang Elroy"
+      aria-expanded="false" aria-controls="chatPanel">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 9.5A2.5 2.5 0 0111.5 12H8l-3.5 2.5V12H4a2.5 2.5 0 01-2.5-2.5v-5A2.5 2.5 0 014 2h7.5A2.5 2.5 0 0114 4.5v5z" />
+        <path d="M5.2 7.2h.01M8 7.2h.01M10.8 7.2h.01" />
+      </svg>
+      <span class="fab-label">Ask AI</span>
+    </button>
     <button class="fab fab-top" id="backToTop" type="button" aria-label="Back to top">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -850,7 +897,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=20"></script>
+  <script src="assets/js/main.js?v=21"></script>
 </body>
 
 </html>
