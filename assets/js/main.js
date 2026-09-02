@@ -571,6 +571,7 @@ document.querySelectorAll('.project-card').forEach(card => {
     const typing = typingBubble();
     let answer = null;
     let text = '';
+    let errored = false;   // server sudah menjelaskan sendiri; jangan ditimpa
 
     try {
       const res = await fetch('/api/chat', {
@@ -632,6 +633,7 @@ document.querySelectorAll('.project-card').forEach(card => {
             typing.remove();
             if (answer) answer.classList.remove('streaming');
             bubble('msg-error', payload.message || 'Ada gangguan sebentar.');
+            errored = true;
           }
         }
       }
@@ -641,7 +643,9 @@ document.querySelectorAll('.project-card').forEach(card => {
         history.push({ role: 'assistant', content: text });
       } else {
         typing.remove();
-        bubble('msg-error', 'Tidak ada jawaban yang diterima. Coba lagi ya.');
+        // Kalau server sudah mengirim event error, pesannya lebih tepat
+        // daripada tebakan umum ini — jangan tampilkan dua gelembung.
+        if (!errored) bubble('msg-error', 'Tidak ada jawaban yang diterima. Coba lagi ya.');
         history.pop();
       }
     } catch (err) {
