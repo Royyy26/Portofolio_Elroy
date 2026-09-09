@@ -2358,10 +2358,33 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 }
 
 /* ── PROJECT CTA TILE ── */
+/* Melintang penuh, bukan satu sel. Dengan enam kartu ubin ini tersisa
+   sendirian di baris terakhir dan dua kolom di sebelahnya menganga
+   memperlihatkan latar garis grid. Membentang penuh membuat barisnya selalu
+   terisi, berapa pun jumlah kartunya, dan isinya ditata mendatar supaya
+   pita selebar itu tidak terasa kosong. */
 .project-cta {
-  justify-content: center;
-  background: linear-gradient(140deg, rgba(232, 146, 42, .10), rgba(42, 140, 122, .07));
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  background: linear-gradient(120deg, rgba(232, 146, 42, .10), rgba(42, 140, 122, .07));
   cursor: pointer;
+}
+
+.cta-main {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.cta-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .55rem;
 }
 
 .project-cta:hover {
@@ -2376,7 +2399,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   font-size: 2rem;
   line-height: 1;
   color: var(--amber);
-  margin-bottom: .9rem;
   transition: transform .4s var(--ease-spring);
 }
 
@@ -2390,14 +2412,12 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   font-weight: 900;
   line-height: 1.05;
   color: var(--text-h);
-  margin-bottom: .6rem;
 }
 
 .cta-sub {
   font-size: .78rem;
   color: var(--muted);
   line-height: 1.7;
-  margin-bottom: 1.2rem;
 }
 
 .cta-link {
