@@ -30,17 +30,6 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold:.1 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-/* ── SKILL BARS ── */
-const skillObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.skill-bar[data-width]').forEach(b => b.style.width = b.dataset.width + '%');
-      skillObs.unobserve(e.target);
-    }
-  });
-}, { threshold:.25 });
-document.querySelectorAll('.skills-grid > div').forEach(el => skillObs.observe(el));
-
 /* ── ACTIVE NAV ── */
 const sections = document.querySelectorAll('section[id]');
 const navAs    = document.querySelectorAll('.nav-links a');
