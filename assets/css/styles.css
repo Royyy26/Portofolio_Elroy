@@ -2480,20 +2480,45 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 }
 
 /* ── PROJECT CTA TILE ── */
-/* Melintang penuh, bukan satu sel. Dengan enam kartu ubin ini tersisa
-   sendirian di baris terakhir dan dua kolom di sebelahnya menganga
-   memperlihatkan latar garis grid. Membentang penuh membuat barisnya selalu
-   terisi, berapa pun jumlah kartunya, dan isinya ditata mendatar supaya
-   pita selebar itu tidak terasa kosong. */
+/* Ubin ini mengisi SISA baris terakhir, bukan selalu melintang penuh.
+   Grid-nya memperlihatkan warna garisnya sendiri di sel kosong, jadi baris
+   yang tidak penuh terlihat bolong. Dengan enam kartu ubin ini memulai baris
+   baru (melintang penuh); dengan tujuh kartu, membentang penuh justru
+   meninggalkan kartu ketujuh sendirian dengan dua sel kosong. Posisi ubin
+   di antara anak grid menentukan lebarnya, jadi barisnya selalu pas
+   berapa pun jumlah kartunya. */
+/* Bentuk dasar: isi ditumpuk dan dipusatkan vertikal. Ubin yang berbagi
+   baris dengan kartu ikut setinggi kartu itu, jadi isi yang ditata mendatar
+   lalu membungkus akan tercerai ke atas dan bawah. Tata letak mendatar hanya
+   dipakai saat ubin menjadi pita penuh yang pendek (aturan di bawah). */
 .project-cta {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1.25rem clamp(1.5rem, 5vw, 4rem);
+  grid-column: span 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.1rem;
   background: linear-gradient(120deg, rgba(232, 146, 42, .10), rgba(42, 140, 122, .07));
   cursor: pointer;
+}
+
+/* 3 kolom: posisi 3n+1 memulai baris -> pita penuh mendatar;
+   3n+2 -> mengisi sisa dua sel, tetap bertumpuk */
+.projects-grid > .project-cta:nth-child(3n+1) {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem clamp(1.5rem, 5vw, 4rem);
+}
+
+.projects-grid > .project-cta:nth-child(3n+2) {
+  grid-column: span 2;
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.projects-grid > .project-cta:nth-child(3n+2) .cta-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
 }
 
 .cta-main {
@@ -3945,6 +3970,31 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 @media (max-width: 1024px) {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 2 kolom: aturan 3 kolom di atas tidak berlaku lagi; posisi ganjil
+     memulai baris -> pita penuh mendatar, posisi genap -> satu sel bertumpuk */
+  .projects-grid > .project-cta:nth-child(n) {
+    grid-column: span 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.1rem;
+    padding: 1.75rem;
+  }
+
+  .projects-grid > .project-cta:nth-child(n) .cta-title {
+    font-size: 1.6rem;
+  }
+
+  .projects-grid > .project-cta:nth-child(2n+1) {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem clamp(1.5rem, 5vw, 4rem);
   }
 }
 
