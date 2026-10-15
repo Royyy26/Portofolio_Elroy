@@ -24,11 +24,15 @@ export default async function handler(req, res) {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const r = await ai.models.generateContent({
       model,
-      contents: "ping",
-      config: { maxOutputTokens: 5 },
+      contents: "Say hello to a portfolio visitor in five words.",
+      config: {
+        maxOutputTokens: 120,
+        ...(req.query?.think ? { thinkingConfig: { thinkingLevel: String(req.query.think).toUpperCase() } } : {}),
+      },
     });
     out.probe = "ok";
-    out.sample = String(r?.text ?? "").slice(0, 40);
+    out.sample = String(r?.text ?? "").slice(0, 60);
+    out.usage = r?.usageMetadata ?? null;
   } catch (err) {
     out.probe = "gagal";
     out.status = err?.status ?? err?.code ?? null;
