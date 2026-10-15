@@ -484,8 +484,8 @@ document.querySelectorAll('.project-card').forEach(card => {
     },
     {
       re: /(github|repo|repositor|source code|kode sumber)/i,
-      id: 'Kode Elroy ada di github.com/Royyy26 — di sana ada TripVerse, Customer Portal Comtronics, NEXA, dan OdeBistro. Beberapa project lain seperti ERP Egafood bersifat privat karena project internship.',
-      en: "Elroy's code is at github.com/Royyy26 — TripVerse, the Comtronics Customer Portal, NEXA, and OdeBistro are there. A few projects like the Egafood ERP are private because they're internship work.",
+      id: 'Profil GitHub Elroy ada di github.com/Royyy26 — termasuk NEXA dan OdeBistro. Beberapa project, seperti ERP Egafood, Royale POS, dan UltraSleep, tidak punya repositori publik; kartu project-nya menautkan demo live.',
+      en: "Elroy's GitHub is github.com/Royyy26 — NEXA and OdeBistro are there, among others. Some projects, like the Egafood ERP, Royale POS, and UltraSleep, have no public repository; their project cards link to live demos instead.",
     },
     {
       re: /(makasih|terima kasih|thanks|thank you|thx|ok(e|ay)?$|sip$|mantap$)/i,
