@@ -16,11 +16,14 @@ export default async function handler(req, res) {
     return;
   }
 
-  const out = { model: MODEL, hasKey: Boolean(process.env.GEMINI_API_KEY) };
+  // hanya model dari daftar ini yang boleh diuji, supaya endpoint tak bisa dipakai sembarangan
+  const BOLEH = [MODEL, "gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-2.5-flash"];
+  const model = BOLEH.includes(req.query?.model) ? req.query.model : MODEL;
+  const out = { model, hasKey: Boolean(process.env.GEMINI_API_KEY) };
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const r = await ai.models.generateContent({
-      model: MODEL,
+      model,
       contents: "ping",
       config: { maxOutputTokens: 5 },
     });
