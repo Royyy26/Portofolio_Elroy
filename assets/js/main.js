@@ -158,7 +158,9 @@ const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (REDUCE) return;
     const dur = 1500, t0 = performance.now();
     const tick = now => {
-      const k = Math.min(1, (now - t0) / dur);
+      // timestamp rAF adalah awal frame, bisa sedikit sebelum t0 -> k negatif dan
+      // angka sempat tampil "-0.02" satu frame. Dijepit ke [0, 1].
+      const k = Math.max(0, Math.min(1, (now - t0) / dur));
       const eased = 1 - Math.pow(1 - k, 3);
       el.textContent = pre + (target * eased).toFixed(dec) + suf;
       if (k < 1) requestAnimationFrame(tick);

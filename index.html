@@ -33,7 +33,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://elroy-matthew.vercel.app/assets/img/og-image.png" />
   <link rel="preload" as="image" href="assets/img/portrait-cutout.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=58" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=63" />
 </head>
 
 <body class="pre-lock">
@@ -120,25 +120,25 @@
 
     <div class="container hero-content">
       <div class="hero-inner">
-        <!-- Left: text -->
+        <!-- Nama raksasa di belakang; potret berdiri di depannya. "Matthew" tetap
+             ada untuk pembaca layar & mesin pencari. -->
+        <h1 class="hero-name">
+          <span class="hn-line"><span class="hn-in">Elroy</span></span>
+          <span class="sr-only">Matthew</span>
+          <span class="hn-line"><span class="hn-in line3 shimmer-text">Wiyanto.</span></span>
+        </h1>
+
+        <!-- Saat JS aktif di layar lebar, gambar ini disembunyikan dan lapisan
+             .portrait-fly (main.js) yang pecah lalu menyatu di bingkai About. -->
+        <figure class="hero-portrait">
+          <img class="hero-cutout" src="assets/img/portrait-cutout.webp" width="866" height="1300"
+            alt="Elroy Matthew Wiyanto, smiling, in a black t-shirt" fetchpriority="high" decoding="async" />
+        </figure>
+
         <div class="hero-left">
-          <div class="hero-badge">
-            <span class="badge-dot"></span>
-            Available for Full-time &amp; Freelance
-          </div>
-          <h1 class="hero-name">
-            <span class="hn-line"><span class="hn-in">Elroy</span></span>
-            <span class="hn-line"><span class="hn-in line2">Matthew</span></span>
-            <span class="hn-line"><span class="hn-in line3 shimmer-text">Wiyanto.</span></span>
-          </h1>
-          <p class="hero-role">
-            Full-Stack Developer &amp; <span class="hl">Web Developer</span>
-          </p>
-          <p class="hero-desc">
-            Building performant, scalable full-stack web applications.
-            Skilled in React.js, Next.js, Golang, RESTful API design, and end-to-end
-            delivery — from database architecture to polished user interfaces.
-          </p>
+          <p class="hero-role">Full-Stack Developer &amp; <span class="hl">Web Developer</span></p>
+          <p class="hero-desc">Building performant, scalable full-stack web applications &mdash; from database
+            architecture to polished user interfaces.</p>
           <div class="hero-ctas">
             <a href="#projects" class="btn btn-primary">View Projects ↓</a>
             <a href="#contact" class="btn btn-ghost">Contact Me →</a>
@@ -146,19 +146,14 @@
           </div>
         </div>
 
-        <!-- Right: potret. Saat JS aktif di layar lebar, gambar ini disembunyikan dan
-             lapisan .portrait-fly (main.js) yang pecah lalu menyatu di bingkai About. -->
-        <figure class="hero-portrait">
-          <span class="hero-arch" aria-hidden="true"></span>
-          <img class="hero-cutout" src="assets/img/portrait-cutout.webp" width="638" height="800"
-            alt="Portrait of Elroy Matthew Wiyanto in a black suit" fetchpriority="high" decoding="async" />
-        </figure>
+        <div class="hero-right">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            Available for Full-time &amp; Freelance
+          </div>
+          <p class="hero-loc">Bandung, Indonesia</p>
+        </div>
       </div>
-    </div>
-
-    <div class="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-mouse"></div>
     </div>
   </section>
 
@@ -194,7 +189,7 @@
         <div class="profile-wrap">
           <div class="profile-frame">
             <div class="profile-inner">
-              <img src="assets/img/portrait-cutout.webp" width="638" height="800" alt="Elroy Matthew Wiyanto"
+              <img src="assets/img/portrait-cutout.webp" width="866" height="1300" alt="Elroy Matthew Wiyanto"
                 decoding="async" />
             </div>
             <div class="profile-corner-br"></div>
@@ -341,11 +336,10 @@
             <li class="tool"><img src="assets/icons/vscode.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>VS Code</span></li>
             <li class="tool"><img src="assets/icons/xampp.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>XAMPP</span></li>
             <li class="tool"><img src="assets/icons/aws.svg" width="30" height="30" alt="" loading="lazy" decoding="async" class="ic-flip" /><span>AWS</span></li>
-            <li class="tool"><img src="assets/icons/canva.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Canva</span></li>
+            <li class="tool"><img src="assets/icons/canva.webp" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Canva</span></li>
             <li class="tool"><img src="assets/icons/wordpress.svg" width="30" height="30" alt="" loading="lazy" decoding="async" class="ic-flip" /><span>WordPress</span></li>
             <li class="tool"><img src="assets/icons/vite.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Vite</span></li>
-            <li class="tool"><img src="assets/icons/alpinejs.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Alpine.js</span></li>
-            <li class="tool tool-text"><span>Microsoft Excel</span></li>
+            <li class="tool"><img src="assets/icons/excel.webp" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Microsoft Excel</span></li>
           </ul>
         </div>
         <div class="tags-wrap">
@@ -677,10 +671,10 @@
             <div class="project-icon">🌙</div>
             <div class="project-name">UltraSleep &mdash; Product Website</div>
             <div class="project-desc">Official website for a BPOM- and Halal-registered sleep supplement, designed,
-              built, and deployed end to end. A custom WordPress theme in Tailwind and Alpine.js, bilingual (ID/EN),
+              built, and deployed end to end. A custom WordPress theme built with Tailwind CSS, bilingual (ID/EN),
               covering product benefits, research, FAQ, reseller sign-up, and an in-page cart.</div>
             <div class="project-stack"><span class="stack-tag">WordPress</span><span class="stack-tag">PHP</span><span
-                class="stack-tag">Tailwind CSS</span><span class="stack-tag">Alpine.js</span><span
+                class="stack-tag">Tailwind CSS</span><span
                 class="stack-tag">TranslatePress</span></div>
             <div class="proj-links">
               <a href="https://ultrasleepofficial.com/id/" target="_blank" rel="noopener" class="proj-link proj-demo">
@@ -1107,7 +1101,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=58"></script>
+  <script src="assets/js/main.js?v=63"></script>
 </body>
 
 </html>

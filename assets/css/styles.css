@@ -657,6 +657,7 @@ section {
   display: flex;
   align-items: center;
   padding-top: 7rem;
+  padding-bottom: 0;  /* potret berdiri tepat di tepi bawah hero */
   overflow: hidden;
 }
 
@@ -706,56 +707,127 @@ section {
   width: 100%;
 }
 
+/* ── HERO ──
+   Nama raksasa di belakang, potret tanpa latar berdiri di tengah menimpa
+   huruf-hurufnya, peran & tombol di kiri, status di kanan. */
 .hero-inner {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, .82fr);
-  gap: clamp(2rem, 4.5vw, 4.5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* baris 1: nama; baris 2: blok kiri & kanan. Blok teks berada di baris
+     sendiri sehingga tidak mungkin naik menabrak nama -- versi sebelumnya
+     dijangkar dari bawah dan bertumpuk dengan huruf W di layar pendek
+     (1280x720, 1000x700). */
+  grid-template-rows: auto 1fr;
+  min-height: calc(100vh - 7rem);
+  min-height: calc(100svh - 7rem);
+}
+
+.hero-name {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.hero-left {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
+  justify-self: start;
+  /* tidak melebar sampai ke potret di tengah */
+  max-width: min(320px, 26vw);
+  margin: 1.5rem 0 clamp(2rem, 8vh, 5.5rem);
+}
+
+.hero-right {
+  position: relative;
+  z-index: 2;
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .7rem;
+  max-width: min(280px, 24vw);
+  margin: 1.5rem 0 clamp(4rem, 20vh, 12rem);
+  text-align: right;
+}
+
+/* desktop pendek: kalimat deskripsi disembunyikan agar tombol tetap terlihat
+   tanpa scroll; isinya sudah ada di bagian About */
+@media (min-width: 901px) and (max-height: 860px) {
+  .hero-left .hero-desc {
+    display: none;
+  }
+}
+
+.hero-right .hero-badge {
+  margin: 0;
+}
+
+.hero-loc {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted-h);
+  animation: fadeIn .8s ease .3s both;
+}
+
+.hero-left .hero-role {
+  margin-top: 0;
+}
+
+.hero-left .hero-ctas {
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+  margin-top: 1.4rem;
+}
+
+.hero-left .hero-ctas .btn {
+  justify-content: center;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── HERO PORTRAIT ──
-   Potret tanpa latar berdiri di depan lengkungan amber; kepalanya menyembul
-   di atas lengkungan. Kotak <img> berasio sama persis dengan berkasnya
-   (.7975), dan bingkai foto About juga -- itu yang membuat serah-terima
-   lapisan terbang (main.js) tepat piksel. */
+   Potret tanpa latar berdiri di tengah, tepat di tepi bawah hero. Dipusatkan
+   dengan left/right + margin auto (bukan transform) agar offsetLeft -- yang
+   dipakai main.js untuk mengukur titik awal lapisan terbang -- tetap akurat.
+   Rasio kotak <img> sama persis dengan berkasnya (.6662), begitu juga bingkai
+   foto About: serah-terimanya jadi tepat piksel. */
 .hero-portrait {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
   width: fit-content;
   margin: 0 auto;
   animation: fadeIn .9s ease .45s both;
 }
 
-.hero-arch {
-  position: absolute;
-  left: -7%;
-  right: -7%;
-  bottom: 0;
-  height: 80%;
-  border-radius: 999px 999px var(--r-lg) var(--r-lg);
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, .22) 1px, transparent 1.5px) 0 0 / 14px 14px,
-    radial-gradient(120% 90% at 50% 100%, var(--amber-l), var(--amber) 55%, var(--amber-d));
-  box-shadow: var(--shadow-lg);
-}
-
-.hero-arch::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 2px solid var(--amber);
-  border-radius: inherit;
-  opacity: .35;
-  transform: translate(14px, 14px);
-}
-
 .hero-cutout {
-  position: relative;
-  z-index: 1;
   display: block;
-  width: min(100%, calc(min(78vh, 700px) * .7975));
-  height: auto;
-  aspect-ratio: 638 / 800;
-  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .18));
+  width: auto;
+  height: min(74vh, 720px);
+  aspect-ratio: 866 / 1300;
+  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, .22));
 }
 
 /* Lapisan potret yang berpindah dari hero ke bingkai About (dibuat main.js).
@@ -853,10 +925,16 @@ section {
 
 .hero-name {
   font-family: var(--font-display);
-  /* Turun dari 10.5rem: pada layar 900px tinggi, tiga baris nama memakan
-     ~600px sehingga tombol Download CV jatuh di bawah lipatan. */
-  font-size: clamp(3.6rem, 8vw, 7rem);
-  line-height: .88;
+  /* Dua baris raksasa di belakang potret, gaya poster */
+  position: relative;
+  z-index: 0;
+  margin: 0;
+  padding-top: clamp(.25rem, 2vh, 1.5rem);
+  text-align: center;
+  /* dibatasi lebar DAN tinggi layar: di laptop 720-768px nama setinggi ini
+     mendorong tombol ke bawah lipatan */
+  font-size: clamp(4.5rem, min(13.5vw, 21vh), 13rem);
+  line-height: .8;
   letter-spacing: -.02em;
   color: var(--text-h);
   font-weight: 900;
@@ -906,49 +984,6 @@ section {
   gap: .65rem;
   margin-top: 2.25rem;
   animation: fadeUp .7s var(--ease-out) .4s both;
-}
-
-/* Scroll hint */
-.scroll-hint {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .4rem;
-  animation: fadeIn 1s ease 1.2s both;
-}
-
-.scroll-hint span {
-  font-family: var(--font-mono);
-  font-size: .52rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.scroll-mouse {
-  width: 18px;
-  height: 28px;
-  border: 1px solid var(--muted);
-  border-radius: var(--r-full);
-  position: relative;
-  overflow: hidden;
-}
-
-.scroll-mouse::after {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 5px;
-  background: var(--amber);
-  border-radius: var(--r-full);
-  animation: floatY 1.5s ease infinite;
 }
 
 /* ── ABOUT ── */
@@ -1054,7 +1089,7 @@ section {
 .profile-frame {
   position: relative;
   width: 260px;
-  height: calc(260px / .7975);  /* rasio potret tanpa latar */
+  height: calc(260px / .6662);  /* rasio potret tanpa latar */
   flex-shrink: 0;
 }
 
@@ -4069,14 +4104,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
    PERAPIAN MOBILE
 ============================================================ */
 @media (max-width: 640px) {
-  /* Petunjuk "SCROLL" diposisikan absolut di dasar hero. Di layar sempit
-     tombol CTA menumpuk ke bawah sampai menabraknya, jadi teks dan ikon
-     mouse-nya menindih tombol GITHUB. Ia cuma dekorasi — di layar sekecil
-     ini orang sudah tahu harus scroll. */
-  .scroll-hint {
-    display: none;
-  }
-
   /* Navbar terlalu padat: avatar, nama, sakelar tema, tombol CV, dan
      hamburger berdesakan sampai tombolnya nyaris bersentuhan. Tombol
      Download CV dibuang dari navbar — bukan menghilangkan fungsinya, karena
@@ -4152,18 +4179,50 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
     display: block;
   }
 
+  /* layar sempit: semua mengalir ke bawah -- nama, potret menimpa baris
+     bawah nama, lalu teks & tombol; tanpa transisi terbang */
   .hero-inner {
-    grid-template-columns: 1fr;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3rem;
   }
 
-  /* layar sempit: potret di atas teks, tanpa transisi terbang */
+  .hero-left,
+  .hero-right {
+    margin-bottom: 0;
+  }
+
   .hero-portrait {
-    order: -1;
-    margin-top: 1.5rem;
+    position: relative;
+    margin-top: -1.6rem;
   }
 
   .hero-cutout {
-    width: min(70vw, calc(46vh * .7975));
+    height: auto;
+    width: min(74vw, calc(52vh * .6662));
+  }
+
+  .hero-left,
+  .hero-right {
+    max-width: 34rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-left {
+    order: 3;
+    margin-top: 1.8rem;
+  }
+
+  .hero-right {
+    order: 2;
+    margin-top: 1.4rem;
+  }
+
+  .hero-left .hero-ctas {
+    align-items: center;
   }
 
   .about-layout {
