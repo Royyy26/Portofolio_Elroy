@@ -212,32 +212,74 @@ document.querySelectorAll('.project-card').forEach(card => {
 });
 
 /* ── PORTRAIT STORY ──
-   Potret hero berpindah ke bingkai foto About seiring scroll: mengecil,
-   bergeser, dan zoom tipis di wajah melepas ke foto utuh.
-   Satu lapisan fixed (.portrait-fly) yang digambar ulang tiap frame scroll;
-   kedua gambar aslinya tetap di tempat sebagai versi tanpa-JS/reduced-motion. */
+   Potret hero berpindah ke bingkai foto About seiring scroll. Di tengah jalan
+   ia pecah jadi kepingan segitiga yang terlempar keluar sambil berputar, lalu
+   menyatu kembali tepat di bingkai. Scroll naik memutar urutannya.
+   Kedua gambar aslinya tetap di tempat sebagai versi tanpa-JS/reduced-motion. */
 (function portraitStory() {
-  const fig = document.querySelector('.hero-portrait');
+  const fig = document.querySelector('.hero-cutout');
   const slot = document.querySelector('.profile-inner');
-  const heroImg = fig && fig.querySelector('img');
-  if (!fig || !slot || !heroImg) return;
+  if (!fig || !slot) return;
 
   const root = document.documentElement;
   const mq = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
-  const START = { fx: 50, fy: 18, z: 1.06, r: 20 };   // sama dengan .hero-portrait
-  const END = { fx: 50, fy: 0, z: 1, r: 8 };          // sama dengan .profile-inner img
   const LAND_AT = .2;  // mendarat saat bingkai About di 20% tinggi layar
+  const SRC = fig.getAttribute('src');
 
   const fly = document.createElement('div');
   fly.className = 'portrait-fly';
   fly.setAttribute('aria-hidden', 'true');
-  const img = document.createElement('img');
-  img.alt = '';
-  img.decoding = 'async';
-  img.sizes = heroImg.sizes;
-  img.srcset = heroImg.srcset;
-  img.src = heroImg.getAttribute('src');
-  fly.appendChild(img);
+  // URL absolut: url() relatif di dalam variabel CSS di-resolve terhadap lokasi
+  // stylesheet (/assets/css/), bukan halaman -- kepingan jadi kosong (404)
+  fly.style.setProperty('--src', 'url("' + new URL(SRC, document.baseURI).href + '")');
+  const whole = document.createElement('img');
+  whole.alt = '';
+  whole.decoding = 'async';
+  whole.src = SRC;
+  fly.appendChild(whole);
+
+  // Kepingan: kisi 3x4 dengan titik-titik dalam digeser acak, tiap sel dibelah
+  // dua segitiga. Seed tetap -> bentuknya sama setiap kali halaman dimuat.
+  let seed = 20261021;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const COLS = 3, ROWS = 4;
+  const P = [];
+  for (let r = 0; r <= ROWS; r++) {
+    P.push([]);
+    for (let c = 0; c <= COLS; c++) {
+      const inner = r > 0 && r < ROWS && c > 0 && c < COLS;
+      P[r].push([
+        (c + (inner ? (rnd() - .5) * .7 : 0)) / COLS * 100,
+        (r + (inner ? (rnd() - .5) * .7 : 0)) / ROWS * 100,
+      ]);
+    }
+  }
+  const shards = [];
+  const addShard = tri => {
+    const cx = (tri[0][0] + tri[1][0] + tri[2][0]) / 3;
+    const cy = (tri[0][1] + tri[1][1] + tri[2][1]) / 3;
+    const el = document.createElement('div');
+    el.className = 'shard';
+    el.style.clipPath = 'polygon(' + tri.map(p => p[0].toFixed(2) + '% ' + p[1].toFixed(2) + '%').join(',') + ')';
+    el.style.transformOrigin = cx.toFixed(2) + '% ' + cy.toFixed(2) + '%';
+    // terlempar menjauhi pusat badan, sedikit melayang naik, berputar acak
+    const mag = .32 + rnd() * .42;
+    shards.push({
+      el,
+      dx: (cx - 50) / 50 * mag + (rnd() - .5) * .22,
+      dy: (cy - 55) / 50 * mag * .8 + (rnd() - .5) * .22 - .05,
+      rot: (rnd() - .5) * 80,
+      sc: .88 + rnd() * .26,
+    });
+    fly.appendChild(el);
+  };
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const a = P[r][c], b = P[r][c + 1], d = P[r + 1][c], e = P[r + 1][c + 1];
+      if ((r + c) % 2) { addShard([a, b, e]); addShard([a, e, d]); }
+      else { addShard([a, b, d]); addShard([b, e, d]); }
+    }
+  }
   document.body.appendChild(fly);
 
   // posisi dokumen lewat offset: tidak terpengaruh transform (reveal, hero fade)
@@ -263,14 +305,21 @@ document.querySelectorAll('.project-card').forEach(card => {
     const e = ease(p);
     const L = (a, b) => a + (b - a) * e;
     // awal: tertahan di posisi hero semula; akhir: ikut bingkai About yang ikut scroll
-    fly.style.width = L(S.w, E.w).toFixed(1) + 'px';
-    fly.style.height = L(S.h, E.h).toFixed(1) + 'px';
+    const w = L(S.w, E.w), h = L(S.h, E.h);
+    fly.style.width = w.toFixed(1) + 'px';
+    fly.style.height = h.toFixed(1) + 'px';
     fly.style.transform = 'translate3d(' + L(S.x, E.x).toFixed(1) + 'px,' + L(S.y, E.y - y).toFixed(1) + 'px,0)';
-    fly.style.borderRadius = L(START.r, END.r).toFixed(1) + 'px';
-    const pos = L(START.fx, END.fx).toFixed(2) + '% ' + L(START.fy, END.fy).toFixed(2) + '%';
-    img.style.objectPosition = pos;
-    img.style.transformOrigin = pos;
-    img.style.transform = 'scale(' + L(START.z, END.z).toFixed(4) + ')';
+
+    // sebaran pecahan: nol di kedua ujung, puncak di tengah perjalanan.
+    // Pangkat 1.8 membuat retakan awal pelan dulu sebelum berhamburan.
+    const spread = Math.pow(Math.sin(Math.PI * p), 1.8);
+    const broken = spread > .015;
+    fly.classList.toggle('shattered', broken);
+    if (!broken) return;
+    for (const s of shards) {
+      s.el.style.transform = 'translate3d(' + (s.dx * spread * w).toFixed(1) + 'px,' + (s.dy * spread * h).toFixed(1) +
+        'px,0) rotate(' + (s.rot * spread).toFixed(2) + 'deg) scale(' + (1 + (s.sc - 1) * spread).toFixed(4) + ')';
+    }
   };
   const kick = () => { if (on && !raf) raf = requestAnimationFrame(update); };
   const remeasure = () => { if (on) { measure(); kick(); } };
@@ -285,6 +334,7 @@ document.querySelectorAll('.project-card').forEach(card => {
   window.addEventListener('scroll', kick, { passive: true });
   window.addEventListener('resize', remeasure, { passive: true });
   window.addEventListener('load', remeasure);
+  if (fig.complete) remeasure(); else fig.addEventListener('load', remeasure);
   if (document.fonts) document.fonts.ready.then(remeasure);
   // tata letak di atas bingkai bisa bergeser (font, gambar) -- ukur ulang
   if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);

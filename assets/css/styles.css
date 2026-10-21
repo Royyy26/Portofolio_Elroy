@@ -714,56 +714,84 @@ section {
 }
 
 /* ── HERO PORTRAIT ──
-   Foto studio persegi 400px: zoom dibuat tipis (--z) berpusat di wajah
-   (--fx/--fy) supaya pikselnya tidak makin diperbesar. Nilai-nilai ini juga
-   titik awal transisi di main.js. */
+   Potret tanpa latar berdiri di depan lengkungan amber; kepalanya menyembul
+   di atas lengkungan. Kotak <img> berasio sama persis dengan berkasnya
+   (.7975), dan bingkai foto About juga -- itu yang membuat serah-terima
+   lapisan terbang (main.js) tepat piksel. */
 .hero-portrait {
-  --fx: 50%;
-  --fy: 18%;
-  --z: 1.06;
   position: relative;
-  margin: 0;
-  height: min(82vh, 780px);
-  min-height: 420px;
-  overflow: hidden;
-  border-radius: var(--r-lg);
-  background: var(--bg3);
-  box-shadow: var(--shadow-lg);
+  width: fit-content;
+  margin: 0 auto;
   animation: fadeIn .9s ease .45s both;
 }
 
-.hero-portrait img {
+.hero-arch {
+  position: absolute;
+  left: -7%;
+  right: -7%;
+  bottom: 0;
+  height: 80%;
+  border-radius: 999px 999px var(--r-lg) var(--r-lg);
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, .22) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    radial-gradient(120% 90% at 50% 100%, var(--amber-l), var(--amber) 55%, var(--amber-d));
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-arch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--amber);
+  border-radius: inherit;
+  opacity: .35;
+  transform: translate(14px, 14px);
+}
+
+.hero-cutout {
+  position: relative;
+  z-index: 1;
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: var(--fx) var(--fy);
-  transform: scale(var(--z));
-  transform-origin: var(--fx) var(--fy);
+  width: min(100%, calc(min(78vh, 700px) * .7975));
+  height: auto;
+  aspect-ratio: 638 / 800;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .18));
 }
 
 /* Lapisan potret yang berpindah dari hero ke bingkai About (dibuat main.js).
-   Hanya aktif di layar >= 901px tanpa reduced-motion; selain itu kedua
-   gambar statis di tempatnya masing-masing. */
+   Di tengah jalan ia pecah jadi kepingan segitiga (.shard) lalu menyatu lagi.
+   Tidak memakai overflow/contain: kepingan harus bisa terlempar keluar kotak.
+   Hanya aktif di layar >= 901px tanpa reduced-motion. */
 .portrait-fly {
   display: none;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 60;
-  overflow: hidden;
   pointer-events: none;
-  background: var(--bg3);
-  box-shadow: var(--shadow-lg);
-  contain: layout paint;
   will-change: transform, width, height;
 }
 
-.portrait-fly img {
-  display: block;
+.portrait-fly > img,
+.portrait-fly .shard {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+}
+
+.portrait-fly .shard {
+  display: none;
+  background: var(--src) center / 100% 100% no-repeat;
+}
+
+/* saat diam (awal & akhir) tampil satu gambar utuh: tidak ada garis sambungan */
+.portrait-fly.shattered .shard {
+  display: block;
+}
+
+.portrait-fly.shattered > img {
+  visibility: hidden;
 }
 
 .portrait-live .portrait-fly {
@@ -775,13 +803,8 @@ section {
   visibility: hidden;
 }
 
-.portrait-live .hero-portrait {
+.portrait-live .hero-cutout {
   visibility: hidden;
-}
-
-/* bingkai About menunggu kosong selama potret masih di perjalanan */
-.portrait-live:not(.portrait-landed) .profile-inner {
-  background: transparent;
 }
 
 .portrait-live:not(.portrait-landed) .profile-inner img {
@@ -1031,7 +1054,7 @@ section {
 .profile-frame {
   position: relative;
   width: 260px;
-  height: 310px;
+  height: calc(260px / .7975);  /* rasio potret tanpa latar */
   flex-shrink: 0;
 }
 
@@ -1078,15 +1101,18 @@ section {
   height: 100%;
   overflow: hidden;
   border-radius: var(--r-sm);
-  background: var(--bg3);
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, .2) 1px, transparent 1.5px) 0 0 / 12px 12px,
+    radial-gradient(120% 90% at 50% 100%, var(--amber-l), var(--amber) 55%, var(--amber-d));
 }
 
 .profile-inner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center bottom;
   display: block;
+  transform-origin: center bottom;
   transition: transform .4s var(--ease-out);
 }
 
@@ -1449,6 +1475,36 @@ section {
 .tool:nth-child(8) { --i: 7; }
 .tool:nth-child(9) { --i: 8; }
 .tool:nth-child(10) { --i: 9; }
+
+/* bahasa: ubin bendera. Bendera berkibar sekali saat bagiannya muncul (agar
+   terlihat juga di layar sentuh), dan terus berkibar selama di-hover. */
+.lang-grid {
+  grid-template-columns: repeat(2, minmax(118px, 1fr));
+}
+
+.lang .flag {
+  width: 36px;
+  height: 24px;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .22), inset 0 0 0 1px rgba(0, 0, 0, .06);
+  transform-origin: left center;
+}
+
+.tags-row.visible .lang .flag {
+  animation: flagWave 1.3s ease-in-out .7s 2;
+}
+
+.tags-row.visible .lang:hover .flag {
+  animation: flagWave 1.3s ease-in-out infinite;
+}
+
+@keyframes flagWave {
+  0%, 100% { transform: perspective(140px) rotateY(0) skewY(0); }
+  25% { transform: perspective(140px) rotateY(-16deg) skewY(2.5deg); }
+  50% { transform: perspective(140px) rotateY(4deg) skewY(-1deg); }
+  75% { transform: perspective(140px) rotateY(-8deg) skewY(1.5deg); }
+}
 
 /* logo yang gelap (GitHub, AWS, WordPress, MySQL) hilang di latar gelap:
    kecerahannya dibalik, rona warnanya dikembalikan */
@@ -4103,9 +4159,11 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   /* layar sempit: potret di atas teks, tanpa transisi terbang */
   .hero-portrait {
     order: -1;
-    height: 46vh;
-    min-height: 300px;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-cutout {
+    width: min(70vw, calc(46vh * .7975));
   }
 
   .about-layout {
@@ -4217,6 +4275,11 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .tags-row.visible .lang .flag,
+  .tags-row.visible .lang:hover .flag {
+    animation: none;
   }
 
   .sk-col:hover {
