@@ -545,7 +545,7 @@ document.querySelectorAll('.project-card').forEach(card => {
     if (!greeted) {
       greeted = true;
       bubble('msg-bot',
-        "Hai! Saya asisten AI-nya Elroy. Tanya apa saja soal pengalaman, project, atau keahliannya — boleh pakai bahasa Indonesia atau Inggris.");
+        "Hai! Saya asisten AI-nya Elroy. Tanya apa saja soal pengalaman, project, atau keahliannya - boleh pakai bahasa Indonesia atau Inggris.");
     }
     setTimeout(() => input.focus(), 280);
   }
@@ -592,23 +592,23 @@ document.querySelectorAll('.project-card').forEach(card => {
   const FAST = [
     {
       re: /^(hai|halo|hallo|hi|hello|hey|pagi|siang|sore|malam|selamat (pagi|siang|sore|malam))\b/i,
-      id: 'Halo! Silakan tanya apa saja tentang Elroy — pengalaman kerja, project, keahlian, atau ketersediaannya.',
-      en: 'Hi! Ask me anything about Elroy — his work experience, projects, skills, or availability.',
+      id: 'Halo! Silakan tanya apa saja tentang Elroy - pengalaman kerja, project, keahlian, atau ketersediaannya.',
+      en: 'Hi! Ask me anything about Elroy - his work experience, projects, skills, or availability.',
     },
     {
       re: /(siapa kamu|kamu siapa|kamu ini apa|kamu ai|kamu bot|who are you|what are you|are you (an? )?(ai|bot|gemini|chatgpt))/i,
-      id: 'Saya asisten AI di portfolio Elroy Matthew Wiyanto, ditenagai Google Gemini. Saya menjawab berdasarkan CV dan profil Elroy — jadi kalau ada yang tidak saya ketahui, saya akan bilang tidak tahu, bukan mengarang.',
-      en: "I'm the AI assistant on Elroy Matthew Wiyanto's portfolio, powered by Google Gemini. I answer from Elroy's CV and profile — so if I don't know something, I'll say so rather than make it up.",
+      id: 'Saya asisten AI di portfolio Elroy Matthew Wiyanto, ditenagai Google Gemini. Saya menjawab berdasarkan CV dan profil Elroy - jadi kalau ada yang tidak saya ketahui, saya akan bilang tidak tahu, bukan mengarang.',
+      en: "I'm the AI assistant on Elroy Matthew Wiyanto's portfolio, powered by Google Gemini. I answer from Elroy's CV and profile - so if I don't know something, I'll say so rather than make it up.",
     },
     {
       re: /(kontak|hubungi|contact|reach (him|out)|email\b|e-mail|whatsapp|wa\b|nomor|phone)/i,
-      id: 'Elroy bisa dihubungi lewat:\n• Email — elroy.matthew10@gmail.com\n• WhatsApp — +62 878-0677-6235 (ada tombol hijaunya di pojok kanan bawah)\n• LinkedIn — elroy-matthew-wiyanto\n• GitHub — @Royyy26',
-      en: 'You can reach Elroy at:\n• Email — elroy.matthew10@gmail.com\n• WhatsApp — +62 878-0677-6235 (green button, bottom right)\n• LinkedIn — elroy-matthew-wiyanto\n• GitHub — @Royyy26',
+      id: 'Elroy bisa dihubungi lewat:\n• Email - elroy.matthew10@gmail.com\n• WhatsApp - +62 878-0677-6235 (ada tombol hijaunya di pojok kanan bawah)\n• LinkedIn - elroy-matthew-wiyanto\n• GitHub - @Royyy26',
+      en: 'You can reach Elroy at:\n• Email - elroy.matthew10@gmail.com\n• WhatsApp - +62 878-0677-6235 (green button, bottom right)\n• LinkedIn - elroy-matthew-wiyanto\n• GitHub - @Royyy26',
     },
     {
       re: /(open to work|lagi cari kerja|sedang mencari|available|tersedia|bisa direkrut|hiring|lowongan|masih kuliah)/i,
       id: 'Ya, Elroy terbuka untuk peluang internship, project freelance, maupun posisi full-time. Ia mencari posisi di Bandung, on-site atau hybrid. Saat ini masih berkuliah (perkiraan lulus Juni 2027) sambil magang, jadi soal jadwal sebaiknya dibicarakan langsung dengannya.',
-      en: "Yes — Elroy is open to internships, freelance projects, and full-time roles. He's looking in Bandung, on-site or hybrid. He's still studying (expected to graduate June 2027) alongside his internship, so timing is best discussed with him directly.",
+      en: "Yes - Elroy is open to internships, freelance projects, and full-time roles. He's looking in Bandung, on-site or hybrid. He's still studying (expected to graduate June 2027) alongside his internship, so timing is best discussed with him directly.",
     },
     {
       re: /^(.{0,40})(cv|resume|curriculum)\b/i,
@@ -617,8 +617,8 @@ document.querySelectorAll('.project-card').forEach(card => {
     },
     {
       re: /(github|repo|repositor|source code|kode sumber)/i,
-      id: 'Profil GitHub Elroy ada di github.com/Royyy26 — termasuk NEXA dan OdeBistro. Beberapa project, seperti ERP Egafood, Royale POS, dan UltraSleep, tidak punya repositori publik; kartu project-nya menautkan demo live.',
-      en: "Elroy's GitHub is github.com/Royyy26 — NEXA and OdeBistro are there, among others. Some projects, like the Egafood ERP, Royale POS, and UltraSleep, have no public repository; their project cards link to live demos instead.",
+      id: 'Profil GitHub Elroy ada di github.com/Royyy26 - termasuk NEXA dan OdeBistro. Beberapa project, seperti ERP Egafood, Royale POS, dan UltraSleep, tidak punya repositori publik; kartu project-nya menautkan demo live.',
+      en: "Elroy's GitHub is github.com/Royyy26 - NEXA and OdeBistro are there, among others. Some projects, like the Egafood ERP, Royale POS, and UltraSleep, have no public repository; their project cards link to live demos instead.",
     },
     {
       re: /(makasih|terima kasih|thanks|thank you|thx|ok(e|ay)?$|sip$|mantap$)/i,
