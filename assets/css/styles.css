@@ -708,9 +708,98 @@ section {
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .82fr);
+  gap: clamp(2rem, 4.5vw, 4.5rem);
   align-items: center;
+}
+
+/* ── HERO PORTRAIT ──
+   Foto studio persegi 400px: zoom dibuat tipis (--z) berpusat di wajah
+   (--fx/--fy) supaya pikselnya tidak makin diperbesar. Nilai-nilai ini juga
+   titik awal transisi di main.js. */
+.hero-portrait {
+  --fx: 50%;
+  --fy: 18%;
+  --z: 1.06;
+  position: relative;
+  margin: 0;
+  height: min(82vh, 780px);
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--bg3);
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn .9s ease .45s both;
+}
+
+.hero-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--fx) var(--fy);
+  transform: scale(var(--z));
+  transform-origin: var(--fx) var(--fy);
+}
+
+/* Lapisan potret yang berpindah dari hero ke bingkai About (dibuat main.js).
+   Hanya aktif di layar >= 901px tanpa reduced-motion; selain itu kedua
+   gambar statis di tempatnya masing-masing. */
+.portrait-fly {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg3);
+  box-shadow: var(--shadow-lg);
+  contain: layout paint;
+  will-change: transform, width, height;
+}
+
+.portrait-fly img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-live .portrait-fly {
+  display: block;
+  animation: fadeIn .9s ease .45s both;
+}
+
+.portrait-live.portrait-landed .portrait-fly {
+  visibility: hidden;
+}
+
+.portrait-live .hero-portrait {
+  visibility: hidden;
+}
+
+/* bingkai About menunggu kosong selama potret masih di perjalanan */
+.portrait-live:not(.portrait-landed) .profile-inner {
+  background: transparent;
+}
+
+.portrait-live:not(.portrait-landed) .profile-inner img {
+  visibility: hidden;
+}
+
+.portrait-live .profile-frame::before,
+.portrait-live .profile-frame::after,
+.portrait-live .profile-corner-br,
+.portrait-live .profile-badge {
+  transition: opacity .5s var(--ease-out);
+}
+
+.portrait-live:not(.portrait-landed) .profile-frame::before,
+.portrait-live:not(.portrait-landed) .profile-frame::after,
+.portrait-live:not(.portrait-landed) .profile-corner-br,
+.portrait-live:not(.portrait-landed) .profile-badge {
+  opacity: 0;
 }
 
 /* Status badge */
@@ -794,115 +883,6 @@ section {
   gap: .65rem;
   margin-top: 2.25rem;
   animation: fadeUp .7s var(--ease-out) .4s both;
-}
-
-/* Code snippet sidebar */
-.hero-code {
-  background: var(--bg-code);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  line-height: 1.9;
-  box-shadow: var(--shadow-lg);
-  animation: fadeIn .9s ease .6s both;
-  position: relative;
-}
-
-.hero-code-bar {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  padding: .7rem 1rem;
-  background: rgba(0, 0, 0, .3);
-  border-bottom: 1px solid rgba(255, 255, 255, .06);
-}
-
-.hc-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-}
-
-.hc-dot.r {
-  background: #ff5f57;
-}
-
-.hc-dot.y {
-  background: #febc2e;
-}
-
-.hc-dot.g {
-  background: #28c840;
-}
-
-.hc-fname {
-  flex: 1;
-  text-align: center;
-  font-size: .58rem;
-  color: rgba(255, 255, 255, .3);
-  letter-spacing: .08em;
-}
-
-.hero-code-body {
-  padding: 1.1rem 1.25rem;
-}
-
-.cl {
-  display: block;
-}
-
-.c-ln {
-  color: rgba(255, 255, 255, .15);
-  user-select: none;
-  display: inline-block;
-  width: 20px;
-  margin-right: .5rem;
-  text-align: right;
-  font-size: .6rem;
-}
-
-.c-kw {
-  color: #c792ea;
-}
-
-.c-fn {
-  color: #82aaff;
-}
-
-.c-str {
-  color: #c3e88d;
-}
-
-.c-num {
-  color: #f78c6c;
-}
-
-.c-com {
-  color: rgba(255, 255, 255, .28);
-  font-style: italic;
-}
-
-.c-key {
-  color: #89ddff;
-}
-
-.c-val {
-  color: #eeffff;
-}
-
-.c-punc {
-  color: rgba(255, 255, 255, .4);
-}
-
-.c-cursor {
-  display: inline-block;
-  width: 7px;
-  height: 1em;
-  background: var(--amber);
-  animation: blink 1.2s infinite;
-  vertical-align: text-bottom;
-  margin-left: 1px;
 }
 
 /* Scroll hint */
@@ -1298,6 +1278,36 @@ section {
   gap: .75rem;
 }
 
+.sk-id {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  min-width: 0;
+}
+
+/* logo teknologi di depan nama skill; ukuran seragam 20px */
+.sk-ics {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 3px;
+}
+
+.sk-ics img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* REST API tidak punya logo merek -- penanda konsep, bukan tiruan logo */
+.sk-ics-concept {
+  justify-content: center;
+  min-width: 20px;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
 .sk-name {
   font-size: .84rem;
   font-weight: 600;
@@ -1370,6 +1380,80 @@ section {
 .sk-where::before {
   content: "\21B3  ";
   color: var(--amber);
+}
+
+/* ubin alat: logo + nama, muncul berurutan saat bagiannya terlihat */
+.tool-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: .55rem;
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 86px;
+  padding: .85rem .5rem .7rem;
+  text-align: center;
+  background: var(--bg1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .5s var(--ease-out), transform .5s var(--ease-out), border-color .2s, box-shadow .25s;
+  transition-delay: calc(var(--i, 0) * 45ms), calc(var(--i, 0) * 45ms), 0s, 0s;
+}
+
+.tags-row.visible .tool {
+  opacity: 1;
+  transform: none;
+}
+
+.tags-row.visible .tool:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-h);
+  box-shadow: var(--shadow-sm);
+  transition-delay: 0s;
+}
+
+.tool img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.tool span {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .04em;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.tool-text span {
+  color: var(--muted-h);
+}
+
+.tool:nth-child(2) { --i: 1; }
+.tool:nth-child(3) { --i: 2; }
+.tool:nth-child(4) { --i: 3; }
+.tool:nth-child(5) { --i: 4; }
+.tool:nth-child(6) { --i: 5; }
+.tool:nth-child(7) { --i: 6; }
+.tool:nth-child(8) { --i: 7; }
+.tool:nth-child(9) { --i: 8; }
+.tool:nth-child(10) { --i: 9; }
+
+/* logo yang gelap (GitHub, AWS, WordPress, MySQL) hilang di latar gelap:
+   kecerahannya dibalik, rona warnanya dikembalikan */
+[data-theme="dark"] .ic-flip {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .tags-row {
@@ -4016,8 +4100,12 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
     grid-template-columns: 1fr;
   }
 
-  .hero-code {
-    display: none;
+  /* layar sempit: potret di atas teks, tanpa transisi terbang */
+  .hero-portrait {
+    order: -1;
+    height: 46vh;
+    min-height: 300px;
+    margin-top: 1rem;
   }
 
   .about-layout {
@@ -4122,6 +4210,12 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   }
 
   .sk-meter i::after {
+    transition: none;
+  }
+
+  .tool {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 

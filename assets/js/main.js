@@ -49,7 +49,7 @@ window.addEventListener('scroll', () => {
 }, { passive:true });
 
 /* ── 3D INTERACTIVE CARD PARALLAX TILT ── */
-document.querySelectorAll('.project-card, .stat-card, .cert-card, .org-card, .edu-card, .hero-code, .terminal').forEach(card => {
+document.querySelectorAll('.project-card, .stat-card, .cert-card, .org-card, .edu-card, .terminal').forEach(card => {
   card.addEventListener('mousemove', e => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -210,6 +210,87 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.style.setProperty('--my', (e.clientY - r.top) + 'px');
   });
 });
+
+/* ── PORTRAIT STORY ──
+   Potret hero berpindah ke bingkai foto About seiring scroll: mengecil,
+   bergeser, dan zoom tipis di wajah melepas ke foto utuh.
+   Satu lapisan fixed (.portrait-fly) yang digambar ulang tiap frame scroll;
+   kedua gambar aslinya tetap di tempat sebagai versi tanpa-JS/reduced-motion. */
+(function portraitStory() {
+  const fig = document.querySelector('.hero-portrait');
+  const slot = document.querySelector('.profile-inner');
+  const heroImg = fig && fig.querySelector('img');
+  if (!fig || !slot || !heroImg) return;
+
+  const root = document.documentElement;
+  const mq = window.matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
+  const START = { fx: 50, fy: 18, z: 1.06, r: 20 };   // sama dengan .hero-portrait
+  const END = { fx: 50, fy: 0, z: 1, r: 8 };          // sama dengan .profile-inner img
+  const LAND_AT = .2;  // mendarat saat bingkai About di 20% tinggi layar
+
+  const fly = document.createElement('div');
+  fly.className = 'portrait-fly';
+  fly.setAttribute('aria-hidden', 'true');
+  const img = document.createElement('img');
+  img.alt = '';
+  img.decoding = 'async';
+  img.sizes = heroImg.sizes;
+  img.srcset = heroImg.srcset;
+  img.src = heroImg.getAttribute('src');
+  fly.appendChild(img);
+  document.body.appendChild(fly);
+
+  // posisi dokumen lewat offset: tidak terpengaruh transform (reveal, hero fade)
+  const docRect = el => {
+    let x = 0, y = 0;
+    for (let n = el; n; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
+    return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+  };
+
+  let S, E, on = false, raf = 0;
+  const measure = () => { S = docRect(fig); E = docRect(slot); };
+  const ease = p => (p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+
+  const update = () => {
+    raf = 0;
+    if (!on) return;
+    const y = window.scrollY;
+    const dist = Math.max(1, E.y - window.innerHeight * LAND_AT);
+    const p = Math.min(1, Math.max(0, y / dist));
+    root.classList.toggle('portrait-landed', p >= 1);
+    if (p >= 1) return;
+
+    const e = ease(p);
+    const L = (a, b) => a + (b - a) * e;
+    // awal: tertahan di posisi hero semula; akhir: ikut bingkai About yang ikut scroll
+    fly.style.width = L(S.w, E.w).toFixed(1) + 'px';
+    fly.style.height = L(S.h, E.h).toFixed(1) + 'px';
+    fly.style.transform = 'translate3d(' + L(S.x, E.x).toFixed(1) + 'px,' + L(S.y, E.y - y).toFixed(1) + 'px,0)';
+    fly.style.borderRadius = L(START.r, END.r).toFixed(1) + 'px';
+    const pos = L(START.fx, END.fx).toFixed(2) + '% ' + L(START.fy, END.fy).toFixed(2) + '%';
+    img.style.objectPosition = pos;
+    img.style.transformOrigin = pos;
+    img.style.transform = 'scale(' + L(START.z, END.z).toFixed(4) + ')';
+  };
+  const kick = () => { if (on && !raf) raf = requestAnimationFrame(update); };
+  const remeasure = () => { if (on) { measure(); kick(); } };
+
+  const setLive = live => {
+    on = live;
+    root.classList.toggle('portrait-live', live);
+    if (live) { measure(); update(); }
+    else root.classList.remove('portrait-landed');
+  };
+
+  window.addEventListener('scroll', kick, { passive: true });
+  window.addEventListener('resize', remeasure, { passive: true });
+  window.addEventListener('load', remeasure);
+  if (document.fonts) document.fonts.ready.then(remeasure);
+  // tata letak di atas bingkai bisa bergeser (font, gambar) -- ukur ulang
+  if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
+  mq.addEventListener('change', ev => setLive(ev.matches));
+  setLive(mq.matches);
+})();
 
 /* ── HERO SCROLL FADE ── */
 (function heroFade() {

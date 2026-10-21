@@ -32,7 +32,8 @@
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://elroy-matthew.vercel.app/assets/img/og-image.png" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=49" />
+  <link rel="preload" as="image" href="assets/img/portrait.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=55" />
 </head>
 
 <body class="pre-lock">
@@ -139,47 +140,19 @@
             delivery — from database architecture to polished user interfaces.
           </p>
           <div class="hero-ctas">
-            <a href="assets/cv/Elroy_Matthew_Wiyanto_cv.pdf" download class="btn btn-primary">Download CV ↓</a>
-            <a href="#projects" class="btn btn-ghost">View Projects ↗</a>
-            <a href="https://github.com/Royyy26" target="_blank" rel="noopener" class="btn btn-dark">GitHub ↗</a>
+            <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+            <a href="#contact" class="btn btn-ghost">Contact Me →</a>
+            <a href="assets/cv/Elroy_Matthew_Wiyanto_cv.pdf" download class="btn btn-dark">Download CV ↓</a>
           </div>
         </div>
 
-        <!-- Right: code snippet card -->
-        <div class="hero-code">
-          <div class="hero-code-bar">
-            <div class="hc-dot r"></div>
-            <div class="hc-dot y"></div>
-            <div class="hc-dot g"></div>
-            <span class="hc-fname">developer.ts</span>
-          </div>
-          <div class="hero-code-body">
-            <span class="cl"><span class="c-ln">1</span><span class="c-kw">const</span> <span class="c-fn">me</span>
-              <span class="c-punc">= {</span></span>
-            <span class="cl"><span class="c-ln">2</span> <span class="c-key">name</span><span class="c-punc">:</span>
-              <span class="c-str">"Elroy Matthew"</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">3</span> <span class="c-key">role</span><span class="c-punc">:</span>
-              <span class="c-str">"Full-Stack & Web Dev"</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">4</span> <span class="c-key">gpa</span><span class="c-punc">:</span>
-              <span class="c-num">4.00</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">5</span> <span class="c-key">stack</span><span class="c-punc">:
-                [</span></span>
-            <span class="cl"><span class="c-ln">6</span> <span class="c-str">"React"</span><span class="c-punc">,</span>
-              <span class="c-str">"Next.js"</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">7</span> <span class="c-str">"Laravel"</span><span
-                class="c-punc">,</span> <span class="c-str">"Golang"</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">8</span> <span class="c-str">"PostgreSQL"</span><span
-                class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">9</span> <span class="c-punc">],</span></span>
-            <span class="cl"><span class="c-ln">10</span> <span class="c-key">available</span><span
-                class="c-punc">:</span> <span class="c-kw">true</span><span class="c-punc">,</span></span>
-            <span class="cl"><span class="c-ln">11</span><span class="c-punc">};</span></span>
-            <span class="cl" style="margin-top:.5rem"><span class="c-ln">12</span><span class="c-com">// open to work
-                🤝</span></span>
-            <span class="cl"><span class="c-ln">13</span><span class="c-punc">█</span><span
-                class="c-cursor"></span></span>
-          </div>
-        </div>
+        <!-- Right: potret. Saat JS aktif di layar lebar, gambar ini disembunyikan dan
+             lapisan .portrait-fly (main.js) yang terbang ke bingkai About. -->
+        <figure class="hero-portrait">
+          <img src="assets/img/portrait.webp" width="400" height="400"
+            alt="Portrait of Elroy Matthew Wiyanto in a black suit"
+            fetchpriority="high" decoding="async" />
+        </figure>
       </div>
     </div>
 
@@ -218,10 +191,11 @@
         </div>
 
         <!-- Center: profile photo -->
-        <div class="profile-wrap reveal reveal-d1">
+        <div class="profile-wrap">
           <div class="profile-frame">
             <div class="profile-inner">
-              <img src="assets/img/profile.webp" alt="Elroy Matthew Wiyanto" loading="lazy" />
+              <img src="assets/img/portrait.webp" width="400" height="400" alt="Elroy Matthew Wiyanto"
+                decoding="async" />
             </div>
             <div class="profile-corner-br"></div>
             <div class="profile-badge">
@@ -290,22 +264,22 @@
           <div class="skill-group-head">Frontend</div>
           <ul class="sk-list">
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">React.js / Next.js</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/react.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/nextjs.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">React.js / Next.js</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Egafood ERP · AKOJA ERP · NEXA · Royale POS</div>
             </li>
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">HTML / CSS / JavaScript</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/html5.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/css3.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/javascript.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">HTML / CSS / JavaScript</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">TripVerse · Comtronics portal · this site</div>
             </li>
             <li class="sk" data-lvl="2">
-              <div class="sk-top"><span class="sk-name">TypeScript</span><span class="sk-lvl">Proficient</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/typescript.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">TypeScript</span></span><span class="sk-lvl">Proficient</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Egafood ERP · Accelworks · NEXA</div>
             </li>
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">Tailwind CSS / Responsive Design</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/tailwindcss.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">Tailwind CSS / Responsive Design</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">NEXA · Royale POS</div>
             </li>
@@ -315,22 +289,22 @@
           <div class="skill-group-head">Backend</div>
           <ul class="sk-list">
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">PHP / Laravel</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/php.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/laravel.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">PHP / Laravel</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">TripVerse · Comtronics portal</div>
             </li>
             <li class="sk" data-lvl="1">
-              <div class="sk-top"><span class="sk-name">Golang (Gin Framework)</span><span class="sk-lvl">Intermediate</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/go.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/gin.webp" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">Golang (Gin Framework)</span></span><span class="sk-lvl">Intermediate</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Egafood ERP · Accelworks</div>
             </li>
             <li class="sk" data-lvl="2">
-              <div class="sk-top"><span class="sk-name">Python</span><span class="sk-lvl">Proficient</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/python.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">Python</span></span><span class="sk-lvl">Proficient</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Python Programming coursework</div>
             </li>
             <li class="sk" data-lvl="1">
-              <div class="sk-top"><span class="sk-name">Java (OOP)</span><span class="sk-lvl">Intermediate</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/java.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">Java (OOP)</span></span><span class="sk-lvl">Intermediate</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">OdeBistro · taught OOP as a TA</div>
             </li>
@@ -340,17 +314,17 @@
           <div class="skill-group-head">Data, API &amp; Workflow</div>
           <ul class="sk-list">
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">MySQL / PostgreSQL</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/mysql.svg" width="20" height="20" alt="" loading="lazy" decoding="async" class="ic-flip" /><img src="assets/icons/postgresql.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">MySQL / PostgreSQL</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Egafood ERP · AKOJA ERP · TripVerse</div>
             </li>
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">RESTful API Design &amp; Integration</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics sk-ics-concept" aria-hidden="true">{ }</span><span class="sk-name">RESTful API Design &amp; Integration</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Egafood ERP · Accelworks</div>
             </li>
             <li class="sk" data-lvl="3">
-              <div class="sk-top"><span class="sk-name">Git / GitHub / GitLab</span><span class="sk-lvl">Advanced</span></div>
+              <div class="sk-top"><span class="sk-id"><span class="sk-ics" aria-hidden="true"><img src="assets/icons/git.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /><img src="assets/icons/github.svg" width="20" height="20" alt="" loading="lazy" decoding="async" class="ic-flip" /><img src="assets/icons/gitlab.svg" width="20" height="20" alt="" loading="lazy" decoding="async" /></span><span class="sk-name">Git / GitHub / GitLab</span></span><span class="sk-lvl">Advanced</span></div>
               <div class="sk-meter" aria-hidden="true"><i></i><i></i><i></i></div>
               <div class="sk-where">Team repos on GitLab (AKOJA) and GitHub</div>
             </li>
@@ -361,15 +335,18 @@
       <div class="tags-row reveal">
         <div class="tags-wrap">
           <div class="tags-head">// Tools &amp; Platforms</div>
-          <div class="tags-cloud">
-            <span class="tag">Postman</span>
-            <span class="tag">Figma</span>
-            <span class="tag">VS Code</span>
-            <span class="tag">XAMPP</span>
-            <span class="tag">AWS Cloud</span>
-            <span class="tag">Canva</span>
-            <span class="tag">Microsoft Excel</span>
-          </div>
+          <ul class="tool-grid">
+            <li class="tool"><img src="assets/icons/postman.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Postman</span></li>
+            <li class="tool"><img src="assets/icons/figma.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Figma</span></li>
+            <li class="tool"><img src="assets/icons/vscode.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>VS Code</span></li>
+            <li class="tool"><img src="assets/icons/xampp.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>XAMPP</span></li>
+            <li class="tool"><img src="assets/icons/aws.svg" width="30" height="30" alt="" loading="lazy" decoding="async" class="ic-flip" /><span>AWS</span></li>
+            <li class="tool"><img src="assets/icons/canva.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Canva</span></li>
+            <li class="tool"><img src="assets/icons/wordpress.svg" width="30" height="30" alt="" loading="lazy" decoding="async" class="ic-flip" /><span>WordPress</span></li>
+            <li class="tool"><img src="assets/icons/vite.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Vite</span></li>
+            <li class="tool"><img src="assets/icons/alpinejs.svg" width="30" height="30" alt="" loading="lazy" decoding="async" /><span>Alpine.js</span></li>
+            <li class="tool tool-text"><span>Microsoft Excel</span></li>
+          </ul>
         </div>
         <div class="tags-wrap">
           <div class="tags-head">// Languages</div>
@@ -1128,7 +1105,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=49"></script>
+  <script src="assets/js/main.js?v=55"></script>
 </body>
 
 </html>
