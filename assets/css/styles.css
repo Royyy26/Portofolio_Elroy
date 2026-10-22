@@ -751,8 +751,11 @@ section {
   flex-direction: column;
   align-items: flex-end;
   gap: .7rem;
-  max-width: min(280px, 24vw);
-  margin: 1.5rem 0 clamp(4rem, 20vh, 12rem);
+  max-width: min(280px, 22vw);
+  /* sejajar dasar kolom kiri; kalau lebih tinggi dari kolom kiri, baris ini
+     ikut memanjang dan tombol kiri terdorong ke bawah lipatan. Margin kanan
+     memberi jalan bagi tombol chat & WhatsApp yang melayang di pojok. */
+  margin: 1.5rem 3.25rem clamp(1.25rem, 6vh, 5.5rem) 0;
   text-align: right;
 }
 
@@ -766,6 +769,91 @@ section {
 
 .hero-right .hero-badge {
   margin: 0;
+}
+
+/* Kartu ajakan ke asisten AI: terlihat seperti kolom chat yang sedang
+   mengetik pertanyaan contoh. Klik = chat terbuka & pertanyaannya terkirim. */
+.hero-ai {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  width: min(280px, 22vw);
+  margin-bottom: .4rem;
+  padding: .85rem .95rem .8rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-h);
+  background: var(--bg);
+  box-shadow: var(--shadow-md);
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .35s var(--ease-spring), box-shadow .3s, border-color .3s;
+  animation: fadeUp .8s var(--ease-out) .55s both;
+}
+
+.hero-ai:hover {
+  transform: translateY(-3px);
+  border-color: var(--amber);
+  box-shadow: var(--shadow-glow);
+}
+
+.hero-ai-top {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font-mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.hero-ai-top svg {
+  width: 13px;
+  height: 13px;
+  animation: sparkTwinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes sparkTwinkle {
+  0%, 100% { transform: scale(1) rotate(0); opacity: 1; }
+  50%      { transform: scale(.75) rotate(45deg); opacity: .6; }
+}
+
+.hero-ai-field {
+  display: flex;
+  align-items: center;
+  min-height: 2.1rem;
+  padding: .45rem .7rem;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--bg1);
+  font-size: .78rem;
+  color: var(--text-h);
+}
+
+.hero-ai-caret {
+  flex: none;
+  width: 1.5px;
+  height: 1em;
+  margin-left: 2px;
+  background: var(--amber);
+  animation: caretBlink 1s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  50% { opacity: 0; }
+}
+
+.hero-ai-sub {
+  font-size: .68rem;
+  color: var(--muted-h);
+  transition: color .25s;
+}
+
+.hero-ai:hover .hero-ai-sub {
+  color: var(--amber);
 }
 
 .hero-loc {
@@ -816,6 +904,82 @@ section {
   height: min(74vh, 720px);
   aspect-ratio: 866 / 1300;
   filter: drop-shadow(0 26px 34px rgba(0, 0, 0, .22));
+}
+
+/* Cahaya amber & cincin putus-putus di belakang potret -- memberi kedalaman
+   dan mengisi ruang kosong di sekitar tokoh. Di dalam figure (z-index 1),
+   jadi z-index -1 tetap di depan nama tapi di belakang foto. */
+.hero-portrait::before,
+.hero-portrait::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  z-index: -1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+.hero-portrait::before {
+  width: 150%;
+  background: radial-gradient(circle, rgba(232, 146, 42, .24) 0%, rgba(232, 146, 42, .09) 40%, transparent 68%);
+}
+
+.hero-portrait::after {
+  width: 122%;
+  border: 1.5px dashed rgba(232, 146, 42, .3);
+  animation: ringSpin 70s linear infinite;
+}
+
+@keyframes ringSpin {
+  to { rotate: 360deg; }
+}
+
+/* Stack utama melayang di kiri-kanan potret. Diletakkan di luar kotak foto
+   dan di bawah baris nama; hanya di layar lebar, di layar lain ruangnya
+   sudah terisi. */
+.hero-chip {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  align-items: center;
+  gap: .45rem;
+  padding: .42rem .85rem .42rem .5rem;
+  border-radius: var(--r-full);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .04em;
+  color: var(--text-h);
+  white-space: nowrap;
+  animation: chipFloat 6s ease-in-out infinite;
+}
+
+.hero-chip img {
+  width: 18px;
+  height: 18px;
+}
+
+/* di bawah 60% tinggi foto nama sudah lewat di semua ukuran layar; bagian
+   kotak foto yang ditimpa chip bawah adalah area transparan di sisi badan */
+.hc-1 { top: 60%; right: 96%; }
+.hc-2 { top: 80%; right: 90%; animation-delay: -1.5s; }
+.hc-3 { top: 66%; left: 100%; animation-delay: -3s; }
+.hc-4 { top: 86%; left: 92%; animation-delay: -4.5s; }
+
+@keyframes chipFloat {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -10px; }
+}
+
+@media (min-width: 1360px) {
+  .hero-chip {
+    display: inline-flex;
+  }
 }
 
 /* Lapisan potret yang berpindah dari hero ke bingkai About (dibuat main.js).
@@ -3783,6 +3947,110 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   color: #fff;
 }
 
+/* denyut amber supaya tombol chat terlihat bisa diajak bicara */
+.fab-ring-chat {
+  inset: 0;
+  border-color: var(--amber);
+  animation: fabPulse 2.6s ease-out infinite;
+}
+
+.fab-chat:hover .fab-ring-chat,
+.fab-chat.open .fab-ring-chat {
+  animation: none;
+  opacity: 0;
+}
+
+/* Gelembung ajakan di kiri tombol chat (tombol WA 46px + celah di bawahnya) */
+.chat-nudge {
+  position: absolute;
+  right: calc(100% + .9rem);
+  bottom: calc(46px + .7rem + 23px);
+  translate: 0 50%;
+  display: flex;
+  align-items: flex-start;
+  gap: .2rem;
+  width: max-content;
+  max-width: min(250px, calc(100vw - 6rem));
+  padding: .7rem .45rem .75rem .9rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-h);
+  background: var(--bg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateX(12px) scale(.94);
+  transform-origin: right center;
+  transition: opacity .35s var(--ease-out), transform .45s var(--ease-spring);
+}
+
+.chat-nudge[hidden] {
+  display: none;
+}
+
+.chat-nudge.show {
+  opacity: 1;
+  transform: none;
+}
+
+/* ekor gelembung yang menunjuk tombol */
+.chat-nudge::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--bg);
+  border-top: 1px solid var(--line-h);
+  border-right: 1px solid var(--line-h);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.chat-nudge-body {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chat-nudge-body strong {
+  font-size: .76rem;
+  color: var(--text-h);
+}
+
+.chat-nudge-body span {
+  font-size: .7rem;
+  line-height: 1.45;
+  color: var(--muted-h);
+}
+
+.chat-nudge-body:hover strong {
+  color: var(--amber);
+}
+
+.chat-nudge-x {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -.2rem;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chat-nudge-x:hover {
+  color: var(--amber);
+  background: var(--bg2);
+}
+
 /* Tooltip seragam untuk ketiga tombol. Muncul di kiri tombol — tombol berbentuk
    gambar tidak bisa memuat teks di dalamnya seperti pill yang melebar. */
 .fab-tip {
@@ -4653,5 +4921,34 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 
   .cert-close:hover {
     transform: none;
+  }
+}
+
+/* kartu AI di hero versi layar sempit: ikut lebar kolom, bukan 24vw */
+@media (max-width: 900px) {
+  .hero-ai {
+    width: min(320px, 100%);
+    margin-bottom: .2rem;
+  }
+
+  /* align-self: end milik grid desktop menggeser kolom ke kanan di flex kolom */
+  .hero-left,
+  .hero-right {
+    align-self: center;
+    margin-right: 0;
+  }
+
+  .hero-left .hero-ctas {
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait::after,
+  .hero-chip,
+  .hero-ai-top svg,
+  .hero-ai-caret,
+  .fab-ring-chat {
+    animation: none;
   }
 }

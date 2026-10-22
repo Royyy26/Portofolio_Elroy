@@ -32,8 +32,8 @@
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://elroy-matthew.vercel.app/assets/img/og-image.png" />
-  <link rel="preload" as="image" href="assets/img/portrait-cutout.webp" fetchpriority="high" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=68" />
+  <link rel="preload" as="image" href="assets/img/portrait-torii.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=69" />
 </head>
 
 <body class="pre-lock">
@@ -130,8 +130,13 @@
         <!-- Saat JS aktif di layar lebar, gambar ini disembunyikan dan lapisan
              .portrait-fly (main.js) yang pecah lalu menyatu di bingkai About. -->
         <figure class="hero-portrait">
-          <img class="hero-cutout" src="assets/img/portrait-cutout.webp" width="866" height="1300"
+          <img class="hero-cutout" src="assets/img/portrait-torii.webp" width="866" height="1300"
             alt="Elroy Matthew Wiyanto, smiling with arms crossed, in a white jacket" fetchpriority="high" decoding="async" />
+          <!-- stack utama, melayang di kiri-kanan potret (hanya layar lebar) -->
+          <span class="hero-chip hc-1" aria-hidden="true"><img class="ic-flip" src="assets/icons/nextjs.svg" alt="" />Next.js</span>
+          <span class="hero-chip hc-2" aria-hidden="true"><img src="assets/icons/typescript.svg" alt="" />TypeScript</span>
+          <span class="hero-chip hc-3" aria-hidden="true"><img src="assets/icons/go.svg" alt="" />Golang</span>
+          <span class="hero-chip hc-4" aria-hidden="true"><img src="assets/icons/postgresql.svg" alt="" />PostgreSQL</span>
         </figure>
 
         <div class="hero-left">
@@ -146,6 +151,18 @@
         </div>
 
         <div class="hero-right">
+          <!-- ajakan ke asisten AI: pertanyaan contoh berganti-ganti, klik = langsung ditanyakan -->
+          <button class="hero-ai" id="heroAi" type="button" data-ask="What is his tech stack?">
+            <span class="hero-ai-top">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 0l1.7 5.1L15 7l-5.3 1.9L8 14l-1.7-5.1L1 7l5.3-1.9z" />
+              </svg>
+              Ask my AI assistant
+            </span>
+            <span class="hero-ai-field"><span class="hero-ai-q" id="heroAiQ">What is his tech stack?</span><span
+                class="hero-ai-caret" aria-hidden="true"></span></span>
+            <span class="hero-ai-sub">Anything about my work, projects &amp; skills &rarr;</span>
+          </button>
           <div class="hero-badge">
             <span class="badge-dot"></span>
             Available for Full-time &amp; Freelance
@@ -188,7 +205,7 @@
         <div class="profile-wrap">
           <div class="profile-frame">
             <div class="profile-inner">
-              <img src="assets/img/portrait-cutout.webp" width="866" height="1300" alt="Elroy Matthew Wiyanto"
+              <img src="assets/img/portrait-torii.webp" width="866" height="1300" alt="Elroy Matthew Wiyanto"
                 decoding="async" />
             </div>
             <div class="profile-corner-br"></div>
@@ -1109,7 +1126,16 @@
         <path d="M5.2 7.2h.01M8 7.2h.01M10.8 7.2h.01" />
       </svg>
       <span class="fab-tip">Ask AI</span>
+      <span class="fab-ring fab-ring-chat" aria-hidden="true"></span>
     </button>
+    <!-- gelembung ajakan di samping tombol chat; muncul sekali per sesi -->
+    <div class="chat-nudge" id="chatNudge" hidden>
+      <button class="chat-nudge-body" type="button" data-ask="">
+        <strong>Hi! 👋 I'm Elroy's AI assistant.</strong>
+        <span>Ask me anything about his projects, skills, or experience.</span>
+      </button>
+      <button class="chat-nudge-x" id="chatNudgeX" type="button" aria-label="Tutup ajakan">&times;</button>
+    </div>
     <a class="fab fab-wa" href="https://wa.me/6287806776235?text=Hi%20Elroy%2C%20I%20saw%20your%20portfolio"
       target="_blank" rel="noopener" aria-label="Contact me on WhatsApp">
       <span class="fab-tip">Contact Me</span>
@@ -1118,7 +1144,7 @@
     </a>
   </div>
 
-  <script src="assets/js/main.js?v=68"></script>
+  <script src="assets/js/main.js?v=69"></script>
 </body>
 
 </html>

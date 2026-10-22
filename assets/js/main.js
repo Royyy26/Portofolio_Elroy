@@ -792,6 +792,69 @@ document.querySelectorAll('.project-card').forEach(card => {
       if (chip) ask(chip.textContent.trim());
     });
   }
+
+  /* ---------- ajakan: kartu di hero & gelembung di samping tombol ---------- */
+
+  const nudge = document.getElementById('chatNudge');
+  const NUDGE_KEY = 'elroy-ai-nudge';
+
+  function hideNudge() {
+    try { sessionStorage.setItem(NUDGE_KEY, '1'); } catch (e) { /* mode privat */ }
+    if (!nudge || nudge.hidden) return;
+    nudge.classList.remove('show');
+    setTimeout(() => { nudge.hidden = true; }, 300);
+  }
+
+  // elemen ber-data-ask membuka chat; kalau isinya ada, langsung ditanyakan
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-ask]');
+    if (!t) return;
+    hideNudge();
+    if (panel.hidden) open();
+    if (t.dataset.ask) ask(t.dataset.ask);
+  });
+  toggle.addEventListener('click', hideNudge);
+
+  if (nudge) {
+    let seen = false;
+    try { seen = sessionStorage.getItem(NUDGE_KEY) === '1'; } catch (e) { /* mode privat */ }
+    const x = document.getElementById('chatNudgeX');
+    if (x) x.addEventListener('click', hideNudge);
+    // Sekali per sesi, setelah pengunjung melewati hero (di hero sudah ada
+    // kartu AI, dan gelembung ini akan menutupi badge di sana), lalu pergi sendiri.
+    if (!seen) {
+      const show = () => {
+        if (window.scrollY < window.innerHeight * .5) return;
+        window.removeEventListener('scroll', show);
+        setTimeout(() => {
+          if (!panel.hidden) return;
+          nudge.hidden = false;
+          requestAnimationFrame(() => nudge.classList.add('show'));
+          setTimeout(hideNudge, 14000);
+        }, 900);
+      };
+      window.addEventListener('scroll', show, { passive: true });
+    }
+  }
+
+  // contoh pertanyaan di kartu hero diketik bergantian
+  const card = document.getElementById('heroAi');
+  const cardQ = document.getElementById('heroAiQ');
+  if (card && cardQ && !REDUCE) {
+    const qs = ['What is his tech stack?', 'Tell me about the ERP project', 'Is he open to work?',
+      'Pengalaman kerjanya apa saja?'];
+    let i = 0;
+    const type = (s, k) => {
+      cardQ.textContent = s.slice(0, k);
+      if (k < s.length) setTimeout(() => type(s, k + 1), 38);
+    };
+    setInterval(() => {
+      if (document.hidden) return;
+      i = (i + 1) % qs.length;
+      card.dataset.ask = qs[i];
+      type(qs[i], 0);
+    }, 4200);
+  }
 })();
 
 /* ── CERTIFICATE MODAL ── */
