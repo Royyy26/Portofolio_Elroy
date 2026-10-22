@@ -2276,8 +2276,21 @@ section {
   color: var(--teal);
 }
 
+/* ── CERTIFICATIONS ──
+   Galeri bukti nyata: badge AWS (persegi, 6 sejajar) dan sertifikat
+   HackerRank (lanskap, 4 sejajar) dikelompokkan per penerbit, sehingga tiap
+   baris selalu penuh di semua lebar layar. Klik kartu = modal besar + verify. */
 .certs-wrap {
   margin-top: 3.5rem;
+}
+
+.certs-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem 1.5rem;
+  margin-bottom: 1.6rem;
 }
 
 .certs-title {
@@ -2286,26 +2299,101 @@ section {
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--teal);
-  margin-bottom: 1.25rem;
+}
+
+.certs-sum {
+  margin: 0;
+  font-size: .78rem;
+  color: var(--muted-h);
+}
+
+.certs-sum strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--amber);
+}
+
+.certs-group + .certs-group {
+  margin-top: 2.2rem;
+}
+
+.certs-group-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+
+.cg-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* tanda sederhana untuk HackerRank (tidak ada logo resminya di aset) */
+.cg-hr {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #1ba94c;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.cg-name {
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--text-h);
+}
+
+.cg-count {
+  padding: .15rem .6rem;
+  border-radius: var(--r-full);
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: .56rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted-h);
+}
+
+/* garis tipis yang mengisi sisa baris judul grup */
+.certs-group-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
 }
 
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr));
-  gap: .65rem;
+  gap: 1rem;
+}
+
+.certs-grid--badges {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.certs-grid--docs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .cert-card {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: .65rem;
-  padding: .85rem .95rem;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
   background: var(--bg);
   border: 1px solid var(--line);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   box-shadow: var(--shadow-sm);
-  transition: transform .25s var(--ease-spring), border-color .2s, box-shadow .2s;
-  /* Kartunya sekarang <button>: netralkan gaya bawaan tombol */
+  transition: transform .4s var(--ease-spring), border-color .25s, box-shadow .3s;
+  /* Kartunya <button>: netralkan gaya bawaan tombol */
   width: 100%;
   font: inherit;
   text-align: left;
@@ -2314,67 +2402,164 @@ section {
   appearance: none;
 }
 
+.cert-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--line-h);
+  box-shadow: var(--shadow-lg);
+}
+
 .cert-card:focus-visible {
   outline: 2px solid var(--amber);
-  outline-offset: 2px;
+  outline-offset: 3px;
+}
+
+/* area gambar: latar lembut berpola titik, gambar di tengah */
+.cert-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(232, 146, 42, .14), transparent 65%),
+    radial-gradient(var(--line) 1px, transparent 1px) 0 0 / 12px 12px,
+    var(--bg2);
+  border-bottom: 1px solid var(--line);
+}
+
+/* kilau menyapu saat di-hover */
+.cert-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .45) 50%, transparent 65%);
+  transform: translateX(-110%);
+  transition: transform .8s var(--ease-out);
+  pointer-events: none;
+}
+
+.cert-card:hover .cert-media::after {
+  transform: translateX(110%);
+}
+
+.cert-media img {
+  display: block;
+  transition: transform .55s var(--ease-spring), filter .3s;
+}
+
+/* badge AWS: persegi, badge melayang dengan bayangan */
+.certs-grid--badges .cert-media {
+  aspect-ratio: 1;
+}
+
+.certs-grid--badges .cert-media img {
+  width: 70%;
+  height: auto;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .18));
+}
+
+.certs-grid--badges .cert-card:hover .cert-media img {
+  transform: translateY(-6px) rotate(-4deg) scale(1.06);
+  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, .22));
+}
+
+/* sertifikat HackerRank: kertas sedikit miring, lurus saat di-hover */
+.certs-grid--docs .cert-media {
+  aspect-ratio: 4 / 3;
+}
+
+.certs-grid--docs .cert-media img {
+  width: 84%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .16), 0 2px 5px rgba(0, 0, 0, .08);
+  transform: rotate(-2.5deg);
+}
+
+.certs-grid--docs .cert-card:hover .cert-media img {
+  transform: rotate(0) scale(1.06);
 }
 
 .cert-body {
   display: flex;
   flex-direction: column;
-  min-width: 0;
   flex: 1;
-}
-
-/* Panah kecil yang memberi tahu kartunya bisa diklik */
-.cert-go {
-  flex-shrink: 0;
-  width: 15px;
-  height: 15px;
-  color: var(--muted);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity .25s, transform .25s var(--ease-spring), color .2s;
-}
-
-.cert-go svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.cert-card:hover .cert-go,
-.cert-card:focus-visible .cert-go {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--amber);
-}
-
-.cert-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(124, 92, 252, .3);
-  box-shadow: var(--shadow-md);
-}
-
-.cert-icon {
-  font-size: .95rem;
-  flex-shrink: 0;
+  gap: .35rem;
+  min-width: 0;
+  padding: .75rem .85rem .8rem;
 }
 
 .cert-name {
-  display: block;
-  font-size: .7rem;
+  font-size: .76rem;
   font-weight: 700;
-  color: var(--text);
-  line-height: 1.4;
+  line-height: 1.35;
+  color: var(--text-h);
+  transition: color .25s;
+}
+
+.cert-card:hover .cert-name {
+  color: var(--amber);
+}
+
+.cert-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem;
+  margin-top: auto;
 }
 
 .cert-year {
-  display: block;
   font-family: var(--font-mono);
   font-size: .58rem;
   color: var(--muted);
-  margin-top: .1rem;
+}
+
+.cert-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-family: var(--font-mono);
+  font-size: .54rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.cert-ok::before {
+  content: "\2713";
+  display: grid;
+  place-items: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-size: .5rem;
+}
+
+@media (max-width: 1000px) {
+  .certs-grid--badges {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .certs-grid--docs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .certs-grid {
+    gap: .7rem;
+  }
+
+  .certs-grid--badges {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cert-ok {
+    font-size: 0;
+    gap: 0;
+  }
 }
 
 /* ── ORGANIZATIONS ── */
@@ -3322,38 +3507,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
   box-shadow: 0 6px 14px rgba(0, 0, 0, .07);
 }
 
-/* ── CERT CARDS ── */
-.cert-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.cert-card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(180deg, var(--amber), var(--teal-l));
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform .45s var(--ease-out);
-}
-
-.cert-card:hover::after {
-  transform: scaleY(1);
-}
-
-.cert-icon {
-  display: inline-block;
-  transition: transform .45s var(--ease-spring);
-}
-
-.cert-card:hover .cert-icon {
-  transform: scale(1.22) rotate(-8deg);
-}
-
 /* ── CONTACT CARDS ── */
 .contact-card {
   position: relative;
@@ -3757,16 +3910,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 
 .tl-item:hover .tl-role {
   color: var(--amber);
-}
-
-/* kartu sertifikat: ikon bergoyang selama di-hover */
-.cert-card:hover .cert-icon {
-  animation: certWobble 1.5s ease-in-out infinite;
-}
-
-@keyframes certWobble {
-  0%, 100% { transform: scale(1.2) rotate(-8deg); }
-  50%      { transform: scale(1.28) rotate(8deg); }
 }
 
 /* kartu kontak: ikon memantul terus */
@@ -4665,7 +4808,6 @@ body.loaded .hn-line:nth-child(3) .hn-in { transition-delay: .20s; }
 
   .fab-stack.show .fab-ring,
   .tl-item:hover::before,
-  .cert-card:hover .cert-icon,
   .contact-card:hover .contact-icon {
     animation: none !important;
   }

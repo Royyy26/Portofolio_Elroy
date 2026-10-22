@@ -890,8 +890,7 @@ document.querySelectorAll('.project-card').forEach(card => {
     elVerify.hidden = !verify;
     if (verify) elVerify.href = verify;
 
-    const ikon = c.querySelector('.cert-icon');
-    mark.textContent = ikon ? ikon.textContent : '';
+    mark.textContent = c.dataset.mark || '';
 
     // Uji muat dulu di luar DOM. Kalau berkasnya belum ada, onload tak
     // pernah jalan dan panel cadangan tetap tampil -- tidak ada ikon rusak.
